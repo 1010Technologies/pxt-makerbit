@@ -22,27 +22,35 @@ namespace makerbit {
 
 	/**
 	 * Connect to serial MP3 device with chip YX5300.
-     * @param mp3Tx MP3 device transmitter pin (TX), eg: SerialPin.P0
-     * @param mp3Rx MP3 device receiver pin (RX), eg: SerialPin.P1
+     * @param mp3Rx MP3 device receiver pin (RX), eg: AnalogPin.P0
+     * @param mp3Tx MP3 device transmitter pin (TX), eg: AnalogPin.P1
 	 */
-    //% subcategory=MP3
-    //% blockId="makebit_mp3_connect" block="connect to MP3 device with MP3 TX attached to %tx | and MP3 RX to %rx"
+    //% subcategory="Serial MP3"
+    //% blockExternalInputs=1
+    //% blockId="makebit_mp3_connect" block="connect MP3 with MP3 RX attached to %mp3Rx | and MP3 TX to %mp3Tx"
+    //% tx.fieldEditor="gridpicker" mp3Rx.fieldOptions.columns=3
+    //% tx.fieldOptions.tooltips="false"
+    //% rx.fieldEditor="gridpicker" mp3Tx.fieldOptions.columns=3
+    //% rx.fieldOptions.tooltips="false"
     //% weight=50
-    export function connectSerialMp3(mp3Tx: SerialPin, mp3Rx: SerialPin): void {
-        serial.redirect(mp3Rx, mp3Tx, BaudRate.BaudRate9600)
+    export function connectSerialMp3(mp3Rx: AnalogPin, mp3Tx: AnalogPin): void {
+        redirectSerial(mp3Rx, mp3Tx, BaudRate.BaudRate9600)
         basic.pause(100)
         sendCommand(YX5300.selectDeviceTfCard())
-        basic.pause(500)
+        basic.pause(1500)
         sendCommand(YX5300.setVolume(30))
         sendCommand(YX5300.unmute())
     }
+
+    //% shim=makerbit::redirectSerial
+    export function redirectSerial(tx: number, rx: number, baud: number): void { return }
 
     /**
      * Play track.
      * @param track track index, eg:1
      * @param repeat indicates whether to repeat the track
      */
-    //% subcategory=MP3
+    //% subcategory="Serial MP3"
     //% blockId="makebit_mp3_play_track" block="play MP3 track %track | %repeat"
     //% track.min=1 track.max=255
     //% weight=49
@@ -60,7 +68,7 @@ namespace makerbit {
      * @param folder folder index, eg:1
      * @param repeat indicates whether to repeat the track
      */
-    //% subcategory=MP3
+    //% subcategory="Serial MP3"
     //% blockId="makebit_mp3_play_track_from_folder" block="play MP3 track %track | from folder %folder | %repeat"
     //% track.min=1 track.max=255
     //% folder.min=1 folder.max=99
@@ -76,7 +84,7 @@ namespace makerbit {
      * Play folder.
      * @param folder folder index, eg:1
      */
-    //% subcategory=MP3
+    //% subcategory="Serial MP3"
     //% blockId="makebit_mp3_play_folder" block="play MP3 folder %folder | repeatedly"
     //% folder.min=1 folder.max=99
     //% weight=47
@@ -88,7 +96,7 @@ namespace makerbit {
      * Set volume.
      * @param volume volume in the range of 0 to 30: eg: 30
      */
-    //% subcategory=MP3
+    //% subcategory="Serial MP3"
     //% blockId="makebit_mp3_set_volume" block="set MP3 volume to %volume"
     //% volume.min=0 volume.max=30
     //% weight=46
@@ -100,7 +108,7 @@ namespace makerbit {
      * Dispatches a command to the MP3 device.
      * @param command command
      */
-    //% subcategory=MP3
+    //% subcategory="Serial MP3"
     //% blockId="makebit_mp3_run_command" block="run MP3 command %command"
     //% weight=45
     export function runMp3Command(command: Command): void {

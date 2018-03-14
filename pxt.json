@@ -9,6 +9,7 @@
     "files": [
         "README.md",
         "motor.ts",
+        "mp3.cpp",
         "mp3.ts",
         "namespace.ts"
     ],
