@@ -9,5 +9,8 @@ namespace makerbit {
       MicroBitPin* rxp = getPin((int)rx); if (!rxp) return;
       uBit.serial.redirect(txp->name, rxp->name);
       uBit.serial.baud(baud);
+
+      // Enforce initialization of serial RX buffers to prevent hang
+      uBit.serial.read(MicroBitSerialMode::ASYNC);
     }
 }

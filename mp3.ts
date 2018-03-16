@@ -22,18 +22,18 @@ namespace makerbit {
 
 	/**
 	 * Connect to serial MP3 device with chip YX5300.
-     * @param mp3Rx MP3 device receiver pin (RX), eg: AnalogPin.P0
-     * @param mp3Tx MP3 device transmitter pin (TX), eg: AnalogPin.P1
+     * @param mp3Rx MP3 device receiver pin (RX), eg: DigitalPin.P5
+     * @param mp3Tx MP3 device transmitter pin (TX), eg: DigitalPin.P8
 	 */
     //% subcategory="Serial MP3"
     //% blockExternalInputs=1
     //% blockId="makebit_mp3_connect" block="connect MP3 with MP3 RX attached to %mp3Rx | and MP3 TX to %mp3Tx"
-    //% tx.fieldEditor="gridpicker" mp3Rx.fieldOptions.columns=3
-    //% tx.fieldOptions.tooltips="false"
-    //% rx.fieldEditor="gridpicker" mp3Tx.fieldOptions.columns=3
-    //% rx.fieldOptions.tooltips="false"
+    //% mp3Rx.fieldEditor="gridpicker" mp3Rx.fieldOptions.columns=3
+    //% mp3Rx.fieldOptions.tooltips="false"
+    //% mp3Tx.fieldEditor="gridpicker" mp3Tx.fieldOptions.columns=3
+    //% mp3Tx.fieldOptions.tooltips="false"
     //% weight=50
-    export function connectSerialMp3(mp3Rx: AnalogPin, mp3Tx: AnalogPin): void {
+    export function connectSerialMp3(mp3Rx: DigitalPin, mp3Tx: DigitalPin): void {
         redirectSerial(mp3Rx, mp3Tx, BaudRate.BaudRate9600)
         basic.pause(100)
         sendCommand(YX5300.selectDeviceTfCard())
