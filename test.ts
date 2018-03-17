@@ -13,7 +13,7 @@ makerbit.stopMotor(makerbit.Motor.B)
  * Serial MP3 tests 
  */
 
-makerbit.connectSerialMp3(DigitalPin.P0, DigitalPin.P1)
+makerbit.connectSerialMp3(makerbit.MakerBitPin.A0, makerbit.MakerBitPin.A1)
 
 makerbit.playMp3Track(1, makerbit.Repeat.Once)
 makerbit.playMp3Track(1, makerbit.Repeat.Repeatedly)
