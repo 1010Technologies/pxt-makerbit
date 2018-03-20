@@ -11,7 +11,8 @@
         "motor.ts",
         "mp3.cpp",
         "mp3.ts",
-        "namespace.ts"
+        "namespace.ts",
+        "touch.ts"
     ],
     "testFiles": [
         "test.ts"

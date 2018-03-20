@@ -31,3 +31,16 @@ makerbit.runMp3Command(makerbit.Command.RESUME)
 makerbit.runMp3Command(makerbit.Command.STOP)
 makerbit.runMp3Command(makerbit.Command.MUTE)
 makerbit.runMp3Command(makerbit.Command.UNMUTE)
+
+
+/**
+ * Touch tests 
+ */
+
+if (makerbit.isElectrodeTouched(makerbit.MakerBitTouchElectrode.T5)) {
+    basic.showIcon(IconNames.Happy)
+} else {
+    basic.showIcon(IconNames.Sad)
+}
+
+makerbit.isElectrodeTouched(makerbit.MakerBitTouchElectrode.T16)
