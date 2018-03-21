@@ -7,10 +7,13 @@ The MakerBit connects to the BBC micro:bit to provide easy connections to a wide
 http://makerbit.com/
 
 ## Motors
-The MakerBit has a motor controller that can control two bi-directional DC motors.
+The MakerBit board provides a motor controller that can control two bi-directional DC motors.
+
+## Touch
+MakerBit offers built-in support for up to 12 touch electrodes via the proximity capacitive touch sensor controller MPR121.
 
 ## Serial MP3
-This package includes support for Serial MP3 devices that are based on the YX5300 chip.
+This package includes support for external Serial MP3 devices that are based on the YX5300 chip.
 
 ## License
 

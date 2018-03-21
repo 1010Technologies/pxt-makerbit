@@ -48,7 +48,7 @@ namespace makerbit {
     /**
      * Play track.
      * @param track track index, eg:1
-     * @param repeat indicates whether to repeat the track
+     * @param repeat indicates whether to repeat the track, eg: makerbit.Repeat.Once
      */
     //% subcategory="Serial MP3"
     //% blockId="makebit_mp3_play_track" block="play MP3 track %track | %repeat"
@@ -66,7 +66,7 @@ namespace makerbit {
      * Play track from folder.
      * @param track track index, eg:1
      * @param folder folder index, eg:1
-     * @param repeat indicates whether to repeat the track
+     * @param repeat indicates whether to repeat the track, eg: makerbit.Repeat.Once
      */
     //% subcategory="Serial MP3"
     //% blockId="makebit_mp3_play_track_from_folder" block="play MP3 track %track | from folder %folder | %repeat"
@@ -106,7 +106,7 @@ namespace makerbit {
 
     /**
      * Dispatches a command to the MP3 device.
-     * @param command command
+     * @param command command, eg: makerbit.Command.PLAY_NEXT_TRACK
      */
     //% subcategory="Serial MP3"
     //% blockId="makebit_mp3_run_command" block="run MP3 command %command"

@@ -19,11 +19,15 @@ namespace makerbit {
     const MPR121_ADDRESS = 0x5A
     let isInitialized = false
 
+    const TOUCH_STATUS_EXPIRE_MILLIS = 250
+    let cachedTouchStatus = 0
+    let nextReadTimestamp = 0
+
     /**
-     * Init touch
+     * Initialize the touch controller.
      */
     //% subcategory="Touch"
-    //% blockId="makebit_touch_init" block="init touch"
+    //% blockId="makebit_touch_init" block="initialize touch"
     //% weight=70
     function initTouch(): void {
         isInitialized = true
@@ -94,85 +98,28 @@ namespace makerbit {
 
     /**
      * Returns true if an electrode is touched. False otherwise.
-     * @param electrode the electrode to be checked, eg: MakerBitTouchElectrode.T5
+     * @param electrode the electrode to be checked, eg: makerbit.MakerBitTouchElectrode.T5
      */
     //% subcategory="Touch"
-    //% blockId="makebit_touch_is_electrode_touched" block="electrode %electrode is touched"
+    //% blockId="makebit_touch_is_electrode_touched" block="electrode | %electrode | is touched"
     //% weight=69
     export function isElectrodeTouched(electrode: MakerBitTouchElectrode): boolean {
-        if (!isInitialized) {
-            initTouch()
-        }
         const bits = getTouchStatus()
         return (bits & electrode) !== 0
     }
 
-
-    let lastReadTimestamp = 0
-    let lastTouchStatus = 0
-    const CACHE_READ_MS = 250
-
-    /**
-     * TODO
-     */
-    //% subcategory="Touch"
-    //% blockId="makebit_touch_get_status" block="getTouchStatus"
-    //% weight=69
     function getTouchStatus(): number {
+        if (!isInitialized) {
+            initTouch()
+        }
+        
         const now = input.runningTime()
-        if (now > lastReadTimestamp + CACHE_READ_MS) {
-            lastReadTimestamp = now
-            lastTouchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
+        if (now > nextReadTimestamp) {
+            nextReadTimestamp = now + TOUCH_STATUS_EXPIRE_MILLIS
+            cachedTouchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
         }
-        return lastTouchStatus
+        return cachedTouchStatus
     }
-
-    /**
-     * TODO
-     * @param button the button to query the request, eg: MakerBitTouchElectrode.T5
-     */
-    //% subcategory="Touch"
-    //% blockId="makebit_touch_print" block="print |%value"
-    //% weight=69
-    function print16BitLE(value: number): void {
-        for (let i = 0; i < 4; i++) {
-            if ((value & (1 << (15 - i))) !== 0) {
-                led.plot(i, 0)
-            }
-            else {
-                led.unplot(i, 0)
-            }
-        }
-
-        for (let i = 0; i < 4; i++) {
-            if ((value & (1 << (11 - i))) !== 0) {
-                led.plot(i, 1)
-            }
-            else {
-                led.unplot(i, 1)
-            }
-        }
-
-
-        for (let i = 0; i < 4; i++) {
-            if ((value & (1 << (7 - i))) !== 0) {
-                led.plot(i, 2)
-            }
-            else {
-                led.unplot(i, 2)
-            }
-        }
-
-        for (let i = 0; i < 4; i++) {
-            if ((value & (1 << (3 - i))) !== 0) {
-                led.plot(i, 3)
-            }
-            else {
-                led.unplot(i, 3)
-            }
-        }
-    }
-
 
     // Communication module for MPR121 capacitive touch sensor controller
     // https://www.sparkfun.com/datasheets/Components/MPR121.pdf

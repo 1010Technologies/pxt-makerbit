@@ -10,7 +10,7 @@ namespace makerbit {
 
     /**
 	 * Sets the speed and direction of a motor.
-     * @param motor motor
+     * @param motor motor, eg: makerbit.Motor.A
      * @param speed speed in the range of -100 to 100, eg: 80
 	 */
     //% subcategory=Motors
@@ -43,7 +43,7 @@ namespace makerbit {
 
 	/**
 	 * Stops a motor.
-     * @param motor motor
+     * @param motor motor, eg: makerbit.Motor.A
 	 */
     //% subcategory=Motors
     //% blockId="makebit_motor_stop" block="stop motor %motor"
