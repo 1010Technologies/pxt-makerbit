@@ -219,6 +219,21 @@ namespace makerbit {
         }
     }
 
+    /**
+    * Do something when playback is completed.
+    * @handler action
+    */
+    //% subcategory="Serial MP3"
+    //% blockId=makebit_mp3_playback_completed block="on MP3 playback completed"
+    //% weight=43
+    export function onPlaybackCompleted(handler: Action) {
+        control.onEvent(
+            MICROBIT_ID_SERIAL_MP3,
+            MICROBIT_SERIAL_MP3_PLAYBACK_COMPLETED,
+            handler
+        )
+    }
+
     function spinWait(millis: number) {
         control.waitMicros(millis * 1000)
     }

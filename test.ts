@@ -33,6 +33,10 @@ makerbit.runMp3Command(makerbit.Command.STOP)
 makerbit.runMp3Command(makerbit.Command.MUTE)
 makerbit.runMp3Command(makerbit.Command.UNMUTE)
 
+makerbit.onPlaybackCompleted(() => {
+    basic.showIcon(IconNames.Happy)
+})
+
 
 /**
  * Touch tests 
