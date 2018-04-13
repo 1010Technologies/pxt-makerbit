@@ -33,9 +33,7 @@ makerbit.runMp3Command(makerbit.Command.STOP)
 makerbit.runMp3Command(makerbit.Command.MUTE)
 makerbit.runMp3Command(makerbit.Command.UNMUTE)
 
-makerbit.onPlaybackCompleted(() => {
-    basic.showIcon(IconNames.Happy)
-})
+makerbit.onPlaybackCompleted(() => {})
 
 
 /**
@@ -44,3 +42,4 @@ makerbit.onPlaybackCompleted(() => {
 
 makerbit.isElectrodeTouched(makerbit.MakerBitTouchElectrode.T5)
 makerbit.isElectrodeTouched(makerbit.MakerBitTouchElectrode.T16)
+makerbit.onElectrodeTouched(makerbit.MakerBitTouchElectrode.T6, () => {})

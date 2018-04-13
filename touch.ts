@@ -23,6 +23,9 @@ namespace makerbit {
     let cachedTouchStatus = 0
     let nextReadTimestamp = 0
 
+    const MICROBIT_MAKEBIT_TOUCH_ID = 2148;
+    let isEventDetectionEnabled = false
+
     /**
      * Initialize the touch controller.
      */
@@ -96,9 +99,47 @@ namespace makerbit {
         )
     }
 
+    function getTouchStatus(): number {
+        const now = input.runningTime()
+        if (now > nextReadTimestamp) {
+            readTouchStatus(now)
+        }
+        return cachedTouchStatus
+    }
+
+    function readTouchStatus(now: number): number {
+        if (!isInitialized) {
+            initTouch()
+        }
+
+        cachedTouchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
+        nextReadTimestamp = now + TOUCH_STATUS_EXPIRE_MILLIS
+        return cachedTouchStatus
+    }
+
+    function detectAndNotifyTouchEvents() {
+        let previousTouchStatus = 0
+
+        while (true) {
+            const touchStatus = readTouchStatus(input.runningTime())
+
+            for (let electrodeBit = 1; electrodeBit <= 2048; electrodeBit = electrodeBit << 1) {
+                // Raise event only once on touch down
+                if ((electrodeBit & touchStatus) !== 0) {
+                    if (!((electrodeBit & previousTouchStatus) !== 0)) {
+                        control.raiseEvent(MICROBIT_MAKEBIT_TOUCH_ID, electrodeBit)
+                    }
+                }
+            }
+
+            previousTouchStatus = touchStatus
+            basic.pause((TOUCH_STATUS_EXPIRE_MILLIS * 4) / 5)
+        }
+    }
+
     /**
      * Returns true if an electrode is touched. False otherwise.
-     * @param electrode the electrode to be checked, eg: makerbit.MakerBitTouchElectrode.T5
+     * @param electrode the electrode to be checked
      */
     //% subcategory="Touch"
     //% blockId="makebit_touch_is_electrode_touched" block="electrode | %electrode | is touched"
@@ -108,17 +149,21 @@ namespace makerbit {
         return (bits & electrode) !== 0
     }
 
-    function getTouchStatus(): number {
-        if (!isInitialized) {
-            initTouch()
+    /**
+    * Do something when an electrode is touched.
+     * @param electrode the electrode to be checked
+     * @param handler body code to run when event is raised
+    */
+    //% subcategory="Touch"
+    //% blockId=makebit_touch_on_electrode_touched block="on electrode|%NAME%|touched"
+    //% weight=65
+    export function onElectrodeTouched(electrode: MakerBitTouchElectrode, handler: Action) {
+        if (!isEventDetectionEnabled) {
+            isEventDetectionEnabled = true
+            control.inBackground(detectAndNotifyTouchEvents)
         }
-        
-        const now = input.runningTime()
-        if (now > nextReadTimestamp) {
-            nextReadTimestamp = now + TOUCH_STATUS_EXPIRE_MILLIS
-            cachedTouchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
-        }
-        return cachedTouchStatus
+
+        control.onEvent(MICROBIT_MAKEBIT_TOUCH_ID, electrode, handler)
     }
 
     // Communication module for MPR121 capacitive touch sensor controller

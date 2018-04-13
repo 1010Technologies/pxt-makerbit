@@ -221,7 +221,7 @@ namespace makerbit {
 
     /**
     * Do something when playback is completed.
-    * @handler action
+    * @param handler body code to run when event is raised
     */
     //% subcategory="Serial MP3"
     //% blockId=makebit_mp3_playback_completed block="on MP3 playback completed"
