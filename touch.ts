@@ -142,7 +142,7 @@ namespace makerbit {
      * @param electrode the electrode to be checked
      */
     //% subcategory="Touch"
-    //% blockId="makebit_touch_is_electrode_touched" block="electrode | %electrode | is touched"
+    //% blockId="makebit_touch_is_touchsensor_touched" block="electrode | %electrode | is touched"
     //% weight=69
     export function isElectrodeTouched(electrode: MakerBitTouchElectrode): boolean {
         const bits = getTouchStatus()
@@ -155,7 +155,7 @@ namespace makerbit {
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
-    //% blockId=makebit_touch_on_electrode_touched block="on electrode|%NAME%|touched"
+    //% blockId=makebit_touch_on_touchsensor_touched block="on electrode|%NAME%|touched"
     //% weight=65
     export function onElectrodeTouched(electrode: MakerBitTouchElectrode, handler: Action) {
         if (!isEventDetectionEnabled) {
