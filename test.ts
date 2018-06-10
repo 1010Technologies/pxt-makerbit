@@ -8,6 +8,8 @@ makerbit.stopMotor(makerbit.Motor.A)
 makerbit.runMotor(makerbit.Motor.B, -50)
 makerbit.stopMotor(makerbit.Motor.B)
 
+makerbit.setMotorDirection(makerbit.Motor.A, makerbit.MotorDirection.Forward)
+makerbit.setMotorDirection(makerbit.Motor.B, makerbit.MotorDirection.Backward)
 
 /**
  * Serial MP3 tests 

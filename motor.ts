@@ -3,13 +3,25 @@ namespace makerbit {
 
     export enum Motor {
         //% block="A"
-        A,
+        A = 0,
         //% block="B"
-        B
+        B = 1
     }
 
+    export enum MotorDirection {
+        //% block="forward"
+        Forward = 1,
+        //% block="backward"
+        Backward = -1
+    }
+
+    let motorDirections = [
+        MotorDirection.Forward,
+        MotorDirection.Forward
+    ]
+
     /**
-	 * Sets the speed and direction of a motor.
+	 * Sets the speed of a motor.
      * @param motor motor, eg: makerbit.Motor.A
      * @param speed speed in the range of -100 to 100, eg: 80
 	 */
@@ -23,7 +35,7 @@ namespace makerbit {
             return
         }
 
-        const forward = speed > 0
+        const forward = (speed * motorDirections[motor]) > 0
         const absSpeedPercentage = Math.min(Math.abs(speed), 100)
         const analogSpeed = pins.map(absSpeedPercentage, 0, 100, 0, 1023)
 
@@ -61,5 +73,17 @@ namespace makerbit {
                 pins.digitalWritePin(DigitalPin.P14, 0)
                 break
         }
+    }
+
+    /**
+     * Sets the direction of a motor.
+     * @param motor motor, eg: makerbit.Motor.A
+     * @param direction direction of the motor
+     */
+    //% subcategory=Motors
+    //% blockId=makebit_motor_set_direction block="set motor |%motor| direction to |%direction|"
+    //% weight=88
+    export function setMotorDirection(motor: Motor, direction: MotorDirection) {
+        motorDirections[motor] = direction
     }
 }
