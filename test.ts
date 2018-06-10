@@ -40,6 +40,6 @@ makerbit.onPlaybackCompleted(() => {})
  * Touch tests 
  */
 
-makerbit.isElectrodeTouched(makerbit.MakerBitTouchElectrode.T5)
-makerbit.isElectrodeTouched(makerbit.MakerBitTouchElectrode.T16)
-makerbit.onElectrodeTouched(makerbit.MakerBitTouchElectrode.T6, () => {})
+makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T5)
+makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T16)
+makerbit.onTouchDetected(makerbit.MakerBitTouchSensor.T6, () => {})

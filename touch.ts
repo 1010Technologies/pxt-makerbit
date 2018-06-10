@@ -1,7 +1,7 @@
 // MakerBit Touch blocks
 namespace makerbit {
 
-    export enum MakerBitTouchElectrode {
+    export enum MakerBitTouchSensor {
         T5 = 0b100000000000,
         T6 = 0b010000000000,
         T7 = 0b001000000000,
@@ -123,11 +123,11 @@ namespace makerbit {
         while (true) {
             const touchStatus = readTouchStatus(input.runningTime())
 
-            for (let electrodeBit = 1; electrodeBit <= 2048; electrodeBit = electrodeBit << 1) {
+            for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit = touchSensorBit << 1) {
                 // Raise event only once on touch down
-                if ((electrodeBit & touchStatus) !== 0) {
-                    if (!((electrodeBit & previousTouchStatus) !== 0)) {
-                        control.raiseEvent(MICROBIT_MAKEBIT_TOUCH_ID, electrodeBit)
+                if ((touchSensorBit & touchStatus) !== 0) {
+                    if (!((touchSensorBit & previousTouchStatus) !== 0)) {
+                        control.raiseEvent(MICROBIT_MAKEBIT_TOUCH_ID, touchSensorBit)
                     }
                 }
             }
@@ -138,32 +138,32 @@ namespace makerbit {
     }
 
     /**
-     * Returns true if an electrode is touched. False otherwise.
-     * @param electrode the electrode to be checked
+     * Returns true if a specific touch sensor is touched. False otherwise.
+     * @param sensor the touch sensor to be checked
      */
     //% subcategory="Touch"
-    //% blockId="makebit_touch_is_touchsensor_touched" block="electrode | %electrode | is touched"
+    //% blockId="makebit_touch_is_touch_sensor_touched" block="touch is detected at sensor |%sensor|"
     //% weight=69
-    export function isElectrodeTouched(electrode: MakerBitTouchElectrode): boolean {
+    export function isTouchDetected(sensor: MakerBitTouchSensor): boolean {
         const bits = getTouchStatus()
-        return (bits & electrode) !== 0
+        return (bits & sensor) !== 0
     }
 
     /**
-    * Do something when an electrode is touched.
-     * @param electrode the electrode to be checked
+    * Do something when a touch event is detected.
+     * @param sensor the touch sensor to be checked
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
-    //% blockId=makebit_touch_on_touchsensor_touched block="on electrode|%NAME%|touched"
+    //% blockId=makebit_touch_on_touch_detected block="on touch detection at sensor |%sensor%|"
     //% weight=65
-    export function onElectrodeTouched(electrode: MakerBitTouchElectrode, handler: Action) {
+    export function onTouchDetected(sensor: MakerBitTouchSensor, handler: Action) {
         if (!isEventDetectionEnabled) {
             isEventDetectionEnabled = true
             control.inBackground(detectAndNotifyTouchEvents)
         }
 
-        control.onEvent(MICROBIT_MAKEBIT_TOUCH_ID, electrode, handler)
+        control.onEvent(MICROBIT_MAKEBIT_TOUCH_ID, sensor, handler)
     }
 
     // Communication module for MPR121 capacitive touch sensor controller
