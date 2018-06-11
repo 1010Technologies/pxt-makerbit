@@ -24,4 +24,10 @@ namespace makerbit {
       // Enforce initialization of serial RX buffers to prevent hang
       uBit.serial.read(MicroBitSerialMode::ASYNC);
     }
+
+    //%
+    int readSerialToBuffer(Buffer buffer) {
+      return uBit.serial.read(buffer->payload, buffer->length);
+    }
 }
+

@@ -17,12 +17,12 @@ makerbit.setMotorDirection(makerbit.Motor.B, makerbit.MotorDirection.Backward)
 
 makerbit.connectSerialMp3(makerbit.MakerBitPin.A0, makerbit.MakerBitPin.A1)
 
-makerbit.playMp3Track(1, makerbit.Repeat.Once)
-makerbit.playMp3Track(1, makerbit.Repeat.Repeatedly)
-makerbit.playMp3TrackFromFolder(1, 1, makerbit.Repeat.Once)
-makerbit.playMp3TrackFromFolder(1, 1, makerbit.Repeat.Repeatedly)
-makerbit.playMp3Folder(1, makerbit.Repeat.Once)
-makerbit.playMp3Folder(1, makerbit.Repeat.Repeatedly)
+makerbit.playMp3Track(1, makerbit.Play.Once)
+makerbit.playMp3Track(1, makerbit.Play.Repeatedly)
+makerbit.playMp3TrackFromFolder(1, 1, makerbit.Play.Once)
+makerbit.playMp3TrackFromFolder(1, 1, makerbit.Play.Repeatedly)
+makerbit.playMp3Folder(1, makerbit.Play.Once)
+makerbit.playMp3Folder(1, makerbit.Play.Repeatedly)
 makerbit.setMp3Volume(30)
 
 makerbit.runMp3Command(makerbit.Command.PLAY_NEXT_TRACK)
