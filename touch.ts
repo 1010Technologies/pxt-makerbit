@@ -23,14 +23,14 @@ namespace makerbit {
     let cachedTouchStatus = 0
     let nextReadTimestamp = 0
 
-    const MICROBIT_MAKEBIT_TOUCH_ID = 2148;
+    const MICROBIT_MAKERBIT_TOUCH_ID = 2148;
     let isEventDetectionEnabled = false
 
     /**
      * Initialize the touch controller.
      */
     //% subcategory="Touch"
-    //% blockId="makebit_touch_init" block="initialize touch"
+    //% blockId="makerbit_touch_init" block="initialize touch"
     //% weight=70
     function initTouch(): void {
         isInitialized = true
@@ -127,7 +127,7 @@ namespace makerbit {
                 // Raise event only once on touch down
                 if ((touchSensorBit & touchStatus) !== 0) {
                     if (!((touchSensorBit & previousTouchStatus) !== 0)) {
-                        control.raiseEvent(MICROBIT_MAKEBIT_TOUCH_ID, touchSensorBit)
+                        control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_ID, touchSensorBit)
                     }
                 }
             }
@@ -142,7 +142,7 @@ namespace makerbit {
      * @param sensor the touch sensor to be checked
      */
     //% subcategory="Touch"
-    //% blockId="makebit_touch_is_touch_sensor_touched" block="touch is detected at sensor |%sensor|"
+    //% blockId="makerbit_touch_is_touch_sensor_touched" block="touch is detected at sensor |%sensor|"
     //% weight=69
     export function isTouchDetected(sensor: MakerBitTouchSensor): boolean {
         const bits = getTouchStatus()
@@ -155,7 +155,7 @@ namespace makerbit {
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
-    //% blockId=makebit_touch_on_touch_detected block="on touch detection at sensor |%sensor%|"
+    //% blockId=makerbit_touch_on_touch_detected block="on touch detection at sensor |%sensor%|"
     //% weight=65
     export function onTouchDetected(sensor: MakerBitTouchSensor, handler: Action) {
         if (!isEventDetectionEnabled) {
@@ -163,7 +163,7 @@ namespace makerbit {
             control.inBackground(detectAndNotifyTouchEvents)
         }
 
-        control.onEvent(MICROBIT_MAKEBIT_TOUCH_ID, sensor, handler)
+        control.onEvent(MICROBIT_MAKERBIT_TOUCH_ID, sensor, handler)
     }
 
     // Communication module for MPR121 capacitive touch sensor controller

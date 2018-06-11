@@ -89,7 +89,7 @@ namespace makerbit {
 	 */
     //% subcategory="Serial MP3"
     //% blockExternalInputs=1
-    //% blockId="makebit_mp3_connect" block="connect MP3 with MP3 RX attached to %mp3Rx | and MP3 TX to %mp3Tx"
+    //% blockId="makerbit_mp3_connect" block="connect MP3 with MP3 RX attached to %mp3Rx | and MP3 TX to %mp3Tx"
     //% mp3Rx.fieldEditor="gridpicker" mp3Rx.fieldOptions.columns=3
     //% mp3Rx.fieldOptions.tooltips="false"
     //% mp3Tx.fieldEditor="gridpicker" mp3Tx.fieldOptions.columns=3
@@ -114,7 +114,7 @@ namespace makerbit {
      * @param repeat indicates whether to repeat the track, eg: makerbit.Repeat.Once
      */
     //% subcategory="Serial MP3"
-    //% blockId="makebit_mp3_play_track" block="play MP3 track %track | %repeat"
+    //% blockId="makerbit_mp3_play_track" block="play MP3 track %track | %repeat"
     //% track.min=1 track.max=255
     //% weight=49
     export function playMp3Track(track: number, repeat: Repeat): void {
@@ -133,7 +133,7 @@ namespace makerbit {
      * @param repeat indicates whether to repeat the track, eg: makerbit.Repeat.Once
      */
     //% subcategory="Serial MP3"
-    //% blockId="makebit_mp3_play_track_from_folder" block="play MP3 track %track | from folder %folder | %repeat"
+    //% blockId="makerbit_mp3_play_track_from_folder" block="play MP3 track %track | from folder %folder | %repeat"
     //% track.min=1 track.max=255
     //% folder.min=1 folder.max=99
     //% weight=48
@@ -151,7 +151,7 @@ namespace makerbit {
      * @param repeat indicates whether to repeat the folder, eg: makerbit.Repeat.Once
      */
     //% subcategory="Serial MP3"
-    //% blockId="makebit_mp3_play_folder" block="play MP3 folder %folder | %repeat"
+    //% blockId="makerbit_mp3_play_folder" block="play MP3 folder %folder | %repeat"
     //% folder.min=1 folder.max=99
     //% weight=47
     export function playMp3Folder(folder: number, repeat: Repeat): void {
@@ -170,7 +170,7 @@ namespace makerbit {
      * @param volume volume in the range of 0 to 30: eg: 30
      */
     //% subcategory="Serial MP3"
-    //% blockId="makebit_mp3_set_volume" block="set MP3 volume to %volume"
+    //% blockId="makerbit_mp3_set_volume" block="set MP3 volume to %volume"
     //% volume.min=0 volume.max=30
     //% weight=46
     export function setMp3Volume(volume: number): void {
@@ -182,7 +182,7 @@ namespace makerbit {
      * @param command command, eg: makerbit.Command.PLAY_NEXT_TRACK
      */
     //% subcategory="Serial MP3"
-    //% blockId="makebit_mp3_run_command" block="run MP3 command %command"
+    //% blockId="makerbit_mp3_run_command" block="run MP3 command %command"
     //% weight=45
     export function runMp3Command(command: Command): void {
         switch (command) {
@@ -224,7 +224,7 @@ namespace makerbit {
     * @param handler body code to run when event is raised
     */
     //% subcategory="Serial MP3"
-    //% blockId=makebit_mp3_playback_completed block="on MP3 playback completed"
+    //% blockId=makerbit_mp3_playback_completed block="on MP3 playback completed"
     //% weight=43
     export function onPlaybackCompleted(handler: Action) {
         control.onEvent(

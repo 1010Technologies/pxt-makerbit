@@ -26,7 +26,7 @@ namespace makerbit {
      * @param speed speed in the range of -100 to 100, eg: 80
 	 */
     //% subcategory=Motors
-    //% blockId="makebit_motor_run" block="run motor %motor | at %speed |%"
+    //% blockId="makerbit_motor_run" block="run motor %motor | at %speed |%"
     //% speed.min=-100 speed.max=100
     //% weight=90
     export function runMotor(motor: Motor, speed: number): void {
@@ -58,7 +58,7 @@ namespace makerbit {
      * @param motor motor, eg: makerbit.Motor.A
 	 */
     //% subcategory=Motors
-    //% blockId="makebit_motor_stop" block="stop motor %motor"
+    //% blockId="makerbit_motor_stop" block="stop motor %motor"
     //% weight=89
     export function stopMotor(motor: Motor): void {
         switch (motor) {
@@ -81,7 +81,7 @@ namespace makerbit {
      * @param direction direction of the motor
      */
     //% subcategory=Motors
-    //% blockId=makebit_motor_set_direction block="set motor |%motor| direction to |%direction|"
+    //% blockId=makerbit_motor_set_direction block="set motor |%motor| direction to |%direction|"
     //% weight=88
     export function setMotorDirection(motor: Motor, direction: MotorDirection) {
         motorDirections[motor] = direction
