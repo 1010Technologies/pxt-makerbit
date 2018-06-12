@@ -142,7 +142,9 @@ namespace makerbit {
      * @param sensor the touch sensor to be checked
      */
     //% subcategory="Touch"
-    //% blockId="makerbit_touch_is_touch_sensor_touched" block="touch is detected at sensor |%sensor|"
+    //% blockId="makerbit_touch_is_touch_sensor_touched" block="touch is detected at sensor %sensor"
+    //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
+    //% sensor.fieldOptions.tooltips="false"  
     //% weight=69
     export function isTouchDetected(sensor: MakerBitTouchSensor): boolean {
         const bits = getTouchStatus()
@@ -155,7 +157,9 @@ namespace makerbit {
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
-    //% blockId=makerbit_touch_on_touch_detected block="on touch detection at sensor |%sensor%|"
+    //% blockId=makerbit_touch_on_touch_detected block="on touch detection at sensor %sensor%"
+    //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
+    //% sensor.fieldOptions.tooltips="false"  
     //% weight=65
     export function onTouchDetected(sensor: MakerBitTouchSensor, handler: Action) {
         if (!isEventDetectionEnabled) {
