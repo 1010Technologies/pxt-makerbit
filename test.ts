@@ -42,6 +42,13 @@ makerbit.onPlaybackCompleted(() => {})
  * Touch tests 
  */
 
-makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T5)
+let b : boolean = makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T5)
 makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T16)
 makerbit.onTouchDetected(makerbit.MakerBitTouchSensor.T6, () => {})
+
+
+/**
+ * Ultrasonic tests 
+ */
+
+let n : number = makerbit.getUltrasonicDistance(makerbit.MakerBitPin.P5, makerbit.MakerBitPin.P8)

@@ -13,7 +13,10 @@ The MakerBit board provides a motor controller that can control two bi-direction
 MakerBit offers built-in support for up to 12 touch electrodes via the proximity capacitive touch sensor controller MPR121.
 
 ## Serial MP3
-This package includes support for external Serial MP3 devices that are based on the YX5300 chip.
+This module includes support for external Serial MP3 devices that are based on the YX5300 chip.
+
+## Ultrasonic
+Attach an external HC-SR04 ultrasonic distance sensor to steer your robots.
 
 ## License
 

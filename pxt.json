@@ -12,7 +12,8 @@
         "mp3.cpp",
         "mp3.ts",
         "namespace.ts",
-        "touch.ts"
+        "touch.ts",
+        "ultrasonic.ts"
     ],
     "testFiles": [
         "test.ts"
