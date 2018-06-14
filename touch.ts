@@ -17,14 +17,14 @@ namespace makerbit {
     }
 
     const MPR121_ADDRESS = 0x5A
-    let isInitialized = false
+    let isTouchInitialized = false
 
     const TOUCH_STATUS_EXPIRE_MILLIS = 250
     let cachedTouchStatus = 0
-    let nextReadTimestamp = 0
+    let nextTouchReadTimestamp = 0
 
     const MICROBIT_MAKERBIT_TOUCH_ID = 2148;
-    let isEventDetectionEnabled = false
+    let isTouchEventDetectionEnabled = false
 
     /**
      * Initialize the touch controller.
@@ -33,7 +33,7 @@ namespace makerbit {
     //% blockId="makerbit_touch_init" block="initialize touch"
     //% weight=70
     function initTouch(): void {
-        isInitialized = true
+        isTouchInitialized = true
 
         const addr = MPR121_ADDRESS
         mpr121.reset(addr)
@@ -101,19 +101,19 @@ namespace makerbit {
 
     function getTouchStatus(): number {
         const now = input.runningTime()
-        if (now > nextReadTimestamp) {
+        if (now > nextTouchReadTimestamp) {
             readTouchStatus(now)
         }
         return cachedTouchStatus
     }
 
     function readTouchStatus(now: number): number {
-        if (!isInitialized) {
+        if (!isTouchInitialized) {
             initTouch()
         }
 
         cachedTouchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
-        nextReadTimestamp = now + TOUCH_STATUS_EXPIRE_MILLIS
+        nextTouchReadTimestamp = now + TOUCH_STATUS_EXPIRE_MILLIS
         return cachedTouchStatus
     }
 
@@ -162,8 +162,8 @@ namespace makerbit {
     //% sensor.fieldOptions.tooltips="false"  
     //% weight=65
     export function onTouchDetected(sensor: MakerBitTouchSensor, handler: Action) {
-        if (!isEventDetectionEnabled) {
-            isEventDetectionEnabled = true
+        if (!isTouchEventDetectionEnabled) {
+            isTouchEventDetectionEnabled = true
             control.inBackground(detectAndNotifyTouchEvents)
         }
 
