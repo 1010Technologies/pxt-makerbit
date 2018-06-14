@@ -3,9 +3,9 @@
 namespace makerbit {
 
     /**
-     * Measures the distance and returns the result in millimeters from 1 to 3000.
-     * @param trig Ultrasonic trig pin, eg: makerbit.MakerBitPin.P5
-     * @param echo Ultrasonic echo pin, eg: makerbit.MakerBitPin.P8
+     * Measures the distance and returns the result in a range from 1 to 3000 millimeters. A result of 3000 is returned to indicate when no object was detected.
+     * @param trig Pin connected to trig, eg: makerbit.MakerBitPin.P5
+     * @param echo Pin connected to echo, eg: makerbit.MakerBitPin.P8
      */
     //% subcategory="Ultrasonic"
     //% blockExternalInputs=1

@@ -18,6 +18,18 @@ This module includes support for external Serial MP3 devices that are based on t
 ## Ultrasonic
 Attach an external HC-SR04 ultrasonic distance sensor to steer your robots.
 
+```sig
+makerbit.getUltrasonicDistance(makerbit.MakerBitPin.P5, makerbit.MakerBitPin.P8)
+```
+
+### Usage
+```blocks
+basic.forever(() => {
+    let distance = makerbit.getUltrasonicDistance(makerbit.MakerBitPin.P5, makerbit.MakerBitPin.P8)
+    led.plotBarGraph(distance, 0)
+})
+```
+
 ## License
 
 MIT
