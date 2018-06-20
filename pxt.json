@@ -7,11 +7,12 @@
         "core": "*"
     },
     "files": [
-        "README.md",
+        "lcd.ts",
         "motor.ts",
         "mp3.cpp",
         "mp3.ts",
         "namespace.ts",
+        "README.md",
         "touch.ts",
         "ultrasonic.ts"
     ],

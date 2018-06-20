@@ -30,6 +30,9 @@ basic.forever(() => {
 })
 ```
 
+## LCD
+Use an I2C LCD 1602 to display text, numbers and ASCII art.
+
 ## License
 
 MIT

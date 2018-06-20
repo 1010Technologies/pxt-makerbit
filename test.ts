@@ -52,3 +52,14 @@ makerbit.onTouchDetected(makerbit.MakerBitTouchSensor.T6, () => {})
  */
 
 let n : number = makerbit.getUltrasonicDistance(makerbit.MakerBitPin.P5, makerbit.MakerBitPin.P8)
+
+
+/**
+ * LCD tests 
+ */
+
+makerbit.showStringOnLcd("Hello world",1,1)
+makerbit.showNumberOnLcd(42, 2, 1)
+makerbit.clearLcd()
+makerbit.setLcdBacklight(makerbit.LcdBacklight.On)
+makerbit.connectLcd(39)
