@@ -9,7 +9,7 @@ namespace makerbit {
      */
     //% subcategory="Ultrasonic"
     //% blockExternalInputs=1
-    //% blockId="makerbit_ultrasonic_distance" block="ultrasonic distance (cm) trig %trig | echo %echo"
+    //% blockId="makerbit_ultrasonic_distance" block="ultrasonic distance (mm) trig %trig | echo %echo"
     //% trig.fieldEditor="gridpicker" trig.fieldOptions.columns=3
     //% trig.fieldOptions.tooltips="false"
     //% echo.fieldEditor="gridpicker" echo.fieldOptions.columns=3
