@@ -90,7 +90,7 @@ namespace makerbit {
     }
 
     /**
-     * show a string in LCD at given position
+     * Displays a string on the LCD at a given position.
      * @param text the text to show, eg: "MakerBit"
      * @param line the LCD line, [1 - 2], eg: 1
      * @param column the LCD column, [1 - 16], eg: 1
@@ -115,7 +115,7 @@ namespace makerbit {
     }
 
     /**
-     * show a string in LCD at given position
+     * Displays a number on the LCD at a given position.
      * @param value the number to show
      * @param line the LCD line, [1 - 2], eg: 1
      * @param column the LCD column, [1 - 16], eg: 1
@@ -130,7 +130,7 @@ namespace makerbit {
     }
 
     /**
-     * Clears LCD completely.
+     * Clears the LCD completely.
      */
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_clear" block="clear LCD"
@@ -152,7 +152,7 @@ namespace makerbit {
     }
 
     /**
-     * Connects to LCD at a given I2C address.
+     * Connects to the LCD at a given I2C address.
      * @param i2cAddress I2C address of LCD, eg: 39
      */
     //% subcategory="LCD"
