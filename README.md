@@ -25,7 +25,7 @@ makerbit.getUltrasonicDistance(makerbit.MakerBitPin.P5, makerbit.MakerBitPin.P8)
 ### Usage
 ```blocks
 basic.forever(() => {
-    let distance = makerbit.getUltrasonicDistance(makerbit.MakerBitPin.P5, makerbit.MakerBitPin.P8)
+    let distance = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.MakerBitPin.P5, makerbit.MakerBitPin.P8)
     led.plotBarGraph(distance, 0)
 })
 ```

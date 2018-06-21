@@ -26,11 +26,11 @@ namespace makerbit {
     export function getUltrasonicDistance(unit: DistanceUnit, trig: MakerBitPin, echo: MakerBitPin): number {
         const trigPinNumber: number = trig
         const echoPinNumber: number = echo
-        
+
         const MAX_DIST_MICROMETER = 3000 * 1000
         const VELOCITY_OF_SOUND = 343  // 343 m/s at sea level and 20°C
         const MAX_PULSE_DURATION_US = (2 * MAX_DIST_MICROMETER) / VELOCITY_OF_SOUND
-        
+
         // Trigger pulse
         pins.setPull(trigPinNumber, PinPullMode.PullNone)
         pins.digitalWritePin(trigPinNumber, 0)
@@ -51,4 +51,4 @@ namespace makerbit {
         return objectDistance / unit
     }
 
- }
+}

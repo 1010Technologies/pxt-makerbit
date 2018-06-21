@@ -63,8 +63,8 @@ namespace makerbit {
 
     function readSerial() {
         let responseBuffer: Buffer = pins.createBuffer(10);
-        let first : Buffer = pins.createBuffer(1)
-        let remainder : Buffer = pins.createBuffer(9)
+        let first: Buffer = pins.createBuffer(1)
+        let remainder: Buffer = pins.createBuffer(9)
 
         while (true) {
             readSerialToBuffer(first);

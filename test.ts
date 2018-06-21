@@ -35,30 +35,30 @@ makerbit.runMp3Command(makerbit.Command.STOP)
 makerbit.runMp3Command(makerbit.Command.MUTE)
 makerbit.runMp3Command(makerbit.Command.UNMUTE)
 
-makerbit.onMp3PlaybackCompleted(() => {})
+makerbit.onMp3PlaybackCompleted(() => { })
 
 
 /**
  * Touch tests 
  */
 
-let b : boolean = makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T5)
+let b: boolean = makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T5)
 makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T16)
-makerbit.onTouchDetected(makerbit.MakerBitTouchSensor.T6, () => {})
+makerbit.onTouchDetected(makerbit.MakerBitTouchSensor.T6, () => { })
 
 
 /**
  * Ultrasonic tests 
  */
 
-let n : number = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.MakerBitPin.P5, makerbit.MakerBitPin.P8)
+let n: number = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.MakerBitPin.P5, makerbit.MakerBitPin.P8)
 
 
 /**
  * LCD tests 
  */
 
-makerbit.showStringOnLcd("Hello world",1,1)
+makerbit.showStringOnLcd("Hello world", 1, 1)
 makerbit.showNumberOnLcd(42, 2, 1)
 makerbit.clearLcd()
 makerbit.setLcdBacklight(makerbit.LcdBacklight.On)
