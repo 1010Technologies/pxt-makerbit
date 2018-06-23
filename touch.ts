@@ -142,7 +142,7 @@ namespace makerbit {
      * @param sensor the touch sensor to be checked
      */
     //% subcategory="Touch"
-    //% blockId="makerbit_touch_is_touch_sensor_touched" block="touch is detected at sensor %sensor"
+    //% blockId="makerbit_touch_is_touch_sensor_touched" block="sensor %sensor is touched"
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"  
     //% weight=69
@@ -157,7 +157,7 @@ namespace makerbit {
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
-    //% blockId=makerbit_touch_on_touch_detected block="on touch detection at sensor %sensor%"
+    //% blockId=makerbit_touch_on_touch_detected block="on sensor %sensor% touched"
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"  
     //% weight=65
