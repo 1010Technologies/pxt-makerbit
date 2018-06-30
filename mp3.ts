@@ -84,11 +84,11 @@ namespace makerbit {
     }
 
 
-	/**
-	 * Connect to serial MP3 device with chip YX5300.
+    /**
+     * Connect to serial MP3 device with chip YX5300.
      * @param mp3RX MP3 device receiver pin (RX), eg: makerbit.MakerBitPin.A0
      * @param mp3TX MP3 device transmitter pin (TX), eg: makerbit.MakerBitPin.A1
-	 */
+     */
     //% subcategory="Serial MP3"
     //% blockExternalInputs=1
     //% blockId="makerbit_mp3_connect" block="connect MP3 with MP3 RX attached to %mp3RX | and MP3 TX to %mp3TX"
@@ -432,4 +432,3 @@ namespace makerbit {
         }
     }
 }
-

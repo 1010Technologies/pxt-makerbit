@@ -144,7 +144,7 @@ namespace makerbit {
     //% subcategory="Touch"
     //% blockId="makerbit_touch_is_touch_sensor_touched" block="touch sensor | %sensor | is touched"
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
-    //% sensor.fieldOptions.tooltips="false"  
+    //% sensor.fieldOptions.tooltips="false"
     //% weight=69
     export function isTouchDetected(sensor: MakerBitTouchSensor): boolean {
         const bits = getTouchStatus()
@@ -159,7 +159,7 @@ namespace makerbit {
     //% subcategory="Touch"
     //% blockId=makerbit_touch_on_touch_detected block="on touch sensor | %sensor% | touched"
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
-    //% sensor.fieldOptions.tooltips="false"  
+    //% sensor.fieldOptions.tooltips="false"
     //% weight=65
     export function onTouchDetected(sensor: MakerBitTouchSensor, handler: Action) {
         if (!isTouchEventDetectionEnabled) {

@@ -1,4 +1,4 @@
-// MakerBit motor driver blocks 
+// MakerBit motor driver blocks
 namespace makerbit {
 
     export enum Motor {
@@ -21,10 +21,10 @@ namespace makerbit {
     ]
 
     /**
-	 * Sets the speed of a motor.
+     * Sets the speed of a motor.
      * @param motor motor, eg: makerbit.Motor.A
      * @param speed speed in the range of -100 to 100, eg: 80
-	 */
+     */
     //% subcategory=Motors
     //% blockId="makerbit_motor_run" block="run motor %motor | at %speed"
     //% speed.min=-100 speed.max=100
@@ -53,10 +53,10 @@ namespace makerbit {
         }
     }
 
-	/**
-	 * Stops a motor.
+    /**
+     * Stops a motor.
      * @param motor motor, eg: makerbit.Motor.A
-	 */
+     */
     //% subcategory=Motors
     //% blockId="makerbit_motor_stop" block="stop motor %motor"
     //% weight=89
