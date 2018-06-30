@@ -20,27 +20,40 @@ namespace makerbit {
         UNMUTE,
     }
 
+    interface FolderPlaybackState {
+        currentTrack: number
+        trackCount: number
+        folder: number
+        mode: Play
+    }
+
     const MICROBIT_ID_SERIAL_MP3 = 698
     const MICROBIT_SERIAL_MP3_PLAYBACK_COMPLETED = 1
 
-    let mp3LastTrackCompleted = 0
-    let mp3TracksToPlay = 0
+    let lastTrackCompletedTimestamp: number = 0
+    let playFolder: FolderPlaybackState = undefined
+    let notifyMp3PlaybackCompletion: boolean = false
 
     function handleResponse(response: YX5300.Response) {
 
         if (response.type === YX5300.ResponseType.TRACK_COMPLETED) {
-            let currentTrackCompleted = input.runningTime()
+            let eventTimestamp = input.runningTime()
 
-            if (currentTrackCompleted < mp3LastTrackCompleted + 1000) {
-                // At playback end we received two TRACK_COMPLETED events.
-                // We use the 2nd TRACK_COMPLETED event to notify playback as complete
-                // or to advance folder play.
+            // At end of playback we receive up to two TRACK_COMPLETED events.
+            // We use the 1st TRACK_COMPLETED event to notify playback as complete
+            // or to advance folder play. A closely following 2nd event is ignored.
+            if (lastTrackCompletedTimestamp < eventTimestamp - 250) {
 
-                if (mp3TracksToPlay > 0) {
-                    mp3TracksToPlay -= 1
-                    serial.writeBuffer(YX5300.next())
+                if (playFolder !== undefined && playFolder.currentTrack < playFolder.trackCount) {
+                    playFolder.currentTrack += 1
+                    // write directly (without waiting) so that we do not delay a potential 2nd TRACK_COMPLETED event
+                    serial.writeBuffer(YX5300.playTrackFromFolder(playFolder.currentTrack, playFolder.folder))
                 }
-                else {
+                else if (playFolder !== undefined && playFolder.mode === Play.Repeatedly) {
+                    playFolder.currentTrack = 1
+                    serial.writeBuffer(YX5300.playTrackFromFolder(playFolder.currentTrack, playFolder.folder))
+                }
+                else if (notifyMp3PlaybackCompletion) {
                     control.raiseEvent(
                         MICROBIT_ID_SERIAL_MP3,
                         MICROBIT_SERIAL_MP3_PLAYBACK_COMPLETED,
@@ -49,12 +62,15 @@ namespace makerbit {
                 }
             }
 
-            mp3LastTrackCompleted = currentTrackCompleted
+            lastTrackCompletedTimestamp = eventTimestamp
         }
         else if (response.type === YX5300.ResponseType.FOLDER_TRACK_COUNT) {
-            // Folder track count is queried for single play of folder only.
-            // We fetch the track count to advance track in folder.
-            mp3TracksToPlay = response.payload - 1
+            if (playFolder !== undefined) {
+                // Folder track count is queried for single play of folder only.
+                // We fetch the track count to advance track in folder.
+                playFolder.trackCount = response.payload - 1
+                sendCommand(YX5300.playTrackFromFolder(playFolder.currentTrack, playFolder.folder))
+            }
         }
     }
 
@@ -120,10 +136,12 @@ namespace makerbit {
     //% track.min=1 track.max=255
     //% weight=49
     export function playMp3Track(track: number, mode: Play): void {
-        mp3TracksToPlay = 0
+        playFolder = undefined
         if (mode === Play.Once) {
+            notifyMp3PlaybackCompletion = true
             sendCommand(YX5300.playTrack(track))
         } else {
+            notifyMp3PlaybackCompletion = false
             sendCommand(YX5300.repeatTrack(track))
         }
     }
@@ -140,9 +158,11 @@ namespace makerbit {
     //% folder.min=1 folder.max=99
     //% weight=48
     export function playMp3TrackFromFolder(track: number, folder: number, mode: Play): void {
-        mp3TracksToPlay = 0
+        playFolder = undefined
+        notifyMp3PlaybackCompletion = true
         sendCommand(YX5300.playTrackFromFolder(track, folder))
         if (mode === Play.Repeatedly) {
+            notifyMp3PlaybackCompletion = false
             sendCommand(YX5300.enableRepeatModeForCurrentTrack())
         }
     }
@@ -157,14 +177,9 @@ namespace makerbit {
     //% folder.min=1 folder.max=99
     //% weight=47
     export function playMp3Folder(folder: number, mode: Play): void {
-        mp3TracksToPlay = 0
-        if (mode === Play.Once) {
-            sendCommand(YX5300.queryFolderTrackCount(folder))
-            sendCommand(YX5300.playTrackFromFolder(1, folder))
-        }
-        else {
-            sendCommand(YX5300.repeatFolder(folder))
-        }
+        playFolder = { currentTrack: 1, folder: folder, trackCount: 0, mode: mode }
+        notifyMp3PlaybackCompletion = mode === Play.Once
+        sendCommand(YX5300.queryFolderTrackCount(folder))
     }
 
     /**
@@ -189,11 +204,13 @@ namespace makerbit {
     export function runMp3Command(command: Command): void {
         switch (command) {
             case Command.PLAY_NEXT_TRACK:
-                mp3TracksToPlay = 0
+                playFolder = undefined
+                notifyMp3PlaybackCompletion = true
                 sendCommand(YX5300.next())
                 break
             case Command.PLAY_PREVIOUS_TRACK:
-                mp3TracksToPlay = 0
+                playFolder = undefined
+                notifyMp3PlaybackCompletion = true
                 sendCommand(YX5300.previous())
                 break
             case Command.INCREASE_VOLUME:
@@ -209,7 +226,8 @@ namespace makerbit {
                 sendCommand(YX5300.resume())
                 break
             case Command.STOP:
-                mp3TracksToPlay = 0
+                playFolder = undefined
+                notifyMp3PlaybackCompletion = false
                 sendCommand(YX5300.stop())
                 break
             case Command.MUTE:
