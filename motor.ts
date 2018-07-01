@@ -9,7 +9,7 @@ namespace makerbit {
     }
 
     export enum MotorDirection {
-        //% block="reverse"
+        //% block="forward"
         Forward = 1,
         //% block="reverse"
         Backward = -1
