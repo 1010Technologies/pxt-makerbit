@@ -29,7 +29,7 @@ namespace makerbit {
 
         const MAX_DIST_MICROMETER = 3000 * 1000
         const VELOCITY_OF_SOUND = 343  // 343 m/s at sea level and 20°C
-        const MAX_PULSE_DURATION_US = (2 * MAX_DIST_MICROMETER) / VELOCITY_OF_SOUND
+        const MAX_PULSE_DURATION_US = Math.idiv(2 * MAX_DIST_MICROMETER, VELOCITY_OF_SOUND)
 
         // Trigger pulse
         pins.setPull(trigPinNumber, PinPullMode.PullNone)
@@ -41,14 +41,14 @@ namespace makerbit {
 
         // Receive echo
         const pulseDuration = pins.pulseIn(echoPinNumber, PulseValue.High, MAX_PULSE_DURATION_US)
-        let objectDistance = (pulseDuration * VELOCITY_OF_SOUND) / 2
+        let objectDistance = Math.idiv(pulseDuration * VELOCITY_OF_SOUND, 2)
 
         // Map timeouts to max distance and clip at max distance
         if (objectDistance === 0 || objectDistance > MAX_DIST_MICROMETER) {
             objectDistance = MAX_DIST_MICROMETER
         }
 
-        return objectDistance / unit
+        return Math.idiv(objectDistance, unit)
     }
 
 }
