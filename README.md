@@ -6,6 +6,8 @@ The MakerBit connects to the BBC micro:bit to provide easy connections to a wide
 
 http://makerbit.com/
 
+![](https://github.com/1010Technologies/pxt-makerbit/raw/master/icon.png) 
+
 ## Motors
 The MakerBit board provides a motor controller that can control two bi-directional DC motors.
 
