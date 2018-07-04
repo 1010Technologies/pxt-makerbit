@@ -12,20 +12,20 @@ http://makerbit.com/
 The MakerBit board provides a motor controller that can control two bi-directional DC motors.
 
 
-### runMotor
+### MakerBit runMotor
 Sets the speed of a motor in the range of -100 to 100.
 ```sig
 makerbit.runMotor(makerbit.Motor.A, 80)
 ```
 
-### stopMotor
+### MakerBit stopMotor
 Stops a motor.
 ```sig
 makerbit.stopMotor(makerbit.Motor.A)
 ```
 
-### setMotorDirection
-Sets the direction of a motor.
+### MakerBit setMotorDirection
+Sets the direction of a motor. Use this function at start time to configure your motors without the need to rewire.
 ```sig
 makerbit.setMotorDirection(makerbit.Motor.A, makerbit.MotorDirection.Reverse)
 ```
@@ -40,9 +40,13 @@ Returns true if a specific touch sensor is touched. False otherwise.
 makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T1)
 ```
 
-#### onTouchDetected
+### onTouchDetected
 Do something when a touch event is detected.
 ```sig
+makerbit.onTouchDetected(makerbit.MakerBitTouchSensor.T5, () => {})
+```
+
+```blocks
 makerbit.onTouchDetected(makerbit.MakerBitTouchSensor.T5, () => {
     basic.showString("T5 touched!")
 })
@@ -70,6 +74,7 @@ basic.forever(() => {
 
 ## LCD
 Use an I2C LCD 1602 to display numbers and text.
+
 
 ```blocks
 makerbit.connectLcd(39)
