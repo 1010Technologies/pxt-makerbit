@@ -8,7 +8,7 @@ namespace makerbit {
         Repeatedly = 1,
     }
 
-    export enum Command {
+    export enum Mp3Command {
         PLAY_NEXT_TRACK,
         PLAY_PREVIOUS_TRACK,
         INCREASE_VOLUME,
@@ -201,39 +201,39 @@ namespace makerbit {
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_run_command" block="run MP3 command %command"
     //% weight=45
-    export function runMp3Command(command: Command): void {
+    export function runMp3Command(command: Mp3Command): void {
         switch (command) {
-            case Command.PLAY_NEXT_TRACK:
+            case Mp3Command.PLAY_NEXT_TRACK:
                 playFolder = undefined
                 notifyMp3PlaybackCompletion = true
                 sendCommand(YX5300.next())
                 break
-            case Command.PLAY_PREVIOUS_TRACK:
+            case Mp3Command.PLAY_PREVIOUS_TRACK:
                 playFolder = undefined
                 notifyMp3PlaybackCompletion = true
                 sendCommand(YX5300.previous())
                 break
-            case Command.INCREASE_VOLUME:
+            case Mp3Command.INCREASE_VOLUME:
                 sendCommand(YX5300.increaseVolume())
                 break
-            case Command.DECREASE_VOLUME:
+            case Mp3Command.DECREASE_VOLUME:
                 sendCommand(YX5300.decreaseVolume())
                 break
-            case Command.PAUSE:
+            case Mp3Command.PAUSE:
                 sendCommand(YX5300.pause())
                 break
-            case Command.RESUME:
+            case Mp3Command.RESUME:
                 sendCommand(YX5300.resume())
                 break
-            case Command.STOP:
+            case Mp3Command.STOP:
                 playFolder = undefined
                 notifyMp3PlaybackCompletion = false
                 sendCommand(YX5300.stop())
                 break
-            case Command.MUTE:
+            case Mp3Command.MUTE:
                 sendCommand(YX5300.mute())
                 break
-            case Command.UNMUTE:
+            case Mp3Command.UNMUTE:
                 sendCommand(YX5300.unmute())
                 break
         }

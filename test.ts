@@ -11,6 +11,16 @@ makerbit.stopMotor(makerbit.Motor.B)
 makerbit.setMotorDirection(makerbit.Motor.A, makerbit.MotorDirection.Forward)
 makerbit.setMotorDirection(makerbit.Motor.B, makerbit.MotorDirection.Reverse)
 
+
+/**
+ * Touch tests
+ */
+
+let b: boolean = makerbit.isTouchDetected(makerbit.TouchSensor.T5)
+makerbit.isTouchDetected(makerbit.TouchSensor.T16)
+makerbit.onTouchDetected(makerbit.TouchSensor.T6, () => { })
+
+
 /**
  * Serial MP3 tests
  */
@@ -25,26 +35,17 @@ makerbit.playMp3Folder(1, makerbit.Play.Once)
 makerbit.playMp3Folder(1, makerbit.Play.Repeatedly)
 makerbit.setMp3Volume(30)
 
-makerbit.runMp3Command(makerbit.Command.PLAY_NEXT_TRACK)
-makerbit.runMp3Command(makerbit.Command.PLAY_PREVIOUS_TRACK)
-makerbit.runMp3Command(makerbit.Command.INCREASE_VOLUME)
-makerbit.runMp3Command(makerbit.Command.DECREASE_VOLUME)
-makerbit.runMp3Command(makerbit.Command.PAUSE)
-makerbit.runMp3Command(makerbit.Command.RESUME)
-makerbit.runMp3Command(makerbit.Command.STOP)
-makerbit.runMp3Command(makerbit.Command.MUTE)
-makerbit.runMp3Command(makerbit.Command.UNMUTE)
+makerbit.runMp3Command(makerbit.Mp3Command.PLAY_NEXT_TRACK)
+makerbit.runMp3Command(makerbit.Mp3Command.PLAY_PREVIOUS_TRACK)
+makerbit.runMp3Command(makerbit.Mp3Command.INCREASE_VOLUME)
+makerbit.runMp3Command(makerbit.Mp3Command.DECREASE_VOLUME)
+makerbit.runMp3Command(makerbit.Mp3Command.PAUSE)
+makerbit.runMp3Command(makerbit.Mp3Command.RESUME)
+makerbit.runMp3Command(makerbit.Mp3Command.STOP)
+makerbit.runMp3Command(makerbit.Mp3Command.MUTE)
+makerbit.runMp3Command(makerbit.Mp3Command.UNMUTE)
 
 makerbit.onMp3PlaybackCompleted(() => { })
-
-
-/**
- * Touch tests
- */
-
-let b: boolean = makerbit.isTouchDetected(makerbit.TouchSensor.T5)
-makerbit.isTouchDetected(makerbit.TouchSensor.T16)
-makerbit.onTouchDetected(makerbit.TouchSensor.T6, () => { })
 
 
 /**
