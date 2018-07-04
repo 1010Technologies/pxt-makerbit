@@ -10,7 +10,7 @@ http://makerbit.com/
 
 
 ## Motors
-The MakerBit board provides a motor controller that can control two bi-directional DC motors.
+The MakerBit board provides a motor controller that can control two bi-directional DC motors, or four one-direction motors.
 
 ### MakerBit runMotor
 Sets the speed of a motor in the range of -100 to 100.
