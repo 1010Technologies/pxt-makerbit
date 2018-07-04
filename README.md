@@ -8,9 +8,9 @@ http://makerbit.com/
 
 ![](https://github.com/1010Technologies/pxt-makerbit/raw/master/icon.png)
 
+
 ## Motors
 The MakerBit board provides a motor controller that can control two bi-directional DC motors.
-
 
 ### MakerBit runMotor
 Sets the speed of a motor in the range of -100 to 100.
@@ -32,24 +32,18 @@ makerbit.setMotorDirection(makerbit.Motor.A, makerbit.MotorDirection.Reverse)
 
 
 ## Touch
-MakerBit offers built-in support for up to 12 touch electrodes via the proximity capacitive touch sensor controller MPR121.
+MakerBit offers built-in support for up to 12 touch sensors via the proximity capacitive touch sensor controller MPR121.
 
-### isTouchDetected
+### MakerBit isTouchDetected
 Returns true if a specific touch sensor is touched. False otherwise.
 ```sig
-makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T1)
+makerbit.isTouchDetected(makerbit.TouchSensor.T1)
 ```
 
-### onTouchDetected
+### MakerBit onTouchDetected
 Do something when a touch event is detected.
 ```sig
-makerbit.onTouchDetected(makerbit.MakerBitTouchSensor.T5, () => {})
-```
-
-```blocks
-makerbit.onTouchDetected(makerbit.MakerBitTouchSensor.T5, () => {
-    basic.showString("T5 touched!")
-})
+makerbit.onTouchDetected(makerbit.TouchSensor.T5, () => {})
 ```
 
 
