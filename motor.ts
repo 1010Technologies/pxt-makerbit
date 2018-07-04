@@ -12,7 +12,7 @@ namespace makerbit {
         //% block="forward"
         Forward = 1,
         //% block="reverse"
-        Backward = -1
+        Reverse = -1
     }
 
     let motorDirections = [
@@ -78,7 +78,7 @@ namespace makerbit {
     /**
      * Sets the direction of a motor.
      * @param motor motor, eg: makerbit.Motor.A
-     * @param direction direction of the motor
+     * @param direction direction of the motor, eg: makerbit.MotorDirection.Reverse
      */
     //% subcategory=Motors
     //% blockId=makerbit_motor_set_direction block="set motor %motor direction | to %direction"
