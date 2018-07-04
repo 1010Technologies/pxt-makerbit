@@ -7,6 +7,7 @@ The MakerBit connects to the BBC micro:bit to provide easy connections to a wide
 http://makerbit.com/
 
 ![](https://github.com/1010Technologies/pxt-makerbit/raw/master/icon.png)
+![](https://github.com/1010Technologies/pxt-makerbit/blob/master/MakerBit%20v5.1.jpeg)
 
 
 ## Motors
