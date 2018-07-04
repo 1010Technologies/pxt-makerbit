@@ -1,7 +1,7 @@
 // MakerBit Touch blocks
 namespace makerbit {
 
-    export enum MakerBitTouchSensor {
+    export enum TouchSensor {
         T5 = 0b100000000000,
         T6 = 0b010000000000,
         T7 = 0b001000000000,
@@ -146,7 +146,7 @@ namespace makerbit {
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"
     //% weight=69
-    export function isTouchDetected(sensor: MakerBitTouchSensor): boolean {
+    export function isTouchDetected(sensor: TouchSensor): boolean {
         const bits = getTouchStatus()
         return (bits & sensor) !== 0
     }
@@ -161,7 +161,7 @@ namespace makerbit {
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"
     //% weight=65
-    export function onTouchDetected(sensor: MakerBitTouchSensor, handler: Action) {
+    export function onTouchDetected(sensor: TouchSensor, handler: Action) {
         if (!isTouchEventDetectionEnabled) {
             isTouchEventDetectionEnabled = true
             control.inBackground(detectAndNotifyTouchEvents)

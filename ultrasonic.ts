@@ -12,8 +12,8 @@ namespace makerbit {
     /**
      * Measures the distance and returns the result in a range from 1 to 300 centimeters or up to 118 inch. The maximum value is returned to indicate when no object was detected.
      * @param unit unit of distance, eg: makerbit.DistanceUnit.Cm
-     * @param trig pin connected to trig, eg: makerbit.MakerBitPin.P5
-     * @param echo Pin connected to echo, eg: makerbit.MakerBitPin.P8
+     * @param trig pin connected to trig, eg: makerbit.Pin.P5
+     * @param echo Pin connected to echo, eg: makerbit.Pin.P8
      */
     //% subcategory="Ultrasonic"
     //% blockExternalInputs=1
@@ -23,7 +23,7 @@ namespace makerbit {
     //% echo.fieldEditor="gridpicker" echo.fieldOptions.columns=3
     //% echo.fieldOptions.tooltips="false"
     //% weight=45
-    export function getUltrasonicDistance(unit: DistanceUnit, trig: MakerBitPin, echo: MakerBitPin): number {
+    export function getUltrasonicDistance(unit: DistanceUnit, trig: Pin, echo: Pin): number {
         const trigPinNumber: number = trig
         const echoPinNumber: number = echo
 

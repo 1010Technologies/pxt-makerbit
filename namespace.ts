@@ -4,7 +4,7 @@
 //% color=#0fbc11 icon="\u272a" block="MakerBit"
 namespace makerbit {
 
-    export enum MakerBitPin {
+    export enum Pin {
         A0 = DigitalPin.P0,
         A1 = DigitalPin.P1,
         A2 = DigitalPin.P2,

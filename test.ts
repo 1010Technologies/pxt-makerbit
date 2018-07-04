@@ -15,7 +15,7 @@ makerbit.setMotorDirection(makerbit.Motor.B, makerbit.MotorDirection.Reverse)
  * Serial MP3 tests
  */
 
-makerbit.connectSerialMp3(makerbit.MakerBitPin.A0, makerbit.MakerBitPin.A1)
+makerbit.connectSerialMp3(makerbit.Pin.A0, makerbit.Pin.A1)
 
 makerbit.playMp3Track(1, makerbit.Play.Once)
 makerbit.playMp3Track(1, makerbit.Play.Repeatedly)
@@ -42,16 +42,16 @@ makerbit.onMp3PlaybackCompleted(() => { })
  * Touch tests
  */
 
-let b: boolean = makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T5)
-makerbit.isTouchDetected(makerbit.MakerBitTouchSensor.T16)
-makerbit.onTouchDetected(makerbit.MakerBitTouchSensor.T6, () => { })
+let b: boolean = makerbit.isTouchDetected(makerbit.TouchSensor.T5)
+makerbit.isTouchDetected(makerbit.TouchSensor.T16)
+makerbit.onTouchDetected(makerbit.TouchSensor.T6, () => { })
 
 
 /**
  * Ultrasonic tests
  */
 
-let n: number = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.MakerBitPin.P5, makerbit.MakerBitPin.P8)
+let n: number = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.Pin.P5, makerbit.Pin.P8)
 
 
 /**
