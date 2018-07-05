@@ -9,6 +9,7 @@ http://makerbit.com/
 ![](https://github.com/1010Technologies/pxt-makerbit/raw/master/icon.png)
 ![](https://github.com/1010Technologies/pxt-makerbit/blob/master/MakerBit%20v5.1.jpeg)
 
+MakerBit+R (with motor controller)                   MakerBit
 
 ## Motors
 The MakerBit board provides a motor controller that can control two bi-directional DC motors, or four one-direction motors.
