@@ -6,11 +6,10 @@ The MakerBit connects to the BBC micro:bit to provide easy connections to a wide
 
 http://makerbit.com/
 
-MakerBit (without motor controller)
-![MakerBit](https://github.com/1010Technologies/pxt-makerbit/raw/master/MakerBit.png "MakerBit")
+| ![MakerBit](https://github.com/1010Technologies/pxt-makerbit/raw/master/MakerBit.png "MakerBit") | ![MakerBit+R](https://github.com/1010Technologies/pxt-makerbit/raw/master/MakerBit+R.png "MakerBit+R")  |
+|:--:|:--:|
+| *MakerBit* | *MakerBit+R with motor controller* |
 
-MakerBit+R (with motor controller)
-![MakerBit+R](https://github.com/1010Technologies/pxt-makerbit/raw/master/MakerBit+R.png "MakerBit+R")
 
 
 ## Motors
