@@ -56,12 +56,13 @@ This module includes support for external Serial MP3 devices that are based on t
 ## Ultrasonic
 Attach an external HC-SR04 ultrasonic distance sensor to steer your robots.
 
+### MakerBit getUltrasonicDistance
+Measures the distance and returns the result in a range from 1 to 300 centimeters or up to 118 inch. The maximum value is returned to indicate when no object was detected.
 ```sig
 makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.Pin.P5, makerbit.Pin.P8)
 ```
-Measures the distance and returns the result in a range from 1 to 300 centimeters or up to 118 inch. The maximum value is returned to indicate when no object was detected.
 
-### Example Distance Graph
+### Ultrasonic Example: Distance Graph
 ```blocks
 basic.forever(() => {
     let distance = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.Pin.P5, makerbit.Pin.P8)
@@ -69,10 +70,41 @@ basic.forever(() => {
 })
 ```
 
+
 ## LCD
 Use an I2C LCD 1602 to display numbers and text.
 
+### MakerBit showStringOnLcd
+Displays a string on the LCD at a given position. The text is wrapped automatically at line end.
+```sig
+makerbit.showStringOnLcd("Hello world", 1, 1)
+```
 
+### MakerBit showNumberOnLcd
+Displays a number on the LCD at a given position. The number is wrapped automatically at line end.
+```sig
+makerbit.showNumberOnLcd(42, 2, 1)
+```
+
+### MakerBit clearLcd
+Clears the LCD completely.
+```sig
+makerbit.clearLcd()
+```
+
+### MakerBit setLcdBacklight
+Enables or disables the backlight of the LCD.
+```sig
+makerbit.setLcdBacklight(makerbit.LcdBacklight.On)
+```
+
+### MakerBit connectLcd
+Connects to the LCD at a given I2C address.
+```sig
+makerbit.connectLcd(39
+```
+
+### LCD Example: Distance Graph
 ```blocks
 makerbit.connectLcd(39)
 makerbit.setLcdBacklight(makerbit.LcdBacklight.Off)

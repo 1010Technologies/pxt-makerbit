@@ -140,7 +140,7 @@ namespace makerbit {
     }
 
     /**
-     * Controls the backlight of the LCD.
+     * Enables or disables the backlight of the LCD.
      * @param backlight new state of backlight, eg: makerbit.LcdBacklight.Off
      */
     //% subcategory="LCD"
