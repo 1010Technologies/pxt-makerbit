@@ -51,7 +51,68 @@ makerbit.onTouchDetected(makerbit.TouchSensor.T5, () => {})
 
 
 ## Serial MP3
-This module includes support for external Serial MP3 devices that are based on the YX5300 chip.
+This package includes support for external Serial MP3 devices with the YX5300 chip.
+
+The microSD card has to be formatted as FAT16 or FAT32. To support all commands properly, the file structure needs to follow a strict pattern:
+- Directory names are two-digit numbers, e.g. `01`.
+- Names of MP3 tracks within the directories consist of three digit numbers such as `001.mp3`.
+
+Up to 99 directories and 255 tracks are supported.
+
+```
+├── 01/
+│   ├── 001.mp3
+│   ├── 002.mp3
+│   └── 003.mp3
+├── 02/
+│   ├── 001.mp3
+│   └── 002.mp3
+│
+…
+```
+
+### MakerBit connectSerialMp3
+Connects to serial MP3 device with chip YX5300. The first pin needs to be attached the MP3 device receiver pin (RX) and the second pin to the MP3 device transmitter pin (TX).
+```sig
+makerbit.connectSerialMp3(makerbit.Pin.A0, makerbit.Pin.A1)
+```
+
+### MakerBit playMp3Track
+Plays a track.
+```sig
+makerbit.playMp3Track(1, makerbit.Play.Once)
+```
+
+### MakerBit playMp3TrackFromFolder
+Plays a track from folder.
+```sig
+makerbit.playMp3TrackFromFolder(1, 1, makerbit.Play.Once)
+```
+
+### MakerBit playMp3Folder
+Plays all tracks in a folder.
+```sig
+makerbit.playMp3Folder(1, makerbit.Play.Once)
+```
+
+### MakerBit setMp3Volume
+Sets the volume.
+```sig
+makerbit.setMp3Volume(30)
+```
+
+### MakerBit runMp3Command
+Dispatches a command to the MP3 device.
+```sig
+makerbit.runMp3Command(makerbit.Mp3Command.PLAY_NEXT_TRACK)
+```
+
+### MakerBit onMp3PlaybackCompleted
+Do something when MP3 playback is completed.
+```sig
+makerbit.onMp3PlaybackCompleted(() => { })
+```
+
 
 ## Ultrasonic
 Attach an external HC-SR04 ultrasonic distance sensor to steer your robots.
@@ -101,7 +162,7 @@ makerbit.setLcdBacklight(makerbit.LcdBacklight.On)
 ### MakerBit connectLcd
 Connects to the LCD at a given I2C address.
 ```sig
-makerbit.connectLcd(39
+makerbit.connectLcd(39)
 ```
 
 ### LCD Example: Distance Graph

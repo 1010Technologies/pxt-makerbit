@@ -101,7 +101,7 @@ namespace makerbit {
 
 
     /**
-     * Connect to serial MP3 device with chip YX5300.
+     * Connects to serial MP3 device with chip YX5300.
      * @param mp3RX MP3 device receiver pin (RX), eg: makerbit.Pin.A0
      * @param mp3TX MP3 device transmitter pin (TX), eg: makerbit.Pin.A1
      */
@@ -127,7 +127,7 @@ namespace makerbit {
     export function redirectSerial(tx: number, rx: number, baud: number): void { return }
 
     /**
-     * Play track.
+     * Plays a track.
      * @param track track index, eg:1
      * @param mode indicates whether to repeat the track, eg: makerbit.Play.Once
      */
@@ -147,7 +147,7 @@ namespace makerbit {
     }
 
     /**
-     * Play track from folder.
+     * Plays a track from folder.
      * @param track track index, eg:1
      * @param folder folder index, eg:1
      * @param mode indicates whether to repeat the track, eg: makerbit.Play.Once
@@ -168,7 +168,7 @@ namespace makerbit {
     }
 
     /**
-     * Play folder.
+     * Plays all tracks in a folder.
      * @param folder folder index, eg:1
      * @param mode indicates whether to repeat the folder, eg: makerbit.Play.Once
      */
@@ -183,7 +183,7 @@ namespace makerbit {
     }
 
     /**
-     * Set volume.
+     * Sets the volume.
      * @param volume volume in the range of 0 to 30: eg: 30
      */
     //% subcategory="Serial MP3"
