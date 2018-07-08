@@ -11,7 +11,6 @@ http://makerbit.com/
 | *MakerBit* | *MakerBit+R with motor controller* |
 
 
-
 ## Motors
 The MakerBit board provides a motor controller that can control two bi-directional DC motors, or four one-direction motors.
 
@@ -77,14 +76,8 @@ Connects to serial MP3 device with chip YX5300. The first pin needs to be attach
 makerbit.connectSerialMp3(makerbit.Pin.A0, makerbit.Pin.A1)
 ```
 
-### MakerBit playMp3Track
-Plays a track.
-```sig
-makerbit.playMp3Track(1, makerbit.Play.Once)
-```
-
 ### MakerBit playMp3TrackFromFolder
-Plays a track from a folder.
+Plays a single track from a folder.
 ```sig
 makerbit.playMp3TrackFromFolder(1, 1, makerbit.Play.Once)
 ```
