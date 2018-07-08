@@ -84,7 +84,7 @@ makerbit.playMp3Track(1, makerbit.Play.Once)
 ```
 
 ### MakerBit playMp3TrackFromFolder
-Plays a track from folder.
+Plays a track from a folder.
 ```sig
 makerbit.playMp3TrackFromFolder(1, 1, makerbit.Play.Once)
 ```

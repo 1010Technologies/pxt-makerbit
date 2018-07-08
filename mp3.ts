@@ -135,7 +135,7 @@ namespace makerbit {
     //% blockId="makerbit_mp3_play_track" block="play MP3 track %track | %mode"
     //% track.min=1 track.max=255
     //% weight=49
-    export function playMp3Track(track: number, mode: Play): void {
+    function playMp3Track(track: number, mode: Play): void {
         playFolder = undefined
         if (mode === Play.Once) {
             notifyMp3PlaybackCompletion = true
@@ -147,7 +147,7 @@ namespace makerbit {
     }
 
     /**
-     * Plays a track from folder.
+     * Plays a track from a folder.
      * @param track track index, eg:1
      * @param folder folder index, eg:1
      * @param mode indicates whether to repeat the track, eg: makerbit.Play.Once

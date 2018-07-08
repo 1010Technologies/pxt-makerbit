@@ -27,8 +27,6 @@ makerbit.onTouchDetected(makerbit.TouchSensor.T6, () => { })
 
 makerbit.connectSerialMp3(makerbit.Pin.A0, makerbit.Pin.A1)
 
-makerbit.playMp3Track(1, makerbit.Play.Once)
-makerbit.playMp3Track(1, makerbit.Play.Repeatedly)
 makerbit.playMp3TrackFromFolder(1, 1, makerbit.Play.Once)
 makerbit.playMp3TrackFromFolder(1, 1, makerbit.Play.Repeatedly)
 makerbit.playMp3Folder(1, makerbit.Play.Once)
