@@ -131,13 +131,13 @@ Use an I2C LCD 1602 to display numbers and text.
 ### MakerBit showStringOnLcd
 Displays a string on the LCD at a given position. The text is wrapped automatically at line end.
 ```sig
-makerbit.showStringOnLcd("Hello world", 1, 1)
+makerbit.showStringOnLcd("Hello world", 0)
 ```
 
 ### MakerBit showNumberOnLcd
 Displays a number on the LCD at a given position. The number is wrapped automatically at line end.
 ```sig
-makerbit.showNumberOnLcd(42, 2, 1)
+makerbit.showNumberOnLcd(42, 16)
 ```
 
 ### MakerBit clearLcd
@@ -157,6 +157,13 @@ Connects to the LCD at a given I2C address.
 ```sig
 makerbit.connectLcd(39)
 ```
+
+### MakerBit position
+Turns a LCD position value into a number.
+```sig
+makerbit.position(makerbit.LcdPosition.P16)
+```
+
 
 ### LCD Example: Distance Graph
 ```blocks

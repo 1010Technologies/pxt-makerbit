@@ -6,6 +6,73 @@ namespace makerbit {
         Data = 1
     }
 
+    export enum LcdPosition {
+        //% block="0"
+        P0 = 0,
+        //% block="1"
+        P1 = 1,
+        //% block="2"
+        P2 = 2,
+        //% block="3"
+        P3 = 3,
+        //% block="4"
+        P4 = 4,
+        //% block="5"
+        P5 = 5,
+        //% block="6"
+        P6 = 6,
+        //% block="7"
+        P7 = 7,
+        //% block="8"
+        P8 = 8,
+        //% block="9"
+        P9 = 9,
+        //% block="10"
+        P10 = 10,
+        //% block="11"
+        P11 = 11,
+        //% block="12"
+        P12 = 12,
+        //% block="13"
+        P13 = 13,
+        //% block="14"
+        P14 = 14,
+        //% block="15"
+        P15 = 15,
+        //% block="16"
+        P16 = 16,
+        //% block="17"
+        P17 = 17,
+        //% block="18"
+        P18 = 18,
+        //% block="19"
+        P19 = 19,
+        //% block="20"
+        P20 = 20,
+        //% block="21"
+        P21 = 21,
+        //% block="22"
+        P22 = 22,
+        //% block="23"
+        P23 = 23,
+        //% block="24"
+        P24 = 24,
+        //% block="25"
+        P25 = 25,
+        //% block="26"
+        P26 = 26,
+        //% block="27"
+        P27 = 27,
+        //% block="28"
+        P28 = 28,
+        //% block="29"
+        P29 = 29,
+        //% block="30"
+        P30 = 30,
+        //% block="31"
+        P31 = 31
+    }
+
     export enum LcdBacklight {
         //% block="off"
         Off = 0,
@@ -13,8 +80,8 @@ namespace makerbit {
         On = 8
     }
 
-    let lcdAddr = 39
-    let isLcdInitialized = false
+    let lcdAddr: number = 39
+    let isLcdInitialized: boolean = false
     let lcdBacklight: LcdBacklight = LcdBacklight.On
 
     // Lazy intialization of the display
@@ -70,61 +137,57 @@ namespace makerbit {
 
     // Set cursor
     function setCursor(line: number, column: number) {
-        let a: number
-
-        a = 0x80
-
-        if (line > 1) {
-            a = 0xC0
-        }
-
-        if (column < 1) {
-            column = 1
-        }
-
-        a += column - 1
-
-        sendCommand(a)
+        let cmd = line === 0 ? 0x80 : 0xC0
+        cmd += column
+        sendCommand(cmd)
     }
 
     /**
      * Displays a string on the LCD at a given position.
      * @param text the text to show, eg: "MakerBit"
-     * @param line the LCD line, [1 - 2], eg: 1
-     * @param column the LCD column, [1 - 16], eg: 1
+     * @param position the position on the LCD, [0 - 31], eg: 0
      */
     //% subcategory="LCD"
-    //% blockId="makerbit_lcd_show_string" block="show LCD string %text|in line %x| at column %column"
-    //% line.min=1 line.max=2
-    //% column.min=1 column.max=16
+    //% blockId="makerbit_lcd_show_string" block="show LCD string %text| at %position=lcd_position"
     //% weight=90
-    export function showStringOnLcd(text: string, line: number, column: number): void {
+    export function showStringOnLcd(text: string, position: number): void {
+        const COLUMNS = 16
 
-        setCursor(line, column)
-        const MAX_COLUMN = 16
+        setCursor(Math.idiv(position, COLUMNS), position % COLUMNS)
 
         for (let i = 0; i < text.length; i++) {
-            sendData(text.charCodeAt(i))
-            if (line === 1 && column + i === MAX_COLUMN) {
+            if (i > 0 && (position + i) % COLUMNS === 0) {
                 // simulate carriage return
-                setCursor(2, 1)
+                setCursor(Math.idiv(position + i, COLUMNS), 0)
             }
+            sendData(text.charCodeAt(i))
         }
     }
 
     /**
      * Displays a number on the LCD at a given position.
      * @param value the number to show
-     * @param line the LCD line, [1 - 2], eg: 1
-     * @param column the LCD column, [1 - 16], eg: 1
-     */
+     * @param position the position on the LCD, [0 - 31], eg: 0
+       */
     //% subcategory="LCD"
-    //% blockId="makerbit_lcd_show_number" block="show LCD number %value|in line %x| at column %column"
-    //% line.min=1 line.max=2
-    //% column.min=1 column.max=16
+    //% blockId="makerbit_lcd_show_number" block="show LCD number %value| at %position=lcd_position"
     //% weight=89
-    export function showNumberOnLcd(value: number, line: number, column: number): void {
-        showStringOnLcd(value.toString(), line, column)
+    export function showNumberOnLcd(value: number, position: number): void {
+        showStringOnLcd(value.toString(), position)
+    }
+
+    /**
+     * Turns a LCD position value into a number.
+     * @param position the LCD position
+     */
+    //% weight=49
+    //% blockId=lcd_position block="position %position"
+    //% position.fieldEditor="gridpicker" position.fieldOptions.columns=16
+    //% position.fieldOptions.tooltips="false"
+    //% subcategory="LCD"
+    export function position(position?: LcdPosition): number {
+        if (position == null) return 0
+        return position
     }
 
     /**

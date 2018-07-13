@@ -57,8 +57,9 @@ let n: number = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbi
  * LCD tests
  */
 
-makerbit.showStringOnLcd("Hello world", 1, 1)
-makerbit.showNumberOnLcd(42, 2, 1)
+makerbit.showStringOnLcd("Hello world", 0)
+makerbit.showNumberOnLcd(42, 16)
 makerbit.clearLcd()
 makerbit.setLcdBacklight(makerbit.LcdBacklight.On)
 makerbit.connectLcd(39)
+let pos: number = makerbit.position(makerbit.LcdPosition.P0)
