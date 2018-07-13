@@ -15,13 +15,11 @@ namespace makerbit {
 
     let lcdAddr = 39
     let isLcdInitialized = false
-    let lcdBacklight: LcdBacklight = LcdBacklight.Off
+    let lcdBacklight: LcdBacklight = LcdBacklight.On
 
     // Lazy intialization of the display
     function initLcdIfRequired(): void {
         if (!isLcdInitialized) {
-
-            lcdBacklight = LcdBacklight.Off
 
             // set 4bit mode
             send(Lcd.Command, 0x33)
