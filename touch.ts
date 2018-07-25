@@ -1,7 +1,7 @@
 // MakerBit Touch blocks
 namespace makerbit {
 
-    export enum TouchSensor {
+    export const enum TouchSensor {
         T5 = 0b100000000000,
         T6 = 0b010000000000,
         T7 = 0b001000000000,

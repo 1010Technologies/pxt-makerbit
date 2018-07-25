@@ -2,7 +2,7 @@
 
 namespace makerbit {
 
-    export enum DistanceUnit {
+    export const enum DistanceUnit {
         //% block="cm"
         CM = 10000,
         //% block="inch"

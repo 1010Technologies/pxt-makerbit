@@ -1,14 +1,14 @@
 // MakerBit Serial MP3 blocks supporting Catalex Serial MP3 1.0
 namespace makerbit {
 
-    export enum Play {
+    export const enum Play {
         //% block="once"
         Once = 0,
         //% block="repeatedly"
         Repeatedly = 1,
     }
 
-    export enum Mp3Command {
+    export const enum Mp3Command {
         PLAY_NEXT_TRACK,
         PLAY_PREVIOUS_TRACK,
         INCREASE_VOLUME,
@@ -271,7 +271,7 @@ namespace makerbit {
 
         export const REQUIRED_PAUSE_BETWEEN_COMMANDS_MILLIS = 300
 
-        export enum CommandCode {
+        export const enum CommandCode {
             PLAY_NEXT_TRACK = 0x01,
             PLAY_PREV_TRACK = 0x02,
             PLAY_TRACK = 0x03,
@@ -296,7 +296,7 @@ namespace makerbit {
             QUERY_FOLDER_COUNT = 0x4F
         }
 
-        export enum ResponseType {
+        export const enum ResponseType {
             RESPONSE_INVALID = 0x00,
             RESPONSE_START_BYTE = 0x7E,
             TRACK_COMPLETED = 0x3D,

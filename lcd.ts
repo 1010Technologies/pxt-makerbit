@@ -1,12 +1,12 @@
 // MakerBit blocks supporting a I2C LCD 1602
 namespace makerbit {
 
-    enum Lcd {
+    const enum Lcd {
         Command = 0,
         Data = 1
     }
 
-    export enum LcdPosition {
+    export const enum LcdPosition {
         //% block="0"
         P0 = 0,
         //% block="1"
@@ -73,7 +73,7 @@ namespace makerbit {
         P31 = 31
     }
 
-    export enum LcdBacklight {
+    export const enum LcdBacklight {
         //% block="off"
         Off = 0,
         //% block="on"

@@ -1,14 +1,14 @@
 // MakerBit motor driver blocks
 namespace makerbit {
 
-    export enum Motor {
+    export const enum Motor {
         //% block="A"
         A = 0,
         //% block="B"
         B = 1
     }
 
-    export enum MotorDirection {
+    export const enum MotorDirection {
         //% block="forward"
         Forward = 1,
         //% block="reverse"
