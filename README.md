@@ -118,8 +118,9 @@ makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.Pin.P5, makerb
 
 ### Ultrasonic Example: Distance Graph
 ```blocks
+let distance = 0
 basic.forever(() => {
-    let distance = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.Pin.P5, makerbit.Pin.P8)
+    distance = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.Pin.P5, makerbit.Pin.P8)
     led.plotBarGraph(distance, 0)
 })
 ```
