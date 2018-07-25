@@ -11,7 +11,7 @@ namespace makerbit {
 
     /**
      * Measures the distance and returns the result in a range from 1 to 300 centimeters or up to 118 inch. The maximum value is returned to indicate when no object was detected.
-     * @param unit unit of distance, eg: makerbit.DistanceUnit.Cm
+     * @param unit unit of distance, eg: makerbit.DistanceUnit.CM
      * @param trig pin connected to trig, eg: makerbit.Pin.P5
      * @param echo Pin connected to echo, eg: makerbit.Pin.P8
      */
