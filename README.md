@@ -165,12 +165,12 @@ makerbit.position(makerbit.LcdPosition.P16)
 ```
 
 
-### LCD Example: Distance Graph
+### LCD Example
 ```blocks
 makerbit.connectLcd(39)
 makerbit.setLcdBacklight(makerbit.LcdBacklight.Off)
-makerbit.showStringOnLcd("MakerBit", 1, 1)
-makerbit.showNumberOnLcd(42, 2, 1)
+makerbit.showStringOnLcd("MakerBit", 0)
+makerbit.showNumberOnLcd(42, 16)
 basic.pause(2000)
 makerbit.clearLcd()
 ```
