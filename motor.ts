@@ -23,10 +23,10 @@ namespace makerbit {
     /**
      * Sets the speed of a motor.
      * @param motor motor, eg: makerbit.Motor.A
-     * @param speed speed in the range of -100 to 100, eg: 80
+     * @param speed percentage in the range of -100 to 100, eg: 80
      */
     //% subcategory=Motors
-    //% blockId="makerbit_motor_run" block="run motor %motor | at %speed"
+    //% blockId="makerbit_motor_run" block="run motor %motor | at speed %speed"
     //% speed.min=-100 speed.max=100
     //% weight=90
     export function runMotor(motor: Motor, speed: number): void {
