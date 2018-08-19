@@ -80,7 +80,7 @@ namespace makerbit {
         On = 8
     }
 
-    let lcdAddr: number = 39
+    let lcdAddr: number = 0x3F
     let isLcdInitialized: boolean = false
     let lcdBacklight: LcdBacklight = LcdBacklight.On
 
