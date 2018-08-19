@@ -78,7 +78,7 @@ namespace makerbit {
     /**
      * Sets the direction of a motor.
      * @param motor motor, eg: makerbit.Motor.A
-     * @param direction direction of the motor, eg: makerbit.MotorDirection.Reverse
+     * @param direction direction of the motor, eg: makerbit.MotorDirection.Forward
      */
     //% subcategory=Motors
     //% blockId=makerbit_motor_set_direction block="set motor %motor direction | to %direction"
