@@ -80,7 +80,7 @@ namespace makerbit {
         On = 8
     }
 
-    let lcdAddr: number = 0x3F
+    let lcdAddr: number = 63
     let isLcdInitialized: boolean = false
     let lcdBacklight: LcdBacklight = LcdBacklight.On
 
@@ -214,7 +214,7 @@ namespace makerbit {
 
     /**
      * Connects to the LCD at a given I2C address.
-     * @param i2cAddress I2C address of LCD, eg: 39
+     * @param i2cAddress I2C address of LCD, eg: 63
      */
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_set_address" block="connect LCD at I2C address %i2cAddress"
