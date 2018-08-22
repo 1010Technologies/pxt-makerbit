@@ -19,9 +19,9 @@ namespace makerbit {
     const MPR121_ADDRESS = 0x5A
     let isTouchInitialized = false
 
-    const TOUCH_STATUS_EXPIRE_MILLIS = 250
-    let cachedTouchStatus = 0
-    let nextTouchReadTimestamp = 0
+    const TOUCH_STATUS_MIN_READ_INTERVAL = 100
+    let lastTouchStatus = 0
+    let lastTouchReadTimestamp = 0
 
     const MICROBIT_MAKERBIT_TOUCH_ID = 2148;
     let isTouchEventDetectionEnabled = false
@@ -99,29 +99,26 @@ namespace makerbit {
         )
     }
 
-    function getTouchStatus(): number {
-        const now = input.runningTime()
-        if (now > nextTouchReadTimestamp) {
-            readTouchStatus(now)
-        }
-        return cachedTouchStatus
-    }
-
-    function readTouchStatus(now: number): number {
+    function getCachedTouchStatus(): number {
         if (!isTouchInitialized) {
             initTouch()
         }
 
-        cachedTouchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
-        nextTouchReadTimestamp = now + TOUCH_STATUS_EXPIRE_MILLIS
-        return cachedTouchStatus
+        const now = input.runningTime()
+
+        if (now > lastTouchReadTimestamp + TOUCH_STATUS_MIN_READ_INTERVAL) {
+            lastTouchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
+            lastTouchReadTimestamp = now
+        }
+
+        return lastTouchStatus
     }
 
     function detectAndNotifyTouchEvents() {
         let previousTouchStatus = 0
 
         while (true) {
-            const touchStatus = readTouchStatus(input.runningTime())
+            const touchStatus = getCachedTouchStatus()
 
             for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit = touchSensorBit << 1) {
                 // Raise event only once on touch down
@@ -133,7 +130,7 @@ namespace makerbit {
             }
 
             previousTouchStatus = touchStatus
-            basic.pause((TOUCH_STATUS_EXPIRE_MILLIS * 4) / 5)
+            basic.pause(TOUCH_STATUS_MIN_READ_INTERVAL + 10)
         }
     }
 
@@ -147,7 +144,7 @@ namespace makerbit {
     //% sensor.fieldOptions.tooltips="false"
     //% weight=69
     export function isTouchDetected(sensor: TouchSensor): boolean {
-        const bits = getTouchStatus()
+        const bits = getCachedTouchStatus()
         return (bits & sensor) !== 0
     }
 
