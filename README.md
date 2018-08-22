@@ -54,7 +54,7 @@ This package includes support for external Serial MP3 devices with the YX5300 ch
 
 The microSD card has to be formatted as FAT16 or FAT32. To support all commands properly, the file structure needs to follow a strict pattern:
 - Directory names are two-digit numbers, e.g. `01`.
-- Names of MP3 tracks within the directories consist of three digit numbers such as `001.mp3`.
+- Track names within the directories consist of three digit numbers such as `001.mp3` or `002.wav`
 
 Up to 99 directories and 255 tracks are supported.
 
@@ -69,6 +69,8 @@ Up to 99 directories and 255 tracks are supported.
 │
 …
 ```
+
+Any deviation from the naming conventions results in undefined behavior. Playback might stop any time or not work at all.
 
 ### MakerBit connectSerialMp3
 Connects to serial MP3 device with chip YX5300. The first pin needs to be attached the MP3 device receiver pin (RX) and the second pin to the MP3 device transmitter pin (TX).
