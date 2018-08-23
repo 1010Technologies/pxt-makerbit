@@ -78,9 +78,9 @@ namespace makerbit {
     export function readSerialToBuffer(buffer: Buffer): number { return }
 
     function readSerial() {
-        let responseBuffer: Buffer = pins.createBuffer(10);
-        let first: Buffer = pins.createBuffer(1)
-        let remainder: Buffer = pins.createBuffer(9)
+        const responseBuffer: Buffer = pins.createBuffer(10);
+        const first: Buffer = pins.createBuffer(1)
+        const remainder: Buffer = pins.createBuffer(9)
 
         while (true) {
             readSerialToBuffer(first);
@@ -118,9 +118,9 @@ namespace makerbit {
         spinWait(YX5300.REQUIRED_PAUSE_BETWEEN_COMMANDS_MILLIS)
         sendCommand(YX5300.selectDeviceTfCard())
         spinWait(1500)
+        control.inBackground(readSerial)
         sendCommand(YX5300.setVolume(30))
         sendCommand(YX5300.unmute())
-        control.inBackground(readSerial)
     }
 
     //% shim=makerbit::redirectSerial
@@ -301,7 +301,8 @@ namespace makerbit {
             RESPONSE_START_BYTE = 0x7E,
             TRACK_COMPLETED = 0x3D,
             PLAYBACK_STATUS = 0x42,
-            FOLDER_TRACK_COUNT = 0x4E
+            FOLDER_TRACK_COUNT = 0x4E,
+            FOLDER_COUNT = 0x4F
         }
 
         let commandBuffer: Buffer
@@ -378,6 +379,10 @@ namespace makerbit {
             return composeSerialCommand(CommandCode.QUERY_FOLDER_TRACK_COUNT, 0x00, clipFolder(folder))
         }
 
+        export function queryFolderCount(): Buffer {
+            return composeSerialCommand(CommandCode.QUERY_FOLDER_COUNT, 0x00, 0x00)
+        }
+
         export function stop(): Buffer {
             return composeSerialCommand(CommandCode.STOP, 0x00, 0x00)
         }
@@ -427,25 +432,9 @@ namespace makerbit {
                 return { type: ResponseType.RESPONSE_INVALID }
             }
 
-            const cmd = response.getNumber(NumberFormat.UInt8LE, 3)
-            let type = ResponseType.RESPONSE_INVALID
+            const type = response.getNumber(NumberFormat.UInt8LE, 3)
+            const payload = (response.getNumber(NumberFormat.UInt8LE, 5) << 8) | response.getNumber(NumberFormat.UInt8LE, 6)
 
-            switch (cmd) {
-                case ResponseType.TRACK_COMPLETED:
-                    type = ResponseType.TRACK_COMPLETED
-                    break
-                case ResponseType.PLAYBACK_STATUS:
-                    type = ResponseType.PLAYBACK_STATUS
-                    break
-                case ResponseType.FOLDER_TRACK_COUNT:
-                    type = ResponseType.FOLDER_TRACK_COUNT
-                    break
-                default:
-                    type = ResponseType.RESPONSE_INVALID
-                    break
-            }
-
-            const payload = response.getNumber(NumberFormat.UInt8LE, 6)
             return { type: type, payload: payload };
         }
     }
