@@ -207,11 +207,15 @@ namespace makerbit {
                 playFolder = undefined
                 notifyMp3PlaybackCompletion = true
                 sendCommand(YX5300.next())
+                sendCommand(YX5300.resume())
                 break
             case Mp3Command.PLAY_PREVIOUS_TRACK:
                 playFolder = undefined
                 notifyMp3PlaybackCompletion = true
+                sendCommand(YX5300.pause())
                 sendCommand(YX5300.previous())
+                sendCommand(YX5300.previous())
+                sendCommand(YX5300.resume())
                 break
             case Mp3Command.INCREASE_VOLUME:
                 sendCommand(YX5300.increaseVolume())
