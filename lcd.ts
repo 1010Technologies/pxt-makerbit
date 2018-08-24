@@ -108,11 +108,8 @@ namespace makerbit {
     // Send bits via I2C bus
     function i2cWrite(value: number) {
         pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
-        basic.pause(1)
         pins.i2cWriteNumber(lcdAddr, value + 4, NumberFormat.Int8LE)
-        basic.pause(1)
         pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
-        basic.pause(50)
     }
 
     // Send data to I2C bus
