@@ -45,14 +45,16 @@ namespace makerbit {
 
     function readSerial() {
         const responseBuffer: Buffer = pins.createBuffer(10)
+        const first: Buffer = pins.createBuffer(1)
+        const remainder: Buffer = pins.createBuffer(9)
 
         while (true) {
-            const first = serialReadBuffer(1)
+            readSerialToBuffer(first)
 
             if (first.getNumber(NumberFormat.UInt8LE, 0) == YX5300.ResponseType.RESPONSE_START_BYTE) {
 
                 responseBuffer.setNumber(NumberFormat.UInt8LE, 0, YX5300.ResponseType.RESPONSE_START_BYTE)
-                const remainder = serialReadBuffer(9)
+                readSerialToBuffer(remainder)
                 responseBuffer.write(1, remainder)
 
                 const response = YX5300.decodeResponse(responseBuffer)
@@ -61,6 +63,10 @@ namespace makerbit {
             }
         }
     }
+
+    /** Prevent pxsim failure */
+    //% shim=makerbit::readSerialToBuffer
+    export function readSerialToBuffer(buffer: Buffer): number { return 0 }
 
     function handleResponse(response: YX5300.Response) {
         switch (response.type) {
@@ -127,11 +133,6 @@ namespace makerbit {
     /** Support serial redirect to all pins. */
     //% shim=makerbit::redirectSerial
     export function redirectSerial(tx: number, rx: number, baud: number): void { return }
-
-    /** Prevent pxsim failure */
-    //% shim=makerbit::serialReadBuffer
-    export function serialReadBuffer(length: number): Buffer { return pins.createBuffer(length) }
-
 
     /**
      * Plays a track from a folder.

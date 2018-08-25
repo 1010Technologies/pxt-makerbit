@@ -1,5 +1,4 @@
 #include "pxt.h"
-#include "ManagedBuffer.h"
 
 using namespace pxt;
 
@@ -16,12 +15,14 @@ namespace makerbit {
     }
 
     //%
-    Buffer serialReadBuffer(int length) {
-      ManagedBuffer buf(length);
-      int read = uBit.serial.read(buf.getBytes(), buf.length());
-      if (read != buf.length()) {
-        buf = buf.slice(read);
-      }
-      return buf.leakData();
+    int readSerialToBuffer(Buffer buffer) {
+       // This code is required to support MakerBit during MakeCode Beta phase in both Beta and production environment.
+#ifdef MICROBIT_MANAGED_BUFFER_H
+      // The current version of MakeCode uses ManagedBuffer (2018-08-25)
+      return uBit.serial.read(buffer->payload, buffer->length);
+#else
+      // The next version of MakeCode used BoxedBuffer
+      return uBit.serial.read(buffer->data, buffer->length);
+#endif
     }
 }
