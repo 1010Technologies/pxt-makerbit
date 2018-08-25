@@ -1,6 +1,6 @@
 {
     "name": "MakerBit",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "description": "The MakerBit connects to the BBC micro:bit to provide easy connections to a wide variety of sensors, actuators and other components.",
     "license": "MIT",
     "dependencies": {
