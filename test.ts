@@ -27,10 +27,10 @@ makerbit.onTouchDetected(makerbit.TouchSensor.T6, () => { })
 
 makerbit.connectSerialMp3(makerbit.Pin.A0, makerbit.Pin.A1)
 
-makerbit.playMp3TrackFromFolder(1, 1, makerbit.Play.Once)
-makerbit.playMp3TrackFromFolder(1, 1, makerbit.Play.Repeatedly)
-makerbit.playMp3Folder(1, makerbit.Play.Once)
-makerbit.playMp3Folder(1, makerbit.Play.Repeatedly)
+makerbit.playMp3TrackFromFolder(1, 1, makerbit.Repeat.No)
+makerbit.playMp3TrackFromFolder(1, 1, makerbit.Repeat.Forever)
+makerbit.playMp3Folder(1, makerbit.Repeat.No)
+makerbit.playMp3Folder(1, makerbit.Repeat.Forever)
 makerbit.setMp3Volume(30)
 
 makerbit.runMp3Command(makerbit.Mp3Command.PLAY_NEXT_TRACK)
@@ -42,8 +42,6 @@ makerbit.runMp3Command(makerbit.Mp3Command.RESUME)
 makerbit.runMp3Command(makerbit.Mp3Command.STOP)
 makerbit.runMp3Command(makerbit.Mp3Command.MUTE)
 makerbit.runMp3Command(makerbit.Mp3Command.UNMUTE)
-
-makerbit.onMp3PlaybackCompleted(() => { })
 
 
 /**

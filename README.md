@@ -85,13 +85,13 @@ makerbit.connectSerialMp3(makerbit.Pin.A0, makerbit.Pin.A1)
 ### MakerBit playMp3TrackFromFolder
 Plays a single track from a folder.
 ```sig
-makerbit.playMp3TrackFromFolder(1, 1, makerbit.Play.Once)
+makerbit.playMp3TrackFromFolder(1, 1, makerbit.Repeat.No)
 ```
 
 ### MakerBit playMp3Folder
 Plays all tracks in a folder.
 ```sig
-makerbit.playMp3Folder(1, makerbit.Play.Once)
+makerbit.playMp3Folder(1, makerbit.Repeat.No)
 ```
 
 ### MakerBit setMp3Volume
@@ -104,12 +104,6 @@ makerbit.setMp3Volume(30)
 Dispatches a command to the MP3 device.
 ```sig
 makerbit.runMp3Command(makerbit.Mp3Command.PLAY_NEXT_TRACK)
-```
-
-### MakerBit onMp3PlaybackCompleted
-Do something when MP3 playback is completed.
-```sig
-makerbit.onMp3PlaybackCompleted(() => { })
 ```
 
 
