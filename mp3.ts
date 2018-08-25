@@ -126,7 +126,7 @@ namespace makerbit {
         redirectSerial(mp3RX, mp3TX, BaudRate.BaudRate9600)
         control.inBackground(readSerial)
         sendCommand(YX5300.selectDeviceTfCard())
-        basic.pause(250)
+        basic.pause(500)
         sendCommand(YX5300.setVolume(30))
         sendCommand(YX5300.unmute())
     }
@@ -261,7 +261,7 @@ namespace makerbit {
 
         export interface Response { type: ResponseType, payload?: number }
 
-        export const REQUIRED_PAUSE_BETWEEN_COMMANDS_MILLIS = 500
+        export const REQUIRED_PAUSE_BETWEEN_COMMANDS_MILLIS = 300
 
         export const enum CommandCode {
             PLAY_NEXT_TRACK = 0x01,
