@@ -23,7 +23,7 @@ namespace makerbit {
     let lastTouchStatus = 0
     let lastTouchReadTimestamp = 0
 
-    const MICROBIT_MAKERBIT_TOUCH_ID = 2148;
+    const MICROBIT_MAKERBIT_TOUCH_ID = 2148
     let isTouchEventDetectionEnabled = false
 
     /**
@@ -99,7 +99,7 @@ namespace makerbit {
         )
     }
 
-    function getCachedTouchStatus(): number {
+    function getTouchStatus(): number {
         if (!isTouchInitialized) {
             initTouch()
         }
@@ -118,7 +118,7 @@ namespace makerbit {
         let previousTouchStatus = 0
 
         while (true) {
-            const touchStatus = getCachedTouchStatus()
+            const touchStatus = getTouchStatus()
 
             for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit = touchSensorBit << 1) {
                 // Raise event only once on touch down
@@ -144,7 +144,7 @@ namespace makerbit {
     //% sensor.fieldOptions.tooltips="false"
     //% weight=69
     export function isTouchDetected(sensor: TouchSensor): boolean {
-        const bits = getCachedTouchStatus()
+        const bits = getTouchStatus()
         return (bits & sensor) !== 0
     }
 

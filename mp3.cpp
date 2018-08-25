@@ -3,7 +3,7 @@
 using namespace pxt;
 
 namespace makerbit {
-    //% 
+    //%
     void redirectSerial(int tx, int rx, int baud) {
       MicroBitPin* txp = getPin((int)tx); if (!txp) return;
       MicroBitPin* rxp = getPin((int)rx); if (!rxp) return;
@@ -15,8 +15,12 @@ namespace makerbit {
     }
 
     //%
-    int readSerialToBuffer(Buffer buffer) {
-      return uBit.serial.read(buffer->payload, buffer->length);
+    Buffer serialReadBuffer(int length) {
+      ManagedBuffer buf(length);
+      int read = uBit.serial.read(buf.getBytes(), buf.length());
+      if (read != buf.length()) {
+        buf = buf.slice(read);
+      }
+      return buf.leakData();
     }
 }
-

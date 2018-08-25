@@ -43,22 +43,16 @@ namespace makerbit {
         lastTrackCompletedTimestamp: 0
     }
 
-    //% shim=makerbit::readSerialToBuffer
-    export function readSerialToBuffer(buffer: Buffer): number { return }
-
     function readSerial() {
-        const responseBuffer: Buffer = pins.createBuffer(10);
-        const first: Buffer = pins.createBuffer(1)
-        const remainder: Buffer = pins.createBuffer(9)
+        const responseBuffer: Buffer = pins.createBuffer(10)
 
         while (true) {
-            readSerialToBuffer(first);
+            const first = serialReadBuffer(1)
 
             if (first.getNumber(NumberFormat.UInt8LE, 0) == YX5300.ResponseType.RESPONSE_START_BYTE) {
 
                 responseBuffer.setNumber(NumberFormat.UInt8LE, 0, YX5300.ResponseType.RESPONSE_START_BYTE)
-
-                readSerialToBuffer(remainder)
+                const remainder = serialReadBuffer(9)
                 responseBuffer.write(1, remainder)
 
                 const response = YX5300.decodeResponse(responseBuffer)
@@ -130,8 +124,14 @@ namespace makerbit {
         sendCommand(YX5300.unmute())
     }
 
+    /** Support serial redirect to all pins. */
     //% shim=makerbit::redirectSerial
     export function redirectSerial(tx: number, rx: number, baud: number): void { return }
+
+    /** Prevent pxsim failure */
+    //% shim=makerbit::serialReadBuffer
+    export function serialReadBuffer(length: number): Buffer { return pins.createBuffer(length) }
+
 
     /**
      * Plays a track from a folder.
@@ -365,7 +365,7 @@ namespace makerbit {
                 CommandCode.PLAY_TRACK_FROM_FOLDER,
                 clipFolder(folder),
                 clipTrack(track)
-            );
+            )
         }
 
         export function queryStatus(): Buffer {
@@ -440,7 +440,7 @@ namespace makerbit {
             const type = response.getNumber(NumberFormat.UInt8LE, 3)
             const payload = (response.getNumber(NumberFormat.UInt8LE, 5) << 8) | response.getNumber(NumberFormat.UInt8LE, 6)
 
-            return { type: type, payload: payload };
+            return { type: type, payload: payload }
         }
     }
 }
