@@ -158,7 +158,7 @@ namespace makerbit {
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"
     //% weight=65
-    export function onTouchDetected(sensor: TouchSensor, handler: Action) {
+    export function onTouchDetected(sensor: TouchSensor, handler: () => void) {
         if (!isTouchEventDetectionEnabled) {
             isTouchEventDetectionEnabled = true
             control.inBackground(detectAndNotifyTouchEvents)
