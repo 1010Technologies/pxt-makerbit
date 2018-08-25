@@ -101,6 +101,8 @@ namespace makerbit {
             // clear
             send(Lcd.Command, 0x01)
 
+            basic.pause(50)
+
             isLcdInitialized = true
         }
     }
