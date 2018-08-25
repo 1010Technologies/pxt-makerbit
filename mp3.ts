@@ -115,7 +115,6 @@ namespace makerbit {
      * @param mp3TX MP3 device transmitter pin (TX), eg: makerbit.Pin.A1
      */
     //% subcategory="Serial MP3"
-    //% blockExternalInputs=1
     //% blockId="makerbit_mp3_connect" block="connect MP3 with MP3 RX attached to %mp3RX | and MP3 TX to %mp3TX"
     //% mp3RX.fieldEditor="gridpicker" mp3RX.fieldOptions.columns=3
     //% mp3RX.fieldOptions.tooltips="false"
@@ -138,7 +137,7 @@ namespace makerbit {
      * Plays a track from a folder.
      * @param track track index, eg:1
      * @param folder folder index, eg:1
-     * @param repeat indicates whether to repeat the track, eg: makerbit.Repeat.Once
+     * @param repeat indicates whether to repeat the track, eg: makerbit.Repeat.No
      */
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_play_track_from_folder" block="play MP3 track %track | from folder %folder | %repeat"
@@ -160,7 +159,7 @@ namespace makerbit {
     /**
      * Plays all tracks in a folder.
      * @param folder folder index, eg:1
-     * @param repeat indicates whether to repeat the folder, eg: makerbit.Repeat.Once
+     * @param repeat indicates whether to repeat the folder, eg: makerbit.Repeat.No
      */
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_play_folder" block="play MP3 folder %folder | %repeat"

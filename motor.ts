@@ -15,7 +15,7 @@ namespace makerbit {
         Reverse = -1
     }
 
-    let motorDirections = [
+    const motorDirections = [
         MotorDirection.Forward,
         MotorDirection.Forward
     ]
