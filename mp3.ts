@@ -86,7 +86,9 @@ namespace makerbit {
             playState.maxTracksInFolder = playState.track
         }
 
-        if (playState.playMode === PlayMode.Folder && playState.repeat === Repeat.Forever) {
+        if (playState.track > 1
+            && playState.playMode === PlayMode.Folder
+            && playState.repeat === Repeat.Forever) {
             playState.track = 1
             play(playState)
         }

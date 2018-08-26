@@ -72,7 +72,7 @@ Up to 99 directories and 255 tracks are supported.
 …
 ```
 
-The MP3 device reads files and folders in alphabetic order. It is helpful to create a sequence of folders like `01`, `02`, `03` and name the tracks within each folder starting at `001`. This allows you to use folder and track names as parameters in the playback functions below.
+The MP3 device reads files and folders in alphabetic order. It is required to create a sequence of folders like `01`, `02`, `03` and name the tracks within each folder starting at `001`. Make sure to avoid gaps in your number based naming scheme. This allows you to use folder and track names as parameters in the playback functions below.
 
 If you experience playback problems, check for deviations to the naming convention and the file system format.
 
