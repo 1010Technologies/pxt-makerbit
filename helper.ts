@@ -19,7 +19,7 @@ namespace makerbit {
      /**
       * Sets a pin to either on or off.
       * @param name name of the pin in the range from 0 to 20, eg: 5
-      * @param level value of the pin level, either 0 or 1, eg: 0
+      * @param level value of the pin level, either 0 or 1, eg: 1
       */
      //% blockId="makerbit_pins_set"
      //% block="set pin %pin | to %level"
