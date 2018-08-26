@@ -154,7 +154,7 @@ namespace makerbit {
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
-    //% blockId=makerbit_touch_on_touch_detected block="on touch sensor | %sensor% | touched"
+    //% blockId=makerbit_touch_on_touch_detected block="on touch sensor | %sensor | touched"
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"
     //% weight=65
