@@ -1,4 +1,12 @@
 /**
+ * Helper tests
+ */
+
+makerbit.setAllLedPins(0)
+makerbit.setDigitalPin(5, 1)
+
+
+/**
  * Motor tests
  */
 
