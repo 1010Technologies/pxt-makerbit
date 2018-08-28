@@ -1,11 +1,6 @@
 // MakerBit blocks supporting a I2C LCD 1602
 namespace makerbit {
 
-    const enum Lcd {
-        Command = 0,
-        Data = 1
-    }
-
     export const enum LcdPosition {
         //% block="0"
         P0 = 0,
@@ -80,38 +75,24 @@ namespace makerbit {
         On = 8
     }
 
-    let lcdAddr: number = 63
-    let isLcdInitialized: boolean = false
-    let lcdBacklight: LcdBacklight = LcdBacklight.On
-
-    // Lazy intialization of the display
-    function initLcdIfRequired(): void {
-        if (!isLcdInitialized) {
-
-            // set 4bit mode
-            send(Lcd.Command, 0x33)
-            i2cWrite(0x30)
-            i2cWrite(0x20)
-
-            // set mode
-            send(Lcd.Command, 0x28)
-            send(Lcd.Command, 0x0C)
-            send(Lcd.Command, 0x06)
-
-            // clear
-            send(Lcd.Command, 0x01)
-
-            basic.pause(50)
-
-            isLcdInitialized = true
-        }
+    const enum Lcd {
+        Command = 0,
+        Data = 1
     }
+
+    let lcdAddr: number = -1
+    let lcdBacklight: LcdBacklight = LcdBacklight.On
 
     // Send bits via I2C bus
     function i2cWrite(value: number) {
-        pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
-        pins.i2cWriteNumber(lcdAddr, value + 4, NumberFormat.Int8LE)
-        pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
+        if (lcdAddr >= 0) {
+            pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
+            basic.pause(1)
+            pins.i2cWriteNumber(lcdAddr, value + 4, NumberFormat.Int8LE)
+            basic.pause(1)
+            pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
+            basic.pause(1)
+        }
     }
 
     // Send data to I2C bus
@@ -124,13 +105,11 @@ namespace makerbit {
 
     // Send command
     function sendCommand(command: number) {
-        initLcdIfRequired()
         send(Lcd.Command, command)
     }
 
     // Send data
     function sendData(data: number) {
-        initLcdIfRequired()
         send(Lcd.Data, data)
     }
 
@@ -197,6 +176,7 @@ namespace makerbit {
     //% weight=80
     export function clearLcd(): void {
         send(Lcd.Command, 0x01)
+        basic.pause(50)
     }
 
     /**
@@ -213,6 +193,7 @@ namespace makerbit {
 
     /**
      * Connects to the LCD at a given I2C address.
+     * The addresses 39 or 63 are widely used.
      * @param i2cAddress I2C address of LCD, eg: 63
      */
     //% subcategory="LCD"
@@ -220,8 +201,33 @@ namespace makerbit {
     //% i2cAddress.min=0 i2cAddress.max=127
     //% weight=50
     export function connectLcd(i2cAddress: number): void {
+        if (i2cAddress < 0) {
+            return
+        }
+
         lcdAddr = i2cAddress
-        isLcdInitialized = false
-        initLcdIfRequired()
+
+        // Wait 50 ms before sending first command to device after
+        // being powered on
+        basic.pause(50)
+
+        // set 4bit mode
+        send(Lcd.Command, 0x33)
+        basic.pause(5)  // set 4bit mode (3 attempts)
+        i2cWrite(0x30)
+        basic.pause(5)
+        i2cWrite(0x30)
+        basic.pause(5)
+        i2cWrite(0x30)
+        basic.pause(5)
+        i2cWrite(0x20)  // set 4bit interface
+        basic.pause(5)
+
+        // set mode
+        send(Lcd.Command, 0x28)
+        send(Lcd.Command, 0x0C)
+        send(Lcd.Command, 0x06)
+
+        clearLcd()
     }
 }
