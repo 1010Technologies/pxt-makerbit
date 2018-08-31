@@ -6,11 +6,11 @@ namespace makerbit {
      * The pins 5 to 16 are MakerBit LED pins.
      * @param level digital pin level, either 0 or 1, eg: 0
      */
-    //% blockId="makerbit_helper_set_all_led"
-    //% block="set all LED pins to %level"
+    //% blockId="makerbit_helper_set_led_pins"
+    //% block="set LED pins to %level"
     //% level.min=0 level.max=1
     //% weight=90
-    export function setAllLedPins(level: number): void {
+    export function setLedPins(level: number): void {
         for (let i=5; i<=16; i++) {
             setDigitalPin(i, level)
         }
