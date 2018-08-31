@@ -1,14 +1,20 @@
 // MakerBit helper blocks
 namespace makerbit {
 
+    export const enum PinLevel {
+        //% block="high"
+        High = 1,
+        //% block="low"
+        Low = 0
+    }
+
     /**
      * Sets all LED pins to either on or off.
      * The pins 5 to 16 are MakerBit LED pins.
      * @param level digital pin level, either 0 or 1, eg: 0
      */
     //% blockId="makerbit_helper_set_led_pins"
-    //% block="set LED pins to %level"
-    //% level.min=0 level.max=1
+    //% block="set all LED pins to %level=makerbit_helper_level"
     //% weight=90
     export function setLedPins(level: number): void {
         for (let i=5; i<=16; i++) {
@@ -23,9 +29,8 @@ namespace makerbit {
       * @param level digital pin level, either 0 or 1, eg: 1
       */
      //% blockId="makerbit_helper_set_digital_pin"
-     //% block="set digital pin %pin | to %level"
+     //% block="set digital pin %pin | to %level=makerbit_helper_level"
      //% name.min=0 name.max=20
-     //% level.min=0 level.max=1
      //% weight=89
      export function setDigitalPin(name: number, level: number): void {
         pins.digitalWritePin(name + DigitalPin.P0, level)
@@ -47,4 +52,15 @@ namespace makerbit {
      export function setAnalogPin(name: number, level: number): void {
         pins.analogWritePin(name + AnalogPin.P0, level)
      }
+
+    /**
+     * Turns a digital pin level into a number.
+     * @param level the pin level
+     */
+    //% weight=49
+    //% blockId=makerbit_helper_level
+    //% block="level %level"
+    export function level(level: PinLevel): number {
+        return level
+    }
 }

@@ -126,7 +126,8 @@ namespace makerbit {
      * @param position the position on the LCD, [0 - 31], eg: 0
      */
     //% subcategory="LCD"
-    //% blockId="makerbit_lcd_show_string" block="show LCD string %text| at %position=lcd_position"
+    //% blockId="makerbit_lcd_show_string"
+    //% block="show LCD string %text| at %position=makerbit_lcd_position"
     //% weight=90
     export function showStringOnLcd(text: string, position: number): void {
         const COLUMNS = 16
@@ -148,7 +149,8 @@ namespace makerbit {
      * @param position the position on the LCD, [0 - 31], eg: 0
        */
     //% subcategory="LCD"
-    //% blockId="makerbit_lcd_show_number" block="show LCD number %value| at %position=lcd_position"
+    //% blockId="makerbit_lcd_show_number"
+    //% block="show LCD number %value| at %position=makerbit_lcd_position"
     //% weight=89
     export function showNumberOnLcd(value: number, position: number): void {
         showStringOnLcd(value.toString(), position)
@@ -159,12 +161,12 @@ namespace makerbit {
      * @param position the LCD position
      */
     //% weight=49
-    //% blockId=lcd_position block="position %position"
+    //% blockId=makerbit_lcd_position
+    //% block="position %position"
     //% position.fieldEditor="gridpicker" position.fieldOptions.columns=16
     //% position.fieldOptions.tooltips="false"
     //% subcategory="LCD"
-    export function position(position?: LcdPosition): number {
-        if (position == null) return 0
+    export function position(position: LcdPosition): number {
         return position
     }
 
