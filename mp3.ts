@@ -207,7 +207,8 @@ namespace makerbit {
      * @param command command, eg: makerbit.Command.PLAY_NEXT_TRACK
      */
     //% subcategory="Serial MP3"
-    //% blockId="makerbit_mp3_run_command" block="run MP3 command %command"
+    //% blockId="makerbit_mp3_run_command"
+    //% block="run MP3 command %command"
     //% weight=45
     export function runMp3Command(command: Mp3Command): void {
         switch (command) {
@@ -256,6 +257,28 @@ namespace makerbit {
     function sendCommand(command: Buffer): void {
         serial.writeBuffer(command)
         basic.pause(YX5300.REQUIRED_PAUSE_BETWEEN_COMMANDS_MILLIS)
+    }
+
+    /**
+     * Returns the index of the selected MP3 folder.
+     */
+    //% subcategory="Serial MP3"
+    //% blockId="makerbit_mp3_folder"
+    //% block="mp3 folder"
+    //% weight=40
+    export function mp3Folder(): number {
+        return playState.folder
+    }
+
+    /**
+     * Returns the index of the current MP3 track.
+     */
+    //% subcategory="Serial MP3"
+    //% blockId="makerbit_mp3_track"
+    //% block="mp3 track"
+    //% weight=39
+    export function mp3Track(): number {
+        return playState.track
     }
 
     // YX5300 asynchronous serial port control commands

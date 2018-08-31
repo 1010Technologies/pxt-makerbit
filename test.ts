@@ -53,12 +53,15 @@ makerbit.runMp3Command(makerbit.Mp3Command.STOP)
 makerbit.runMp3Command(makerbit.Mp3Command.MUTE)
 makerbit.runMp3Command(makerbit.Mp3Command.UNMUTE)
 
+const folder: number = makerbit.mp3Folder()
+const track: number = makerbit.mp3Track()
+
 
 /**
  * Ultrasonic tests
  */
 
-let n: number = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.Pin.P5, makerbit.Pin.P8)
+const distance: number = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.Pin.P5, makerbit.Pin.P8)
 
 
 /**
