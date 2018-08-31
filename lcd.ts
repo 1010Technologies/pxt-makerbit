@@ -193,8 +193,8 @@ namespace makerbit {
 
     /**
      * Connects to the LCD at a given I2C address.
-     * The addresses 39 or 63 are widely used.
-     * @param i2cAddress I2C address of LCD, eg: 63
+     * The addresses 39 or 63 seem to be widely used.
+     * @param i2cAddress I2C address of LCD in the range from 0 to 127, eg: 39
      */
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_set_address" block="connect LCD at I2C address %i2cAddress"
