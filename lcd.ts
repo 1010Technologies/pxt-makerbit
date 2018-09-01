@@ -87,11 +87,10 @@ namespace makerbit {
     function i2cWrite(value: number) {
         if (lcdAddr >= 0) {
             pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
-            basic.pause(1)
-            pins.i2cWriteNumber(lcdAddr, value + 4, NumberFormat.Int8LE)
-            basic.pause(1)
-            pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
-            basic.pause(1)
+            pins.i2cWriteNumber(lcdAddr, value | 0x04, NumberFormat.Int8LE)
+            control.waitMicros(1)
+            pins.i2cWriteNumber(lcdAddr, value & (0xFF ^ 0x04), NumberFormat.Int8LE)
+            control.waitMicros(50)
         }
     }
 
@@ -178,7 +177,7 @@ namespace makerbit {
     //% weight=80
     export function clearLcd(): void {
         send(Lcd.Command, 0x01)
-        basic.pause(50)
+        control.waitMicros(2000)
     }
 
     /**
@@ -211,19 +210,19 @@ namespace makerbit {
 
         // Wait 50 ms before sending first command to device after
         // being powered on
-        basic.pause(50)
+        control.waitMicros(50 * 1000)
 
         // set 4bit mode
         send(Lcd.Command, 0x33)
         basic.pause(5)  // set 4bit mode (3 attempts)
         i2cWrite(0x30)
-        basic.pause(5)
+        control.waitMicros(4100)
         i2cWrite(0x30)
-        basic.pause(5)
+        control.waitMicros(4100)
         i2cWrite(0x30)
-        basic.pause(5)
+        control.waitMicros(4100)
         i2cWrite(0x20)  // set 4bit interface
-        basic.pause(5)
+        control.waitMicros(4100)
 
         // set mode
         send(Lcd.Command, 0x28)
