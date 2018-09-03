@@ -43,6 +43,9 @@ namespace makerbit {
         lastTrackCompletedTimestamp: 0
     }
 
+    const MICROBIT_MAKERBIT_MP3_ID = 756
+    const MICROBIT_MAKERBIT_MP3_TRACK_STARTED = 1
+
     function readSerial() {
         const responseBuffer: Buffer = pins.createBuffer(10)
         const first: Buffer = pins.createBuffer(1)
@@ -105,6 +108,7 @@ namespace makerbit {
                 playState.track++
                 // Send as fast as possible to prevent collision with 2nd TRACK_COMPLETED event
                 serial.writeBuffer(YX5300.playTrackFromFolder(playState.track, playState.folder))
+                control.raiseEvent(MICROBIT_MAKERBIT_MP3_ID, MICROBIT_MAKERBIT_MP3_TRACK_STARTED)
             }
         }
 
