@@ -192,6 +192,8 @@ namespace makerbit {
         if (newState.playMode === PlayMode.Track && newState.repeat === Repeat.Forever) {
             sendCommand(YX5300.enableRepeatModeForCurrentTrack())
         }
+
+        control.raiseEvent(MICROBIT_MAKERBIT_MP3_ID, MICROBIT_MAKERBIT_MP3_TRACK_STARTED)
     }
 
     /**
@@ -261,6 +263,21 @@ namespace makerbit {
     function sendCommand(command: Buffer): void {
         serial.writeBuffer(command)
         basic.pause(YX5300.REQUIRED_PAUSE_BETWEEN_COMMANDS_MILLIS)
+    }
+
+    /**
+    * Do something when a MP3 track is started.
+     * @param handler body code to run when event is raised
+    */
+    //% subcategory="Serial MP3"
+    //% blockId=makerbit_mp3_on_track_started
+    //% block="on MP3 track started"
+    //% weight=41
+    export function onMp3TrackStarted(handler: () => void) {
+        control.onEvent(
+            MICROBIT_MAKERBIT_MP3_ID,
+            MICROBIT_MAKERBIT_MP3_TRACK_STARTED,
+            handler)
     }
 
     /**

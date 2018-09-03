@@ -55,6 +55,7 @@ makerbit.runMp3Command(makerbit.Mp3Command.UNMUTE)
 
 const folder: number = makerbit.mp3Folder()
 const track: number = makerbit.mp3Track()
+makerbit.onMp3TrackStarted(() => { })
 
 
 /**
