@@ -128,11 +128,15 @@ namespace makerbit {
     //% block="show LCD string %text| at %position=makerbit_lcd_position"
     //% weight=90
     export function showStringOnLcd(text: string, position: number): void {
+        if (position > 31) {
+            return
+        }
+
         const COLUMNS = 16
 
         setCursor(Math.idiv(position, COLUMNS), position % COLUMNS)
 
-        for (let i = 0; i < text.length; i++) {
+        for (let i = 0; i < text.length && position + i <= 31; i++) {
             if (i > 0 && (position + i) % COLUMNS === 0) {
                 // simulate carriage return
                 setCursor(Math.idiv(position + i, COLUMNS), 0)
