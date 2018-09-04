@@ -39,6 +39,7 @@ namespace makerbit {
 
     const MICROBIT_MAKERBIT_MP3_ID = 756
     const MICROBIT_MAKERBIT_MP3_TRACK_STARTED = 1
+    const MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED = 2
     const ERROR_MP3_NOT_CONNECTED = 'MP3 not initialized. Call connectSerialMp3.'
 
     function readSerial() {
@@ -93,12 +94,14 @@ namespace makerbit {
     }
 
     function handleResponseTrackCompleted(response: YX5300.Response) {
-        let eventTimestamp = input.runningTime()
+        let currentTime = input.runningTime()
 
         // At end of playback we receive up to two TRACK_COMPLETED events.
         // We use the 1st TRACK_COMPLETED event to notify playback as complete
         // or to advance folder play. A closely following 2nd event is ignored.
-        if (deviceState.lastTrackCompletedTimestamp < eventTimestamp - 250) {
+        if (deviceState.lastTrackCompletedTimestamp + 500 < currentTime) {
+            control.raiseEvent(MICROBIT_MAKERBIT_MP3_ID, MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED)
+
             if (deviceState.playMode === PlayMode.Folder) {
                 deviceState.track++
                 // Send as fast as possible to prevent collision with 2nd TRACK_COMPLETED event
@@ -107,7 +110,7 @@ namespace makerbit {
             }
         }
 
-        deviceState.lastTrackCompletedTimestamp = eventTimestamp
+        deviceState.lastTrackCompletedTimestamp = currentTime
     }
 
     /**
@@ -186,7 +189,7 @@ namespace makerbit {
         playTrackOnDevice(deviceState)
     }
 
-    function playTrackOnDevice(targetState : DeviceState): void {
+    function playTrackOnDevice(targetState: DeviceState): void {
 
         sendCommand(YX5300.playTrackFromFolder(targetState.track, targetState.folder))
 
@@ -207,7 +210,7 @@ namespace makerbit {
     //% weight=46
     export function setMp3Volume(volume: number): void {
         makerbit.assert(!!deviceState, ERROR_MP3_NOT_CONNECTED)
-        if(volume < 0 || volume > 30) {
+        if (volume < 0 || volume > 30) {
             return
         }
         deviceState.volume = volume
@@ -248,7 +251,7 @@ namespace makerbit {
                 break
             case Mp3Command.DECREASE_VOLUME:
                 setMp3Volume(deviceState.volume - 1)
-            break
+                break
             case Mp3Command.PAUSE:
                 sendCommand(YX5300.pause())
                 break
@@ -273,17 +276,32 @@ namespace makerbit {
     }
 
     /**
-    * Do something when a MP3 track is started.
+     * Do something when a MP3 track is started.
      * @param handler body code to run when event is raised
     */
     //% subcategory="Serial MP3"
     //% blockId=makerbit_mp3_on_track_started
     //% block="on MP3 track started"
-    //% weight=41
+    //% weight=42
     export function onMp3TrackStarted(handler: () => void) {
         control.onEvent(
             MICROBIT_MAKERBIT_MP3_ID,
             MICROBIT_MAKERBIT_MP3_TRACK_STARTED,
+            handler)
+    }
+
+    /**
+     * Do something when a MP3 track is completed.
+     * @param handler body code to run when event is raised
+    */
+    //% subcategory="Serial MP3"
+    //% blockId=makerbit_mp3_on_track_completed
+    //% block="on MP3 track completed"
+    //% weight=41
+    export function onMp3TrackCompleted(handler: () => void) {
+        control.onEvent(
+            MICROBIT_MAKERBIT_MP3_ID,
+            MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED,
             handler)
     }
 
