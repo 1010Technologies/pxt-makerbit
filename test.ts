@@ -54,6 +54,7 @@ makerbit.runMp3Command(makerbit.Mp3Command.MUTE)
 makerbit.runMp3Command(makerbit.Mp3Command.UNMUTE)
 
 makerbit.onMp3TrackStarted(() => { })
+makerbit.onMp3TrackCompleted(() => { })
 const folder: number = makerbit.mp3Folder()
 const track: number = makerbit.mp3Track()
 const volume: number = makerbit.mp3Volume()
