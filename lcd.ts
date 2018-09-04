@@ -85,13 +85,12 @@ namespace makerbit {
 
     // Send bits via I2C bus
     function i2cWrite(value: number) {
-        if (lcdAddr >= 0) {
-            pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
-            pins.i2cWriteNumber(lcdAddr, value | 0x04, NumberFormat.Int8LE)
-            control.waitMicros(1)
-            pins.i2cWriteNumber(lcdAddr, value & (0xFF ^ 0x04), NumberFormat.Int8LE)
-            control.waitMicros(50)
-        }
+        makerbit.assert(lcdAddr >= 0, 'LCD not initialized. Call connectLcd.')
+        pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
+        pins.i2cWriteNumber(lcdAddr, value | 0x04, NumberFormat.Int8LE)
+        control.waitMicros(1)
+        pins.i2cWriteNumber(lcdAddr, value & (0xFF ^ 0x04), NumberFormat.Int8LE)
+        control.waitMicros(50)
     }
 
     // Send data to I2C bus

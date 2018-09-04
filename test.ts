@@ -53,10 +53,10 @@ makerbit.runMp3Command(makerbit.Mp3Command.STOP)
 makerbit.runMp3Command(makerbit.Mp3Command.MUTE)
 makerbit.runMp3Command(makerbit.Mp3Command.UNMUTE)
 
+makerbit.onMp3TrackStarted(() => { })
 const folder: number = makerbit.mp3Folder()
 const track: number = makerbit.mp3Track()
-makerbit.onMp3TrackStarted(() => { })
-
+const volume: number = makerbit.mp3Volume()
 
 /**
  * Ultrasonic tests
