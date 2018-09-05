@@ -24,7 +24,9 @@ namespace makerbit {
     let lastTouchReadTimestamp = 0
 
     const MICROBIT_MAKERBIT_TOUCH_ID = 2148
+    const MICROBIT_MAKERBIT_ANY_TOUCH_DETECTED = 0xFFF
     let isTouchEventDetectionEnabled = false
+    let lastTouchSensorIndex = 0
 
     /**
      * Initialize the touch controller.
@@ -119,14 +121,22 @@ namespace makerbit {
 
         while (true) {
             const touchStatus = getTouchStatus()
-
+            let sensorIndex = 16
+            let touchDownDetected = false
             for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit = touchSensorBit << 1) {
                 // Raise event only once on touch down
                 if ((touchSensorBit & touchStatus) !== 0) {
                     if (!((touchSensorBit & previousTouchStatus) !== 0)) {
+                        touchDownDetected = true
+                        lastTouchSensorIndex = sensorIndex
                         control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_ID, touchSensorBit)
                     }
                 }
+                sensorIndex -= 1
+            }
+
+            if (touchDownDetected) {
+                control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_ID, MICROBIT_MAKERBIT_ANY_TOUCH_DETECTED)
             }
 
             previousTouchStatus = touchStatus
@@ -143,28 +153,56 @@ namespace makerbit {
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"
     //% weight=69
-    export function isTouchDetected(sensor: TouchSensor): boolean {
+    export function isTouched(sensor: TouchSensor): boolean {
         const bits = getTouchStatus()
         return (bits & sensor) !== 0
     }
 
     /**
-    * Do something when a touch event is detected.
+    * Do something when a specific sensor is touched.
      * @param sensor the touch sensor to be checked
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
-    //% blockId=makerbit_touch_on_touch_detected block="on touch sensor | %sensor | touched"
+    //% blockId=makerbit_touch_on_touch_sensor
+    //% block="on touch sensor | %sensor | touched"
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"
     //% weight=65
-    export function onTouchDetected(sensor: TouchSensor, handler: () => void) {
+    export function onTouchSensor(sensor: TouchSensor, handler: () => void) {
+        initBackgroundDetection()
+        control.onEvent(MICROBIT_MAKERBIT_TOUCH_ID, sensor, handler)
+    }
+
+    /**
+    * Do something when a touch event is detected.
+     * @param handler body code to run when event is raised
+    */
+    //% subcategory="Touch"
+    //% blockId=makerbit_touch_on_touch
+    //% block="on touch"
+    //% weight=64
+    export function onTouch(handler: () => void) {
+        initBackgroundDetection()
+        control.onEvent(MICROBIT_MAKERBIT_TOUCH_ID, MICROBIT_MAKERBIT_ANY_TOUCH_DETECTED, handler)
+    }
+
+    function initBackgroundDetection() {
         if (!isTouchEventDetectionEnabled) {
             isTouchEventDetectionEnabled = true
             control.inBackground(detectAndNotifyTouchEvents)
         }
+    }
 
-        control.onEvent(MICROBIT_MAKERBIT_TOUCH_ID, sensor, handler)
+    /**
+     * Returns the index of the last sensor that was touched when used inside the onTouch block.
+     */
+    //% subcategory="Touch"
+    //% blockId="makerbit_touch_last_touch_detected"
+    //% block="touch sensor index"
+    //% weight=50
+    export function touchSensorIndex(): number {
+        return lastTouchSensorIndex
     }
 
     // Communication module for MPR121 capacitive touch sensor controller
