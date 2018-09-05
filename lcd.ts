@@ -203,7 +203,7 @@ namespace makerbit {
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_set_address" block="connect LCD at I2C address %i2cAddress"
     //% i2cAddress.min=0 i2cAddress.max=127
-    //% weight=50
+    //% weight=95
     export function connectLcd(i2cAddress: number): void {
         if (i2cAddress < 0) {
             return
