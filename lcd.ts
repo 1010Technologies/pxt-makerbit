@@ -121,7 +121,7 @@ namespace makerbit {
     /**
      * Displays a string on the LCD at a given position.
      * @param text the text to show, eg: "MakerBit"
-     * @param position the position on the LCD, [0 - 31], eg: 0
+     * @param position the position on the LCD, [0 - 31]
      */
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_show_string"
@@ -148,7 +148,7 @@ namespace makerbit {
     /**
      * Displays a number on the LCD at a given position.
      * @param value the number to show
-     * @param position the position on the LCD, [0 - 31], eg: 0
+     * @param position the position on the LCD, [0 - 31]
        */
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_show_number"

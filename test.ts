@@ -59,6 +59,7 @@ const folder: number = makerbit.mp3Folder()
 const track: number = makerbit.mp3Track()
 const volume: number = makerbit.mp3Volume()
 
+
 /**
  * Ultrasonic tests
  */
@@ -70,9 +71,9 @@ const distance: number = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM
  * LCD tests
  */
 
+makerbit.connectLcd(39)
 makerbit.showStringOnLcd("Hello world", 0)
 makerbit.showNumberOnLcd(42, 16)
 makerbit.clearLcd()
 makerbit.setLcdBacklight(makerbit.LcdBacklight.On)
-makerbit.connectLcd(39)
 let pos: number = makerbit.position(makerbit.LcdPosition.P0)

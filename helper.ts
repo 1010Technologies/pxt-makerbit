@@ -11,7 +11,7 @@ namespace makerbit {
     /**
      * Sets all LED pins to either on or off.
      * The pins 5 to 16 are MakerBit LED pins.
-     * @param level digital pin level, either 0 or 1, eg: 0
+     * @param level digital pin level, either 0 or 1
      */
     //% blockId="makerbit_helper_set_led_pins"
     //% block="set all LED pins to %level=makerbit_helper_level"
@@ -26,7 +26,7 @@ namespace makerbit {
       * Sets a digital pin to either on or off.
       * Configures this pin as a digital output (if necessary).
       * @param name name of the pin in the range from 0 to 20, eg: 5
-      * @param level digital pin level, either 0 or 1, eg: 1
+      * @param level digital pin level, either 0 or 1
       */
      //% blockId="makerbit_helper_set_digital_pin"
      //% block="set digital pin %pin | to %level=makerbit_helper_level"
