@@ -42,6 +42,8 @@ namespace makerbit {
     const MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED = 2
     const ERROR_MP3_NOT_CONNECTED = 'MP3 not initialized. Call connectSerialMp3.'
 
+    let event = 0
+
     function readSerial() {
         const responseBuffer: Buffer = pins.createBuffer(10)
         const first: Buffer = pins.createBuffer(1)
@@ -68,6 +70,8 @@ namespace makerbit {
     export function readSerialToBuffer(buffer: Buffer): number { return 0 }
 
     function handleResponse(response: YX5300.Response) {
+        event += 1
+        makerbit.showNumberOnLcd(event, 12)
         switch (response.type) {
             case YX5300.ResponseType.TRACK_NOT_FOUND:
                 handleResponseTrackNotFound(response)
