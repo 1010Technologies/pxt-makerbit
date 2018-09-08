@@ -27,7 +27,6 @@ namespace makerbit {
     const MICROBIT_MAKERBIT_TOUCH_RELEASED_ID = 2149
     const MICROBIT_MAKERBIT_ANY_TOUCH_DOWN_DETECTED = 0xFFF
     let isTouchEventDetectionEnabled = false
-    let lastTouchSensorIndex = -1
 
     /**
      * Initialize the touch controller.
@@ -122,14 +121,12 @@ namespace makerbit {
 
         while (true) {
             const touchStatus = getTouchStatus()
-            let sensorIndex = 16
             let touchDownDetected = false
             for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit = touchSensorBit << 1) {
                 // Raise event when touch starts
                 if ((touchSensorBit & touchStatus) !== 0) {
                     if (!((touchSensorBit & previousTouchStatus) !== 0)) {
                         touchDownDetected = true
-                        lastTouchSensorIndex = sensorIndex
                         control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_DOWN_ID, touchSensorBit)
                     }
                 }
@@ -140,7 +137,6 @@ namespace makerbit {
                         control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_RELEASED_ID, touchSensorBit)
                     }
                 }
-                sensorIndex -= 1
             }
 
             if (touchDownDetected) {
@@ -154,7 +150,7 @@ namespace makerbit {
 
     /**
     * Do something when a specific sensor is touched.
-    * A touch down event is notified once in a touch operation.
+    * This touch event is notified once at the beginning of a touch operation.
      * @param sensor the touch sensor to be checked
      * @param handler body code to run when event is raised
     */
@@ -164,7 +160,7 @@ namespace makerbit {
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"
     //% weight=65
-    export function onTouchSensorDown(sensor: TouchSensor, handler: () => void) {
+    export function onTouchSensor(sensor: TouchSensor, handler: () => void) {
         initBackgroundDetection()
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_DOWN_ID, sensor, handler)
     }
@@ -172,7 +168,7 @@ namespace makerbit {
 
     /**
     * Do something when a specific sensor is released.
-    * A touch release event is notified once in a touch operation.
+    * A touch release event is notified once at the end of a touch operation.
      * @param sensor the touch sensor to be checked
      * @param handler body code to run when event is raised
     */
@@ -188,15 +184,15 @@ namespace makerbit {
     }
 
     /**
-    * Do something when a touch down event is detected.
-    * A touch down event is notified once in a touch operation.
+    * Do something when a touch event is detected.
+    * This touch event is notified once at the beginning of a touch operation.
     * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
-    //% blockId=makerbit_touch_on_touch_down
+    //% blockId=makerbit_touch_on_touch
     //% block="on touch"
     //% weight=60
-    export function onTouchDown(handler: () => void) {
+    export function onTouch(handler: () => void) {
         initBackgroundDetection()
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_DOWN_ID, MICROBIT_MAKERBIT_ANY_TOUCH_DOWN_DETECTED, handler)
     }
@@ -209,15 +205,23 @@ namespace makerbit {
     }
 
     /**
-     * Returns the index of the sensor that was touched most recently.
-     * Note: Is only accurate when used inside an onTouch block.
+     * Returns the index of the sensor that is currently touched and -1 if no sensor is touched.
      */
     //% subcategory="Touch"
-    //% blockId="makerbit_touch_last_touch_detected"
-    //% block="touch sensor index"
+    //% blockId="makerbit_touch_current_touch_sensor
+    //% block="touch sensor"
     //% weight=50
-    export function touchSensorIndex(): number {
-        return lastTouchSensorIndex
+    export function touchSensor(): number {
+        const touchStatus = getTouchStatus()
+
+        for (let sensorIndex = 5; sensorIndex <= 16; sensorIndex++) {
+            const touchSensorBit = TouchSensor.T5 >> (sensorIndex-5)
+            if ((touchSensorBit & touchStatus) !== 0) {
+                return sensorIndex
+            }
+        }
+
+        return -1
     }
 
     /**
