@@ -205,7 +205,7 @@ namespace makerbit {
     }
 
     /**
-     * Returns the index of the sensor that is currently touched and -1 if no sensor is touched.
+     * Returns the index of the sensor that is currently touched and 0 if no sensor is touched.
      * If multiple sensors are touched, the one with the lowest index is returned.
      */
     //% subcategory="Touch"
@@ -222,7 +222,7 @@ namespace makerbit {
             }
         }
 
-        return -1
+        return 0
     }
 
     /**
