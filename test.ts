@@ -26,12 +26,11 @@ makerbit.setMotorDirection(makerbit.Motor.B, makerbit.MotorDirection.Reverse)
  * Touch tests
  */
 
-makerbit.onTouchSensor(makerbit.TouchSensor.T5, () => { })
-makerbit.onTouchSensorReleased(makerbit.TouchSensor.T5, () => { })
-makerbit.onTouch(() => { })
+makerbit.onTouchSensorTouched(makerbit.TouchSensor.T5, () => { })
+makerbit.onTouchSensorReleased(makerbit.TouchSensor.T16, () => { })
+makerbit.onTouchEvent(() => { })
 let touchSensor: number = makerbit.touchSensor();
 let b: boolean = makerbit.isTouched(makerbit.TouchSensor.T5)
-makerbit.isTouched(makerbit.TouchSensor.T16)
 
 
 /**

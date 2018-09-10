@@ -23,8 +23,9 @@ namespace makerbit {
     let lastTouchStatus = 0
     let lastTouchReadTimestamp = 0
 
-    const MICROBIT_MAKERBIT_TOUCH_DOWN_ID = 2148
-    const MICROBIT_MAKERBIT_TOUCH_RELEASED_ID = 2149
+    const MICROBIT_MAKERBIT_TOUCH_SENSOR_ID = 2147
+    const MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID = 2148
+    const MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID = 2149
     const MICROBIT_MAKERBIT_ANY_TOUCH_DOWN_DETECTED = 0xFFF
     let isTouchEventDetectionEnabled = false
 
@@ -121,26 +122,27 @@ namespace makerbit {
 
         while (true) {
             const touchStatus = getTouchStatus()
-            let touchDownDetected = false
+            let modifiedTouchSensorBit = 0
             for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit = touchSensorBit << 1) {
                 // Raise event when touch starts
                 if ((touchSensorBit & touchStatus) !== 0) {
                     if (!((touchSensorBit & previousTouchStatus) !== 0)) {
-                        touchDownDetected = true
-                        control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_DOWN_ID, touchSensorBit)
+                        modifiedTouchSensorBit = touchSensorBit
+                        control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, touchSensorBit)
                     }
                 }
 
                 // Raise event when touch ends
                 if ((touchSensorBit & touchStatus) === 0) {
                     if (!((touchSensorBit & previousTouchStatus) === 0)) {
-                        control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_RELEASED_ID, touchSensorBit)
+                        modifiedTouchSensorBit = touchSensorBit
+                        control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, touchSensorBit)
                     }
                 }
             }
 
-            if (touchDownDetected) {
-                control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_DOWN_ID, MICROBIT_MAKERBIT_ANY_TOUCH_DOWN_DETECTED)
+            if (modifiedTouchSensorBit !== 0) {
+                control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_ID, modifiedTouchSensorBit)
             }
 
             previousTouchStatus = touchStatus
@@ -160,9 +162,9 @@ namespace makerbit {
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"
     //% weight=65
-    export function onTouchSensor(sensor: TouchSensor, handler: () => void) {
+    export function onTouchSensorTouched(sensor: TouchSensor, handler: () => void) {
         initBackgroundDetection()
-        control.onEvent(MICROBIT_MAKERBIT_TOUCH_DOWN_ID, sensor, handler)
+        control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, sensor, handler)
     }
 
 
@@ -180,21 +182,21 @@ namespace makerbit {
     //% weight=64
     export function onTouchSensorReleased(sensor: TouchSensor, handler: () => void) {
         initBackgroundDetection()
-        control.onEvent(MICROBIT_MAKERBIT_TOUCH_RELEASED_ID, sensor, handler)
+        control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, sensor, handler)
     }
 
     /**
     * Do something when a touch event is detected.
-    * This touch event is notified once at the beginning of a touch operation.
+    * The touch event handler is triggered at the beginning and at the end of a touch operation.
     * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
     //% blockId=makerbit_touch_on_touch
     //% block="on touch"
     //% weight=60
-    export function onTouch(handler: () => void) {
+    export function onTouchEvent(handler: () => void) {
         initBackgroundDetection()
-        control.onEvent(MICROBIT_MAKERBIT_TOUCH_DOWN_ID, MICROBIT_MAKERBIT_ANY_TOUCH_DOWN_DETECTED, handler)
+        control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_ID, EventBusValue.MICROBIT_EVT_ANY, handler)
     }
 
     function initBackgroundDetection() {
