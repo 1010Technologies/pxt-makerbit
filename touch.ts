@@ -26,7 +26,6 @@ namespace makerbit {
     const MICROBIT_MAKERBIT_TOUCH_SENSOR_ID = 2147
     const MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID = 2148
     const MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID = 2149
-    const MICROBIT_MAKERBIT_ANY_TOUCH_DOWN_DETECTED = 0xFFF
     let isTouchEventDetectionEnabled = false
 
     /**
@@ -153,7 +152,7 @@ namespace makerbit {
     /**
     * Do something when a specific sensor is touched.
     * This touch event is notified once at the beginning of a touch operation.
-     * @param sensor the touch sensor to be checked
+     * @param sensor the touch sensor to be checked, eg: makerbit.TouchSensor.T5
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
@@ -171,7 +170,7 @@ namespace makerbit {
     /**
     * Do something when a specific sensor is released.
     * A touch release event is notified once at the end of a touch operation.
-     * @param sensor the touch sensor to be checked
+     * @param sensor the touch sensor to be checked, eg: makerbit.TouchSensor.T5
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
@@ -229,7 +228,7 @@ namespace makerbit {
 
     /**
      * Returns true if a specific touch sensor is currently touched. False otherwise.
-     * @param sensor the touch sensor to be checked
+     * @param sensor the touch sensor to be checked, eg: makerbit.TouchSensor.T5
      */
     //% subcategory="Touch"
     //% blockId="makerbit_touch_is_touch_sensor_touched" block="touch sensor | %sensor | is touched"

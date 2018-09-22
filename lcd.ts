@@ -160,7 +160,7 @@ namespace makerbit {
 
     /**
      * Turns a LCD position value into a number.
-     * @param position the LCD position
+     * @param position the LCD position, eg: makerbit.LcdPosition.P0
      */
     //% weight=49
     //% blockId=makerbit_lcd_position

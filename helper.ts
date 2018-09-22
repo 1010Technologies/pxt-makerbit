@@ -55,7 +55,7 @@ namespace makerbit {
 
     /**
      * Turns a digital pin level into a number.
-     * @param level the pin level
+     * @param level the pin level, eg: makerbit.PinLevel.High
      */
     //% weight=49
     //% blockId=makerbit_helper_level
