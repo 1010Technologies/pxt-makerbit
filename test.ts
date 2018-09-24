@@ -29,8 +29,9 @@ makerbit.setMotorDirection(makerbit.Motor.B, makerbit.MotorDirection.Reverse)
 makerbit.onTouchSensorTouched(makerbit.TouchSensor.T5, () => { })
 makerbit.onTouchSensorReleased(makerbit.TouchSensor.T16, () => { })
 makerbit.onTouchEvent(() => { })
+makerbit.onTouchEvent(({sensor, isTouched}) => { })
 let touchSensor: number = makerbit.touchSensor();
-let b: boolean = makerbit.isTouched(makerbit.TouchSensor.T5)
+let isTouched: boolean = makerbit.isTouched(makerbit.TouchSensor.T5)
 
 
 /**

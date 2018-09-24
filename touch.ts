@@ -23,7 +23,6 @@ namespace makerbit {
     let lastTouchStatus = 0
     let lastTouchReadTimestamp = 0
 
-    const MICROBIT_MAKERBIT_TOUCH_SENSOR_ID = 2147
     const MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID = 2148
     const MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID = 2149
     let isTouchEventDetectionEnabled = false
@@ -121,12 +120,10 @@ namespace makerbit {
 
         while (true) {
             const touchStatus = getTouchStatus()
-            let modifiedTouchSensorBit = 0
             for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit = touchSensorBit << 1) {
                 // Raise event when touch starts
                 if ((touchSensorBit & touchStatus) !== 0) {
                     if (!((touchSensorBit & previousTouchStatus) !== 0)) {
-                        modifiedTouchSensorBit = touchSensorBit
                         control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, touchSensorBit)
                     }
                 }
@@ -134,14 +131,9 @@ namespace makerbit {
                 // Raise event when touch ends
                 if ((touchSensorBit & touchStatus) === 0) {
                     if (!((touchSensorBit & previousTouchStatus) === 0)) {
-                        modifiedTouchSensorBit = touchSensorBit
                         control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, touchSensorBit)
                     }
                 }
-            }
-
-            if (modifiedTouchSensorBit !== 0) {
-                control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_ID, modifiedTouchSensorBit)
             }
 
             previousTouchStatus = touchStatus
@@ -184,6 +176,28 @@ namespace makerbit {
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, sensor, handler)
     }
 
+    export class TouchEvent {
+        /**
+         * The index of the touch sensor.
+         */
+        public sensor: number
+        /**
+         * The status of the touch sensor. True if touched and false if released.
+         */
+        public isTouched: boolean
+    }
+
+    function firstTouchSensorToIndex(touchSensorBit: TouchSensor) {
+        let bit = TouchSensor.T5
+        for (let sensorIndex = 5; sensorIndex <= 16; sensorIndex++) {
+            if ((bit & touchSensorBit) !== 0) {
+                return sensorIndex
+            }
+            bit >>= 1
+        }
+        return 0
+    }
+
     /**
     * Do something when a touch event is detected.
     * The touch event handler is triggered at the beginning and at the end of a touch operation.
@@ -192,10 +206,24 @@ namespace makerbit {
     //% subcategory="Touch"
     //% blockId=makerbit_touch_on_touch
     //% block="on touch"
+    //% mutate=objectdestructuring
+    //% mutateText=TouchEvent
+    //% mutateDefaults="sensor:sensor,isTouched:isTouched"
     //% weight=60
-    export function onTouchEvent(handler: () => void) {
+    export function onTouchEvent(handler: (event: TouchEvent) => void) {
         initBackgroundDetection()
-        control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_ID, EventBusValue.MICROBIT_EVT_ANY, handler)
+        control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, EventBusValue.MICROBIT_EVT_ANY, () => {
+            const event = new TouchEvent()
+            event.sensor = firstTouchSensorToIndex(control.eventValue())
+            event.isTouched = true
+            handler(event)
+        })
+        control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, EventBusValue.MICROBIT_EVT_ANY, () => {
+            const event = new TouchEvent()
+            event.sensor = firstTouchSensorToIndex(control.eventValue())
+            event.isTouched = false
+            handler(event)
+        })
     }
 
     function initBackgroundDetection() {
@@ -214,16 +242,7 @@ namespace makerbit {
     //% block="touch sensor"
     //% weight=50
     export function touchSensor(): number {
-        const touchStatus = getTouchStatus()
-
-        for (let sensorIndex = 5; sensorIndex <= 16; sensorIndex++) {
-            const touchSensorBit = TouchSensor.T5 >> (sensorIndex-5)
-            if ((touchSensorBit & touchStatus) !== 0) {
-                return sensorIndex
-            }
-        }
-
-        return 0
+        return firstTouchSensorToIndex(getTouchStatus())
     }
 
     /**
@@ -236,8 +255,7 @@ namespace makerbit {
     //% sensor.fieldOptions.tooltips="false"
     //% weight=40
     export function isTouched(sensor: TouchSensor): boolean {
-        const bits = getTouchStatus()
-        return (bits & sensor) !== 0
+        return (getTouchStatus() & sensor) !== 0
     }
 
     // Communication module for MPR121 capacitive touch sensor controller
