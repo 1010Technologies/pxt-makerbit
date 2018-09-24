@@ -85,7 +85,9 @@ namespace makerbit {
 
     // Send bits via I2C bus
     function i2cWrite(value: number) {
-        makerbit.assert(lcdAddr >= 0, 'LCD not initialized. Call connectLcd.')
+        if (lcdAddr < 0) {
+            return
+        }
         pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
         pins.i2cWriteNumber(lcdAddr, value | 0x04, NumberFormat.Int8LE)
         control.waitMicros(1)
@@ -217,7 +219,7 @@ namespace makerbit {
 
         // set 4bit mode
         send(Lcd.Command, 0x33)
-        basic.pause(5)  // set 4bit mode (3 attempts)
+        control.waitMicros(5000)  // set 4bit mode (3 attempts)
         i2cWrite(0x30)
         control.waitMicros(4100)
         i2cWrite(0x30)

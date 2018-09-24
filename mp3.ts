@@ -40,7 +40,6 @@ namespace makerbit {
     const MICROBIT_MAKERBIT_MP3_ID = 756
     const MICROBIT_MAKERBIT_MP3_TRACK_STARTED = 1
     const MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED = 2
-    const ERROR_MP3_NOT_CONNECTED = 'MP3 not initialized. Call connectSerialMp3.'
 
     let event = 0
 
@@ -85,6 +84,10 @@ namespace makerbit {
     }
 
     function handleResponseTrackNotFound(response: YX5300.Response) {
+        if (!deviceState) {
+            return
+        }
+
         if (deviceState.track < deviceState.maxTracksInFolder) {
             deviceState.maxTracksInFolder = deviceState.track
         }
@@ -98,6 +101,10 @@ namespace makerbit {
     }
 
     function handleResponseTrackCompleted(response: YX5300.Response) {
+        if (!deviceState) {
+            return
+        }
+
         let currentTime = input.runningTime()
 
         // At end of playback we receive up to two TRACK_COMPLETED events.
@@ -130,6 +137,12 @@ namespace makerbit {
     //% mp3TX.fieldOptions.tooltips="false"
     //% weight=50
     export function connectSerialMp3(mp3RX: Pin, mp3TX: Pin): void {
+        redirectSerial(mp3RX, mp3TX, BaudRate.BaudRate9600)
+        control.inBackground(readSerial)
+        sendCommand(YX5300.selectDeviceTfCard())
+        control.waitMicros(500 * 1000)
+        sendCommand(YX5300.unmute())
+        setMp3Volume(30)
 
         deviceState = {
             track: 1,
@@ -140,13 +153,6 @@ namespace makerbit {
             lastTrackCompletedTimestamp: 0,
             volume: 30
         }
-
-        redirectSerial(mp3RX, mp3TX, BaudRate.BaudRate9600)
-        control.inBackground(readSerial)
-        sendCommand(YX5300.selectDeviceTfCard())
-        basic.pause(500)
-        sendCommand(YX5300.unmute())
-        setMp3Volume(30)
     }
 
     /** Support serial redirect to all pins. */
@@ -165,7 +171,10 @@ namespace makerbit {
     //% folder.min=1 folder.max=99
     //% weight=48
     export function playMp3TrackFromFolder(track: number, folder: number, repeat: Repeat): void {
-        makerbit.assert(!!deviceState, ERROR_MP3_NOT_CONNECTED)
+        if (!deviceState) {
+            return
+        }
+
         deviceState.track = track
         deviceState.folder = folder
         deviceState.playMode = PlayMode.Track
@@ -184,7 +193,10 @@ namespace makerbit {
     //% folder.min=1 folder.max=99
     //% weight=47
     export function playMp3Folder(folder: number, repeat: Repeat): void {
-        makerbit.assert(!!deviceState, ERROR_MP3_NOT_CONNECTED)
+        if (!deviceState) {
+            return
+        }
+
         deviceState.track = 1
         deviceState.folder = folder
         deviceState.playMode = PlayMode.Folder
@@ -213,7 +225,10 @@ namespace makerbit {
     //% volume.min=0 volume.max=30
     //% weight=46
     export function setMp3Volume(volume: number): void {
-        makerbit.assert(!!deviceState, ERROR_MP3_NOT_CONNECTED)
+        if (!deviceState) {
+            return
+        }
+
         if (volume < 0 || volume > 30) {
             return
         }
@@ -230,7 +245,10 @@ namespace makerbit {
     //% block="run MP3 command %command"
     //% weight=45
     export function runMp3Command(command: Mp3Command): void {
-        makerbit.assert(!!deviceState, ERROR_MP3_NOT_CONNECTED)
+        if (!deviceState) {
+            return
+        }
+
         switch (command) {
             case Mp3Command.PLAY_NEXT_TRACK:
                 if (deviceState.track < deviceState.maxTracksInFolder) {
@@ -276,7 +294,7 @@ namespace makerbit {
 
     function sendCommand(command: Buffer): void {
         serial.writeBuffer(command)
-        basic.pause(YX5300.REQUIRED_PAUSE_BETWEEN_COMMANDS_MILLIS)
+        control.waitMicros(1000 * YX5300.REQUIRED_PAUSE_BETWEEN_COMMANDS_MILLIS)
     }
 
     /**
@@ -317,8 +335,7 @@ namespace makerbit {
     //% block="mp3 folder"
     //% weight=40
     export function mp3Folder(): number {
-        makerbit.assert(!!deviceState, ERROR_MP3_NOT_CONNECTED)
-        return deviceState.folder
+        return deviceState ? deviceState.folder : 1
     }
 
     /**
@@ -329,8 +346,7 @@ namespace makerbit {
     //% block="mp3 track"
     //% weight=39
     export function mp3Track(): number {
-        makerbit.assert(!!deviceState, ERROR_MP3_NOT_CONNECTED)
-        return deviceState.track
+        return deviceState ? deviceState.track : 1
     }
 
     /**
@@ -341,8 +357,7 @@ namespace makerbit {
     //% block="mp3 volume"
     //% weight=38
     export function mp3Volume(): number {
-        makerbit.assert(!!deviceState, ERROR_MP3_NOT_CONNECTED)
-        return deviceState.volume
+        return deviceState ? deviceState.volume : 30
     }
 
     // YX5300 asynchronous serial port control commands

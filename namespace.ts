@@ -25,15 +25,4 @@ namespace makerbit {
         SDL = DigitalPin.P19,
         SDA = DigitalPin.P20
     }
-
-    export function assert(condition: boolean, msg?: string) {
-        if (!condition) {
-            if (msg != null) {
-                console.log('MakerBit Error: ' + msg)
-            } else {
-                console.log('MakerBit Error')
-            }
-            control.panic(67)
-        }
-    }
 }
