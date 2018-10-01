@@ -17,15 +17,18 @@ namespace makerbit {
     }
 
     const MPR121_ADDRESS = 0x5A
-    let isTouchInitialized = false
+    const TOUCH_STATUS_PAUSE_BETWEEN_READ = 50
 
-    const TOUCH_STATUS_MIN_READ_INTERVAL = 100
-    let lastTouchStatus = 0
-    let lastTouchReadTimestamp = 0
+    interface TouchState {
+        lastStatus: number
+        lastReadTimestamp: number
+        isEventDetectionEnabled: boolean
+    }
+
+    let touchController: TouchState
 
     const MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID = 2148
     const MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID = 2149
-    let isTouchEventDetectionEnabled = false
 
     /**
      * Initialize the touch controller.
@@ -33,8 +36,12 @@ namespace makerbit {
     //% subcategory="Touch"
     //% blockId="makerbit_touch_init" block="initialize touch"
     //% weight=70
-    function initTouch(): void {
-        isTouchInitialized = true
+    function initTouchController(): void {
+        touchController = {
+            lastStatus: 0,
+            lastReadTimestamp: 0,
+            isEventDetectionEnabled: false
+        }
 
         const addr = MPR121_ADDRESS
         mpr121.reset(addr)
@@ -101,26 +108,31 @@ namespace makerbit {
     }
 
     function getTouchStatus(): number {
-        if (!isTouchInitialized) {
-            initTouch()
+        if (!touchController) {
+            initTouchController()
+        }
+
+        if (touchController.isEventDetectionEnabled) {
+            return touchController.lastStatus
         }
 
         const now = input.runningTime()
 
-        if (now > lastTouchReadTimestamp + TOUCH_STATUS_MIN_READ_INTERVAL) {
-            lastTouchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
-            lastTouchReadTimestamp = now
+        if (now >= touchController.lastReadTimestamp + TOUCH_STATUS_PAUSE_BETWEEN_READ) {
+            touchController.lastStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
+            touchController.lastReadTimestamp = now
         }
 
-        return lastTouchStatus
+        return touchController.lastStatus
     }
 
     function detectAndNotifyTouchEvents() {
         let previousTouchStatus = 0
 
         while (true) {
-            const touchStatus = getTouchStatus()
-            for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit = touchSensorBit << 1) {
+            const touchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
+            touchController.lastStatus = touchStatus
+            for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit <<= 1) {
                 // Raise event when touch starts
                 if ((touchSensorBit & touchStatus) !== 0) {
                     if (!((touchSensorBit & previousTouchStatus) !== 0)) {
@@ -137,7 +149,7 @@ namespace makerbit {
             }
 
             previousTouchStatus = touchStatus
-            basic.pause(TOUCH_STATUS_MIN_READ_INTERVAL + 10)
+            basic.pause(TOUCH_STATUS_PAUSE_BETWEEN_READ)
         }
     }
 
@@ -227,8 +239,11 @@ namespace makerbit {
     }
 
     function initBackgroundDetection() {
-        if (!isTouchEventDetectionEnabled) {
-            isTouchEventDetectionEnabled = true
+        if (!touchController) {
+            initTouchController()
+        }
+        if (!touchController.isEventDetectionEnabled) {
+            touchController.isEventDetectionEnabled = true
             control.inBackground(detectAndNotifyTouchEvents)
         }
     }
