@@ -129,6 +129,22 @@ basic.forever(() => {
 ## LCD
 Use an I2C LCD 1602 to display numbers and text.
 
+### LCD Example
+```blocks
+makerbit.connectLcd(39)
+makerbit.setLcdBacklight(makerbit.LcdBacklight.Off)
+makerbit.showStringOnLcd("MakerBit", 0)
+makerbit.showNumberOnLcd(42, 16)
+basic.pause(2000)
+makerbit.clearLcd()
+```
+
+### MakerBit connectLcd
+Connects to the LCD at a given I2C address.
+```sig
+makerbit.connectLcd(39)
+```
+
 ### MakerBit showStringOnLcd
 Displays a string on the LCD at a given position. The text is wrapped automatically at line end.
 ```sig
@@ -153,11 +169,6 @@ Enables or disables the backlight of the LCD.
 makerbit.setLcdBacklight(makerbit.LcdBacklight.On)
 ```
 
-### MakerBit connectLcd
-Connects to the LCD at a given I2C address.
-```sig
-makerbit.connectLcd(39)
-```
 
 ### MakerBit position
 Turns a LCD position value into a number.
@@ -166,15 +177,7 @@ makerbit.position(makerbit.LcdPosition.P16)
 ```
 
 
-### LCD Example
-```blocks
-makerbit.connectLcd(39)
-makerbit.setLcdBacklight(makerbit.LcdBacklight.Off)
-makerbit.showStringOnLcd("MakerBit", 0)
-makerbit.showNumberOnLcd(42, 16)
-basic.pause(2000)
-makerbit.clearLcd()
-```
+
 
 ## License
 
