@@ -198,7 +198,7 @@ namespace makerbit {
 
     /**
      * Connects to the LCD at a given I2C address.
-     * The addresses 39 or 63 seem to be widely used.
+     * The addresses 39 (PCF8574) or 63 (PCF8574A) seem to be widely used.
      * @param i2cAddress I2C address of LCD in the range from 0 to 127, eg: 39
      */
     //% subcategory="LCD"
