@@ -181,8 +181,7 @@ namespace makerbit {
     //% blockId="makerbit_lcd_clear" block="clear LCD"
     //% weight=80
     export function clearLcd(): void {
-        send(Lcd.Command, 0x01)
-        control.waitMicros(2000)
+        showStringOnLcd('                                ', 0)
     }
 
     /**
