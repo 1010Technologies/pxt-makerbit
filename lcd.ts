@@ -83,8 +83,8 @@ namespace makerbit {
     let lcdAddr: number = -1
     let lcdBacklight: LcdBacklight = LcdBacklight.On
 
-    // Send bits via I2C bus
-    function i2cWrite(value: number) {
+    // Write 4 bits (high nibble) to I2C bus
+    function write4bits(value: number) {
         if (lcdAddr < 0) {
             return
         }
@@ -95,12 +95,12 @@ namespace makerbit {
         control.waitMicros(50)
     }
 
-    // Send data to I2C bus
+    // Send high and low nibble
     function send(RS_bit: number, payload: number) {
         const highnib = payload & 0xF0
-        i2cWrite(highnib | lcdBacklight | RS_bit)
+        write4bits(highnib | lcdBacklight | RS_bit)
         const lownib = (payload << 4) & 0xF0
-        i2cWrite(lownib | lcdBacklight | RS_bit)
+        write4bits(lownib | lcdBacklight | RS_bit)
     }
 
     // Send command
@@ -212,26 +212,45 @@ namespace makerbit {
 
         lcdAddr = i2cAddress
 
-        // Wait 50 ms before sending first command to device after
-        // being powered on
-        control.waitMicros(50 * 1000)
+        // Wait 50ms before sending first command to device after being powered on
+        basic.pause(50)
 
-        // set 4bit mode
-        send(Lcd.Command, 0x33)
-        control.waitMicros(5000)  // set 4bit mode (3 attempts)
-        i2cWrite(0x30)
-        control.waitMicros(4100)
-        i2cWrite(0x30)
-        control.waitMicros(4100)
-        i2cWrite(0x30)
-        control.waitMicros(4100)
-        i2cWrite(0x20)  // set 4bit interface
-        control.waitMicros(4100)
+        // Pull both RS and R/W low to begin commands
+        pins.i2cWriteNumber(lcdAddr, lcdBacklight, NumberFormat.Int8LE)
+        basic.pause(50)
 
-        // set mode
-        send(Lcd.Command, 0x28)
-        send(Lcd.Command, 0x0C)
-        send(Lcd.Command, 0x06)
+        // Set 4bit mode
+        write4bits(0x30)
+        control.waitMicros(4100)
+        write4bits(0x30)
+        control.waitMicros(4100)
+        write4bits(0x30)
+        control.waitMicros(4100)
+        write4bits(0x20)
+        control.waitMicros(1000)
+
+        // Configure function set
+        const LCD_FUNCTIONSET = 0x20
+        const LCD_4BITMODE = 0x00
+        const LCD_2LINE = 0x08
+        const LCD_5x8DOTS = 0x00
+        send(Lcd.Command, LCD_FUNCTIONSET | LCD_4BITMODE | LCD_2LINE | LCD_5x8DOTS)
+        control.waitMicros(1000)
+
+        // Configure display
+        const LCD_DISPLAYCONTROL = 0x08
+        const LCD_DISPLAYON = 0x04
+        const LCD_CURSOROFF = 0x00
+        const LCD_BLINKOFF = 0x00
+        send(Lcd.Command, LCD_DISPLAYCONTROL | LCD_DISPLAYON | LCD_CURSOROFF | LCD_BLINKOFF)
+        control.waitMicros(1000)
+
+        // Set the entry mode
+        const LCD_ENTRYMODESET = 0x04
+        const LCD_ENTRYLEFT = 0x02
+        const LCD_ENTRYSHIFTDECREMENT = 0x00
+        send(Lcd.Command, LCD_ENTRYMODESET | LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT)
+        control.waitMicros(1000)
 
         clearLcd()
     }
