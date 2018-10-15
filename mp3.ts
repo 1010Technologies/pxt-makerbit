@@ -41,8 +41,6 @@ namespace makerbit {
     const MICROBIT_MAKERBIT_MP3_TRACK_STARTED = 1
     const MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED = 2
 
-    let event = 0
-
     function readSerial() {
         const responseBuffer: Buffer = pins.createBuffer(10)
         responseBuffer.setNumber(NumberFormat.UInt8LE, 0, YX5300.ResponseType.RESPONSE_START_BYTE)
@@ -60,8 +58,6 @@ namespace makerbit {
     }
 
     function handleResponse(response: YX5300.Response) {
-        event += 1
-        makerbit.showNumberOnLcd(event, 12)
         switch (response.type) {
             case YX5300.ResponseType.TRACK_NOT_FOUND:
                 handleResponseTrackNotFound(response)
