@@ -80,27 +80,39 @@ namespace makerbit {
         Data = 1
     }
 
-    let lcdAddr: number = -1
-    let lcdBacklight: LcdBacklight = LcdBacklight.On
+    const LcdRows = 2
+    const LcdColumns = 16
+
+    interface LcdState {
+        i2cAddress: number
+        backlight: LcdBacklight
+        characters: Buffer
+        cursor: number
+    }
+
+    let lcdState: LcdState = undefined
 
     // Write 4 bits (high nibble) to I2C bus
     function write4bits(value: number) {
-        if (lcdAddr < 0) {
+        if (!lcdState) {
             return
         }
-        pins.i2cWriteNumber(lcdAddr, value, NumberFormat.Int8LE)
-        pins.i2cWriteNumber(lcdAddr, value | 0x04, NumberFormat.Int8LE)
+        pins.i2cWriteNumber(lcdState.i2cAddress, value, NumberFormat.Int8LE)
+        pins.i2cWriteNumber(lcdState.i2cAddress, value | 0x04, NumberFormat.Int8LE)
         control.waitMicros(1)
-        pins.i2cWriteNumber(lcdAddr, value & (0xFF ^ 0x04), NumberFormat.Int8LE)
+        pins.i2cWriteNumber(lcdState.i2cAddress, value & (0xFF ^ 0x04), NumberFormat.Int8LE)
         control.waitMicros(50)
     }
 
     // Send high and low nibble
     function send(RS_bit: number, payload: number) {
+        if (!lcdState) {
+            return
+        }
         const highnib = payload & 0xF0
-        write4bits(highnib | lcdBacklight | RS_bit)
+        write4bits(highnib | lcdState.backlight | RS_bit)
         const lownib = (payload << 4) & 0xF0
-        write4bits(lownib | lcdBacklight | RS_bit)
+        write4bits(lownib | lcdState.backlight | RS_bit)
     }
 
     // Send command
@@ -115,9 +127,7 @@ namespace makerbit {
 
     // Set cursor
     function setCursor(line: number, column: number) {
-        let cmd = line === 0 ? 0x80 : 0xC0
-        cmd += column
-        sendCommand(cmd)
+        sendCommand((line === 0 ? 0x80 : 0xC0) + column)
     }
 
     /**
@@ -130,20 +140,25 @@ namespace makerbit {
     //% block="show LCD string %text| at %position=makerbit_lcd_position"
     //% weight=90
     export function showStringOnLcd(text: string, position: number): void {
-        if (position > 31) {
+        for (let i = 0; i < text.length && position + i < LcdRows * LcdColumns; i++) {
+            updateCharacterIfRequired(text.charCodeAt(i), position + i)
+        }
+    }
+
+    function updateCharacterIfRequired(character: number, position: number): void {
+        if (position < 0 || position >= LcdRows * LcdColumns) {
             return
         }
 
-        const COLUMNS = 16
+        if (lcdState.characters[position] != character) {
+            lcdState.characters[position] = character
 
-        setCursor(Math.idiv(position, COLUMNS), position % COLUMNS)
-
-        for (let i = 0; i < text.length && position + i <= 31; i++) {
-            if (i > 0 && (position + i) % COLUMNS === 0) {
-                // simulate carriage return
-                setCursor(Math.idiv(position + i, COLUMNS), 0)
+            if (lcdState.cursor !== position || (lcdState.cursor % LcdColumns) === 0) {
+                setCursor(Math.idiv(position, LcdColumns), position % LcdColumns)
             }
-            sendData(text.charCodeAt(i))
+
+            sendData(character)
+            lcdState.cursor = position + 1
         }
     }
 
@@ -192,7 +207,10 @@ namespace makerbit {
     //% blockId="makerbit_lcd_backlight" block="switch LCD backlight %backlight"
     //% weight=79
     export function setLcdBacklight(backlight: LcdBacklight): void {
-        lcdBacklight = backlight
+        if (!lcdState) {
+            return
+        }
+        lcdState.backlight = backlight
         send(Lcd.Command, 0)
     }
 
@@ -206,17 +224,18 @@ namespace makerbit {
     //% i2cAddress.min=0 i2cAddress.max=127
     //% weight=95
     export function connectLcd(i2cAddress: number): void {
-        if (i2cAddress < 0) {
-            return
+        lcdState = {
+            i2cAddress: i2cAddress,
+            backlight: LcdBacklight.On,
+            characters: pins.createBuffer(LcdRows * LcdColumns),
+            cursor: -1
         }
-
-        lcdAddr = i2cAddress
 
         // Wait 50ms before sending first command to device after being powered on
         basic.pause(50)
 
         // Pull both RS and R/W low to begin commands
-        pins.i2cWriteNumber(lcdAddr, lcdBacklight, NumberFormat.Int8LE)
+        pins.i2cWriteNumber(lcdState.i2cAddress, lcdState.backlight, NumberFormat.Int8LE)
         basic.pause(50)
 
         // Set 4bit mode
@@ -252,6 +271,11 @@ namespace makerbit {
         send(Lcd.Command, LCD_ENTRYMODESET | LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT)
         control.waitMicros(1000)
 
+        // Clear display and buffer
+        const whitespace = 'x'.charCodeAt(0)
+        for (let pos = 0; pos < LcdRows * LcdColumns; pos++) {
+            lcdState.characters[pos] = whitespace
+        }
         clearLcd()
     }
 }
