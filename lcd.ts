@@ -131,17 +131,29 @@ namespace makerbit {
     }
 
     /**
-     * Displays a string on the LCD at a given position.
+     * Displays a text on the LCD in the given position range.
+     * The text will be cropped if it is longer than the provided range.
+     * If there is space left, it will be filled with whitespaces.
+     *
      * @param text the text to show, eg: "MakerBit"
-     * @param position the position on the LCD, [0 - 31]
+     * @param startPosition the start position on the LCD, [0 - 31]
+     * @param endPosition the end position on the LCD, [0 - 31]
      */
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_show_string"
-    //% block="show LCD string %text| at %position=makerbit_lcd_position"
+    //% block="show LCD string %text| from %startPosition=makerbit_lcd_position | to %endPosition=makerbit_lcd_position"
     //% weight=90
-    export function showStringOnLcd(text: string, position: number): void {
-        for (let i = 0; i < text.length && position + i < LcdRows * LcdColumns; i++) {
-            updateCharacterIfRequired(text.charCodeAt(i), position + i)
+    export function showStringOnLcd(text: string, startPosition: number, endPosition: number): void {
+        const whitespace = ' '.charCodeAt(0)
+
+        for (let textPosition = 0; startPosition + textPosition <= endPosition; textPosition++) {
+            let character = text.charCodeAt(textPosition)
+
+            if (textPosition >= text.length) {
+                character = whitespace
+            }
+
+            updateCharacterIfRequired(character, startPosition + textPosition)
         }
     }
 
@@ -163,16 +175,20 @@ namespace makerbit {
     }
 
     /**
-     * Displays a number on the LCD at a given position.
+     * Displays a number on the LCD in the given position range.
+     * If the number needs more space than the range provides, it will be cropped.
+     * If there is space left, it will be filled with whitespaces.
+     *
      * @param value the number to show
-     * @param position the position on the LCD, [0 - 31]
+     * @param startPosition the start position on the LCD, [0 - 31]
+     * @param endPosition the end position on the LCD, [0 - 31]
        */
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_show_number"
-    //% block="show LCD number %value| at %position=makerbit_lcd_position"
+    //% block="show LCD number %value| from %startPosition=makerbit_lcd_position | to %endPosition=makerbit_lcd_position"
     //% weight=89
-    export function showNumberOnLcd(value: number, position: number): void {
-        showStringOnLcd(value.toString(), position)
+    export function showNumberOnLcd(value: number, startPosition: number, endPosition: number): void {
+        showStringOnLcd(value.toString(), startPosition, endPosition)
     }
 
     /**
@@ -181,11 +197,12 @@ namespace makerbit {
      */
     //% weight=49
     //% blockId=makerbit_lcd_position
-    //% block="position %position"
+    //% block="pos %position"
     //% position.fieldEditor="gridpicker" position.fieldOptions.columns=16
     //% position.fieldOptions.tooltips="false"
     //% subcategory="LCD"
-    export function position(position: LcdPosition): number {
+    export function position(position?: LcdPosition): number {
+        if (position === undefined) return 0
         return position
     }
 
@@ -196,7 +213,7 @@ namespace makerbit {
     //% blockId="makerbit_lcd_clear" block="clear LCD"
     //% weight=80
     export function clearLcd(): void {
-        showStringOnLcd('                                ', 0)
+        showStringOnLcd('', 0, 31)
     }
 
     /**

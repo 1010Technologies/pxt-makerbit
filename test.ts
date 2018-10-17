@@ -75,8 +75,8 @@ const distance: number = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM
  */
 
 makerbit.connectLcd(39)
-makerbit.showStringOnLcd("Hello world", 0)
-makerbit.showNumberOnLcd(42, 16)
+makerbit.showStringOnLcd("Hello world", 0, 15)
+makerbit.showNumberOnLcd(42, 16, 2)
 makerbit.clearLcd()
 makerbit.setLcdBacklight(makerbit.LcdBacklight.On)
 let pos: number = makerbit.position(makerbit.LcdPosition.P0)
