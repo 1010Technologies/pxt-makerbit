@@ -1,24 +1,25 @@
 // MakerBit Serial MP3 blocks supporting Catalex Serial MP3 1.0
+
+const enum Mp3Repeat {
+    //% block="once"
+    No = 0,
+    //% block="forever"
+    Forever = 1,
+}
+
+const enum Mp3Command {
+    PLAY_NEXT_TRACK,
+    PLAY_PREVIOUS_TRACK,
+    INCREASE_VOLUME,
+    DECREASE_VOLUME,
+    PAUSE,
+    RESUME,
+    STOP,
+    MUTE,
+    UNMUTE,
+}
+
 namespace makerbit {
-
-    export const enum Repeat {
-        //% block="once"
-        No = 0,
-        //% block="forever"
-        Forever = 1,
-    }
-
-    export const enum Mp3Command {
-        PLAY_NEXT_TRACK,
-        PLAY_PREVIOUS_TRACK,
-        INCREASE_VOLUME,
-        DECREASE_VOLUME,
-        PAUSE,
-        RESUME,
-        STOP,
-        MUTE,
-        UNMUTE,
-    }
 
     const enum PlayMode {
         Track = 0,
@@ -29,7 +30,7 @@ namespace makerbit {
         track: number
         folder: number
         playMode: PlayMode
-        repeat: Repeat
+        repeat: Mp3Repeat
         maxTracksInFolder: number
         lastTrackCompletedTimestamp: number
         volume: number
@@ -81,7 +82,7 @@ namespace makerbit {
 
         if (deviceState.track > 1
             && deviceState.playMode === PlayMode.Folder
-            && deviceState.repeat === Repeat.Forever) {
+            && deviceState.repeat === Mp3Repeat.Forever) {
             deviceState.track = 1
             playTrackOnDevice(deviceState)
         }
@@ -113,8 +114,8 @@ namespace makerbit {
 
     /**
      * Connects to serial MP3 device with chip YX5300.
-     * @param mp3RX MP3 device receiver pin (RX), eg: makerbit.Pin.A0
-     * @param mp3TX MP3 device transmitter pin (TX), eg: makerbit.Pin.A1
+     * @param mp3RX MP3 device receiver pin (RX), eg: MakerBitPin.A0
+     * @param mp3TX MP3 device transmitter pin (TX), eg: MakerBitPin.A1
      */
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_connect" block="connect MP3 with MP3 RX attached to %mp3RX | and MP3 TX to %mp3TX"
@@ -123,7 +124,7 @@ namespace makerbit {
     //% mp3TX.fieldEditor="gridpicker" mp3TX.fieldOptions.columns=3
     //% mp3TX.fieldOptions.tooltips="false"
     //% weight=50
-    export function connectSerialMp3(mp3RX: Pin, mp3TX: Pin): void {
+    export function connectSerialMp3(mp3RX: MakerBitPin, mp3TX: MakerBitPin): void {
         serial.redirect(0 + mp3RX, 0 + mp3TX, BaudRate.BaudRate9600)
         control.inBackground(readSerial)
         sendCommand(YX5300.selectDeviceTfCard())
@@ -135,7 +136,7 @@ namespace makerbit {
             track: 1,
             folder: 1,
             playMode: PlayMode.Track,
-            repeat: Repeat.No,
+            repeat: Mp3Repeat.No,
             maxTracksInFolder: 99,
             lastTrackCompletedTimestamp: 0,
             volume: 30
@@ -146,14 +147,14 @@ namespace makerbit {
      * Plays a track from a folder.
      * @param track track index, eg:1
      * @param folder folder index, eg:1
-     * @param repeat indicates whether to repeat the track, eg: makerbit.Repeat.No
+     * @param repeat indicates whether to repeat the track, eg: Mp3Repeat.No
      */
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_play_track_from_folder" block="play MP3 track %track | from folder %folder | %repeat"
     //% track.min=1 track.max=255
     //% folder.min=1 folder.max=99
     //% weight=48
-    export function playMp3TrackFromFolder(track: number, folder: number, repeat: Repeat): void {
+    export function playMp3TrackFromFolder(track: number, folder: number, repeat: Mp3Repeat): void {
         if (!deviceState) {
             return
         }
@@ -169,13 +170,13 @@ namespace makerbit {
     /**
      * Plays all tracks in a folder.
      * @param folder folder index, eg:1
-     * @param repeat indicates whether to repeat the folder, eg: makerbit.Repeat.No
+     * @param repeat indicates whether to repeat the folder, eg: Mp3Repeat.No
      */
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_play_folder" block="play MP3 folder %folder | %repeat"
     //% folder.min=1 folder.max=99
     //% weight=47
-    export function playMp3Folder(folder: number, repeat: Repeat): void {
+    export function playMp3Folder(folder: number, repeat: Mp3Repeat): void {
         if (!deviceState) {
             return
         }
@@ -192,7 +193,7 @@ namespace makerbit {
 
         sendCommand(YX5300.playTrackFromFolder(targetState.track, targetState.folder))
 
-        if (targetState.playMode === PlayMode.Track && targetState.repeat === Repeat.Forever) {
+        if (targetState.playMode === PlayMode.Track && targetState.repeat === Mp3Repeat.Forever) {
             sendCommand(YX5300.enableRepeatModeForCurrentTrack())
         }
 
@@ -221,7 +222,7 @@ namespace makerbit {
 
     /**
      * Dispatches a command to the MP3 device.
-     * @param command command, eg: makerbit.Command.PLAY_NEXT_TRACK
+     * @param command command, eg: Mp3Command.PLAY_NEXT_TRACK
      */
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_run_command"
@@ -237,7 +238,7 @@ namespace makerbit {
                 if (deviceState.track < deviceState.maxTracksInFolder) {
                     deviceState.track += 1
                     if (deviceState.playMode === PlayMode.Track) {
-                        deviceState.repeat = Repeat.No
+                        deviceState.repeat = Mp3Repeat.No
                     }
                     playTrackOnDevice(deviceState)
                 }
@@ -247,7 +248,7 @@ namespace makerbit {
                     deviceState.track -= 1
                 }
                 if (deviceState.playMode === PlayMode.Track) {
-                    deviceState.repeat = Repeat.No
+                    deviceState.repeat = Mp3Repeat.No
                 }
                 playTrackOnDevice(deviceState)
                 break

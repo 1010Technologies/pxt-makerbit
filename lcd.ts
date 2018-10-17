@@ -1,79 +1,80 @@
 // MakerBit blocks supporting a I2C LCD 1602
+
+const enum LcdPosition {
+    //% block="0"
+    P0 = 0,
+    //% block="1"
+    P1 = 1,
+    //% block="2"
+    P2 = 2,
+    //% block="3"
+    P3 = 3,
+    //% block="4"
+    P4 = 4,
+    //% block="5"
+    P5 = 5,
+    //% block="6"
+    P6 = 6,
+    //% block="7"
+    P7 = 7,
+    //% block="8"
+    P8 = 8,
+    //% block="9"
+    P9 = 9,
+    //% block="10"
+    P10 = 10,
+    //% block="11"
+    P11 = 11,
+    //% block="12"
+    P12 = 12,
+    //% block="13"
+    P13 = 13,
+    //% block="14"
+    P14 = 14,
+    //% block="15"
+    P15 = 15,
+    //% block="16"
+    P16 = 16,
+    //% block="17"
+    P17 = 17,
+    //% block="18"
+    P18 = 18,
+    //% block="19"
+    P19 = 19,
+    //% block="20"
+    P20 = 20,
+    //% block="21"
+    P21 = 21,
+    //% block="22"
+    P22 = 22,
+    //% block="23"
+    P23 = 23,
+    //% block="24"
+    P24 = 24,
+    //% block="25"
+    P25 = 25,
+    //% block="26"
+    P26 = 26,
+    //% block="27"
+    P27 = 27,
+    //% block="28"
+    P28 = 28,
+    //% block="29"
+    P29 = 29,
+    //% block="30"
+    P30 = 30,
+    //% block="31"
+    P31 = 31
+}
+
+const enum LcdBacklight {
+    //% block="off"
+    Off = 0,
+    //% block="on"
+    On = 8
+}
+
 namespace makerbit {
-
-    export const enum LcdPosition {
-        //% block="0"
-        P0 = 0,
-        //% block="1"
-        P1 = 1,
-        //% block="2"
-        P2 = 2,
-        //% block="3"
-        P3 = 3,
-        //% block="4"
-        P4 = 4,
-        //% block="5"
-        P5 = 5,
-        //% block="6"
-        P6 = 6,
-        //% block="7"
-        P7 = 7,
-        //% block="8"
-        P8 = 8,
-        //% block="9"
-        P9 = 9,
-        //% block="10"
-        P10 = 10,
-        //% block="11"
-        P11 = 11,
-        //% block="12"
-        P12 = 12,
-        //% block="13"
-        P13 = 13,
-        //% block="14"
-        P14 = 14,
-        //% block="15"
-        P15 = 15,
-        //% block="16"
-        P16 = 16,
-        //% block="17"
-        P17 = 17,
-        //% block="18"
-        P18 = 18,
-        //% block="19"
-        P19 = 19,
-        //% block="20"
-        P20 = 20,
-        //% block="21"
-        P21 = 21,
-        //% block="22"
-        P22 = 22,
-        //% block="23"
-        P23 = 23,
-        //% block="24"
-        P24 = 24,
-        //% block="25"
-        P25 = 25,
-        //% block="26"
-        P26 = 26,
-        //% block="27"
-        P27 = 27,
-        //% block="28"
-        P28 = 28,
-        //% block="29"
-        P29 = 29,
-        //% block="30"
-        P30 = 30,
-        //% block="31"
-        P31 = 31
-    }
-
-    export const enum LcdBacklight {
-        //% block="off"
-        Off = 0,
-        //% block="on"
-        On = 8
-    }
 
     const enum Lcd {
         Command = 0,
@@ -134,7 +135,6 @@ namespace makerbit {
      * Displays a text on the LCD in the given position range.
      * The text will be cropped if it is longer than the provided range.
      * If there is space left, it will be filled with whitespaces.
-     *
      * @param text the text to show, eg: "MakerBit"
      * @param startPosition the start position on the LCD, [0 - 31]
      * @param endPosition the end position on the LCD, [0 - 31]
@@ -178,7 +178,6 @@ namespace makerbit {
      * Displays a number on the LCD in the given position range.
      * If the number needs more space than the range provides, it will be cropped.
      * If there is space left, it will be filled with whitespaces.
-     *
      * @param value the number to show
      * @param startPosition the start position on the LCD, [0 - 31]
      * @param endPosition the end position on the LCD, [0 - 31]
@@ -193,7 +192,7 @@ namespace makerbit {
 
     /**
      * Turns a LCD position value into a number.
-     * @param position the LCD position, eg: makerbit.LcdPosition.P0
+     * @param position the LCD position
      */
     //% weight=49
     //% blockId=makerbit_lcd_position

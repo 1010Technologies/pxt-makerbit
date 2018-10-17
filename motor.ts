@@ -1,19 +1,19 @@
+const enum Motor {
+    //% block="A"
+    A = 0,
+    //% block="B"
+    B = 1
+}
+
+const enum MotorDirection {
+    //% block="forward"
+    Forward = 1,
+    //% block="reverse"
+    Reverse = -1
+}
+
 // MakerBit motor driver blocks
 namespace makerbit {
-
-    export const enum Motor {
-        //% block="A"
-        A = 0,
-        //% block="B"
-        B = 1
-    }
-
-    export const enum MotorDirection {
-        //% block="forward"
-        Forward = 1,
-        //% block="reverse"
-        Reverse = -1
-    }
 
     const motorDirections = [
         MotorDirection.Forward,
@@ -22,7 +22,7 @@ namespace makerbit {
 
     /**
      * Sets the speed of a motor.
-     * @param motor motor, eg: makerbit.Motor.A
+     * @param motor motor, eg: Motor.A
      * @param speed percentage in the range of -100 to 100, eg: 80
      */
     //% subcategory=Motors
@@ -55,7 +55,7 @@ namespace makerbit {
 
     /**
      * Stops a motor.
-     * @param motor motor, eg: makerbit.Motor.A
+     * @param motor motor, eg: Motor.A
      */
     //% subcategory=Motors
     //% blockId="makerbit_motor_stop" block="stop motor %motor"
@@ -77,8 +77,8 @@ namespace makerbit {
 
     /**
      * Sets the direction of a motor.
-     * @param motor motor, eg: makerbit.Motor.A
-     * @param direction direction of the motor, eg: makerbit.MotorDirection.Forward
+     * @param motor motor, eg: Motor.A
+     * @param direction direction of the motor, eg: MotorDirection.Forward
      */
     //% subcategory=Motors
     //% blockId=makerbit_motor_set_direction block="set motor %motor direction | to %direction"

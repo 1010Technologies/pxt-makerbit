@@ -1,20 +1,21 @@
 // MakerBit Touch blocks
-namespace makerbit {
 
-    export const enum TouchSensor {
-        T5 = 0b100000000000,
-        T6 = 0b010000000000,
-        T7 = 0b001000000000,
-        T8 = 0b000100000000,
-        T9 = 0b000010000000,
-        T10 = 0b000001000000,
-        T11 = 0b000000100000,
-        T12 = 0b000000010000,
-        T13 = 0b000000001000,
-        T14 = 0b000000000100,
-        T15 = 0b000000000010,
-        T16 = 0b000000000001
-    }
+const enum TouchSensor {
+    T5 = 0b100000000000,
+    T6 = 0b010000000000,
+    T7 = 0b001000000000,
+    T8 = 0b000100000000,
+    T9 = 0b000010000000,
+    T10 = 0b000001000000,
+    T11 = 0b000000100000,
+    T12 = 0b000000010000,
+    T13 = 0b000000001000,
+    T14 = 0b000000000100,
+    T15 = 0b000000000010,
+    T16 = 0b000000000001
+}
+
+namespace makerbit {
 
     const MPR121_ADDRESS = 0x5A
     const TOUCH_STATUS_PAUSE_BETWEEN_READ = 50
@@ -156,7 +157,7 @@ namespace makerbit {
     /**
     * Do something when a specific sensor is touched.
     * This touch event is notified once at the beginning of a touch operation.
-     * @param sensor the touch sensor to be checked, eg: makerbit.TouchSensor.T5
+     * @param sensor the touch sensor to be checked, eg: TouchSensor.T5
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
@@ -174,7 +175,7 @@ namespace makerbit {
     /**
     * Do something when a specific sensor is released.
     * A touch release event is notified once at the end of a touch operation.
-     * @param sensor the touch sensor to be checked, eg: makerbit.TouchSensor.T5
+     * @param sensor the touch sensor to be checked, eg: TouchSensor.T5
      * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
@@ -262,7 +263,7 @@ namespace makerbit {
 
     /**
      * Returns true if a specific touch sensor is currently touched. False otherwise.
-     * @param sensor the touch sensor to be checked, eg: makerbit.TouchSensor.T5
+     * @param sensor the touch sensor to be checked, eg: TouchSensor.T5
      */
     //% subcategory="Touch"
     //% blockId="makerbit_touch_is_touch_sensor_touched" block="touch sensor | %sensor | is touched"

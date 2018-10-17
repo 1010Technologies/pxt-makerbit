@@ -5,56 +5,56 @@
 makerbit.setLedPins(0)
 makerbit.setDigitalPin(5, 1)
 makerbit.setAnalogPin(5, 1023)
-let level: number = makerbit.level(makerbit.PinLevel.High)
+let level: number = makerbit.level(PinLevel.High)
 
 
 /**
  * Motor tests
  */
 
-makerbit.runMotor(makerbit.Motor.A, 80)
-makerbit.stopMotor(makerbit.Motor.A)
+makerbit.runMotor(Motor.A, 80)
+makerbit.stopMotor(Motor.A)
 
-makerbit.runMotor(makerbit.Motor.B, -50)
-makerbit.stopMotor(makerbit.Motor.B)
+makerbit.runMotor(Motor.B, -50)
+makerbit.stopMotor(Motor.B)
 
-makerbit.setMotorDirection(makerbit.Motor.A, makerbit.MotorDirection.Forward)
-makerbit.setMotorDirection(makerbit.Motor.B, makerbit.MotorDirection.Reverse)
+makerbit.setMotorDirection(Motor.A, MotorDirection.Forward)
+makerbit.setMotorDirection(Motor.B, MotorDirection.Reverse)
 
 
 /**
  * Touch tests
  */
 
-makerbit.onTouchSensorTouched(makerbit.TouchSensor.T5, () => { })
-makerbit.onTouchSensorReleased(makerbit.TouchSensor.T16, () => { })
+makerbit.onTouchSensorTouched(TouchSensor.T5, () => { })
+makerbit.onTouchSensorReleased(TouchSensor.T16, () => { })
 makerbit.onTouchEvent(() => { })
 makerbit.onTouchEvent(({sensor, isTouched}) => { })
-let touchSensor: number = makerbit.touchSensor();
-let isTouched: boolean = makerbit.isTouched(makerbit.TouchSensor.T5)
+let touchSensor: number = makerbit.touchSensor()
+let isTouched: boolean = makerbit.isTouched(TouchSensor.T5)
 
 
 /**
  * Serial MP3 tests
  */
 
-makerbit.connectSerialMp3(makerbit.Pin.A0, makerbit.Pin.A1)
+makerbit.connectSerialMp3(MakerBitPin.A0, MakerBitPin.A1)
 
-makerbit.playMp3TrackFromFolder(1, 1, makerbit.Repeat.No)
-makerbit.playMp3TrackFromFolder(1, 1, makerbit.Repeat.Forever)
-makerbit.playMp3Folder(1, makerbit.Repeat.No)
-makerbit.playMp3Folder(1, makerbit.Repeat.Forever)
+makerbit.playMp3TrackFromFolder(1, 1, Mp3Repeat.No)
+makerbit.playMp3TrackFromFolder(1, 1, Mp3Repeat.Forever)
+makerbit.playMp3Folder(1, Mp3Repeat.No)
+makerbit.playMp3Folder(1, Mp3Repeat.Forever)
 makerbit.setMp3Volume(30)
 
-makerbit.runMp3Command(makerbit.Mp3Command.PLAY_NEXT_TRACK)
-makerbit.runMp3Command(makerbit.Mp3Command.PLAY_PREVIOUS_TRACK)
-makerbit.runMp3Command(makerbit.Mp3Command.INCREASE_VOLUME)
-makerbit.runMp3Command(makerbit.Mp3Command.DECREASE_VOLUME)
-makerbit.runMp3Command(makerbit.Mp3Command.PAUSE)
-makerbit.runMp3Command(makerbit.Mp3Command.RESUME)
-makerbit.runMp3Command(makerbit.Mp3Command.STOP)
-makerbit.runMp3Command(makerbit.Mp3Command.MUTE)
-makerbit.runMp3Command(makerbit.Mp3Command.UNMUTE)
+makerbit.runMp3Command(Mp3Command.PLAY_NEXT_TRACK)
+makerbit.runMp3Command(Mp3Command.PLAY_PREVIOUS_TRACK)
+makerbit.runMp3Command(Mp3Command.INCREASE_VOLUME)
+makerbit.runMp3Command(Mp3Command.DECREASE_VOLUME)
+makerbit.runMp3Command(Mp3Command.PAUSE)
+makerbit.runMp3Command(Mp3Command.RESUME)
+makerbit.runMp3Command(Mp3Command.STOP)
+makerbit.runMp3Command(Mp3Command.MUTE)
+makerbit.runMp3Command(Mp3Command.UNMUTE)
 
 makerbit.onMp3TrackStarted(() => { })
 makerbit.onMp3TrackCompleted(() => { })
@@ -67,7 +67,7 @@ const volume: number = makerbit.mp3Volume()
  * Ultrasonic tests
  */
 
-const distance: number = makerbit.getUltrasonicDistance(makerbit.DistanceUnit.CM, makerbit.Pin.P5, makerbit.Pin.P8)
+const distance: number = makerbit.getUltrasonicDistance(DistanceUnit.CM, MakerBitPin.P5, MakerBitPin.P8)
 
 
 /**
@@ -78,5 +78,5 @@ makerbit.connectLcd(39)
 makerbit.showStringOnLcd("Hello world", 0, 15)
 makerbit.showNumberOnLcd(42, 16, 2)
 makerbit.clearLcd()
-makerbit.setLcdBacklight(makerbit.LcdBacklight.On)
-let pos: number = makerbit.position(makerbit.LcdPosition.P0)
+makerbit.setLcdBacklight(LcdBacklight.On)
+let pos: number = makerbit.position(LcdPosition.P0)
