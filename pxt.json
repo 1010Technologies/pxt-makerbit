@@ -7,11 +7,11 @@
         "core": "*"
     },
     "files": [
-        "helper.ts",
         "lcd.ts",
         "motor.ts",
         "mp3.ts",
         "namespace.ts",
+        "pins.ts",
         "README.md",
         "touch.ts",
         "ultrasonic.ts"

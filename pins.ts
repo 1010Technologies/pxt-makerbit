@@ -81,7 +81,7 @@ namespace makerbit {
      * @param level the pin level, eg: PinLevel.High
      */
     //% blockId=makerbit_helper_level
-    //% block="level %level"
+    //% block="%level"
     //% blockHidden=true
     export function level(level?: PinLevel): number {
         if (level === undefined) return PinLevel.High
