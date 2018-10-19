@@ -1,6 +1,6 @@
 // MakerBit blocks supporting a I2C LCD 1602
 
-const enum LcdPosition {
+enum LcdPosition {
     //% block="0"
     P0 = 0,
     //% block="1"
@@ -67,7 +67,7 @@ const enum LcdPosition {
     P31 = 31
 }
 
-const enum LcdBacklight {
+enum LcdBacklight {
     //% block="off"
     Off = 0,
     //% block="on"
@@ -181,7 +181,7 @@ namespace makerbit {
      * @param value the number to show
      * @param startPosition the start position on the LCD, [0 - 31]
      * @param endPosition the end position on the LCD, [0 - 31]
-       */
+     */
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_show_number"
     //% block="show LCD number %value| from %startPosition=makerbit_lcd_position | to %endPosition=makerbit_lcd_position"
@@ -191,15 +191,15 @@ namespace makerbit {
     }
 
     /**
-     * Turns a LCD position value into a number.
-     * @param position the LCD position
+     * Turns a LCD position into a number.
+     * @param position the LCD position, eg: LcdPosition.P0
      */
-    //% weight=49
-    //% blockId=makerbit_lcd_position
-    //% block="pos %position"
-    //% position.fieldEditor="gridpicker" position.fieldOptions.columns=16
-    //% position.fieldOptions.tooltips="false"
     //% subcategory="LCD"
+    //% blockId=makerbit_lcd_position
+    //% block="%position"
+    //% position.fieldEditor="gridpicker"
+    //% position.fieldOptions.columns=16
+    //% blockHidden=true
     export function position(position?: LcdPosition): number {
         if (position === undefined) return 0
         return position
@@ -217,7 +217,7 @@ namespace makerbit {
 
     /**
      * Enables or disables the backlight of the LCD.
-     * @param backlight new state of backlight, eg: makerbit.LcdBacklight.Off
+     * @param backlight new state of backlight, eg: LcdBacklight.Off
      */
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_backlight" block="switch LCD backlight %backlight"
