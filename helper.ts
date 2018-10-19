@@ -80,9 +80,9 @@ namespace makerbit {
      * Turns a digital pin level into a number.
      * @param level the pin level, eg: PinLevel.High
      */
-    //% weight=49
     //% blockId=makerbit_helper_level
     //% block="level %level"
+    //% blockHidden=true
     export function level(level?: PinLevel): number {
         if (level === undefined) return PinLevel.High
         return level
