@@ -158,7 +158,7 @@ namespace makerbit {
     }
 
     function updateCharacterIfRequired(character: number, position: number): void {
-        if (position < 0 || position >= LcdRows * LcdColumns) {
+        if (!lcdState || position < 0 || position >= LcdRows * LcdColumns) {
             return
         }
 
