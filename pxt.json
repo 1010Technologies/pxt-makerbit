@@ -14,7 +14,9 @@
         "pins.ts",
         "README.md",
         "touch.ts",
-        "ultrasonic.ts"
+        "ultrasonic.ts",
+        "_locales/de/MakerBit-jsdoc-strings.json",
+        "_locales/de/MakerBit-strings.json"
     ],
     "testFiles": [
         "test.ts"

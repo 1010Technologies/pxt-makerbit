@@ -316,7 +316,7 @@ namespace makerbit {
      */
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_folder"
-    //% block="mp3 folder"
+    //% block="MP3 folder"
     //% weight=40
     export function mp3Folder(): number {
         return deviceState ? deviceState.folder : 1
@@ -327,7 +327,7 @@ namespace makerbit {
      */
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_track"
-    //% block="mp3 track"
+    //% block="MP3 track"
     //% weight=39
     export function mp3Track(): number {
         return deviceState ? deviceState.track : 1
@@ -338,7 +338,7 @@ namespace makerbit {
      */
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_volume"
-    //% block="mp3 volume"
+    //% block="MP3 volume"
     //% weight=38
     export function mp3Volume(): number {
         return deviceState ? deviceState.volume : 30
