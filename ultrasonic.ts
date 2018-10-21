@@ -16,7 +16,7 @@ namespace makerbit {
      * @param echo Pin connected to echo, eg: MakerBitPin.P8
      */
     //% subcategory="Ultrasonic"
-    //% blockId="makerbit_ultrasonic_distance" block="ultrasonic distance in %unit | trig %trig | echo %echo"
+    //% blockId="makerbit_ultrasonic_distance" block="ultrasonic distance in %unit | with Trig at %trig | and Echo at %echo"
     //% trig.fieldEditor="gridpicker" trig.fieldOptions.columns=3
     //% trig.fieldOptions.tooltips="false"
     //% echo.fieldEditor="gridpicker" echo.fieldOptions.columns=3
