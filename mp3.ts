@@ -118,7 +118,7 @@ namespace makerbit {
      * @param mp3TX MP3 device transmitter pin (TX), eg: MakerBitPin.A1
      */
     //% subcategory="Serial MP3"
-    //% blockId="makerbit_mp3_connect" block="connect MP3 with MP3 RX attached to %mp3RX | and MP3 TX to %mp3TX"
+    //% blockId="makerbit_mp3_connect" block="connect MP3 device with MP3 RX attached to %mp3RX | and MP3 TX to %mp3TX"
     //% mp3RX.fieldEditor="gridpicker" mp3RX.fieldOptions.columns=3
     //% mp3RX.fieldOptions.tooltips="false"
     //% mp3TX.fieldEditor="gridpicker" mp3TX.fieldOptions.columns=3
