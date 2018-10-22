@@ -193,48 +193,45 @@ namespace makerbit {
         /**
          * The index of the touch sensor.
          */
-        public sensor: number
-        /**
-         * The status of the touch sensor. True if touched and false if released.
-         */
-        public isTouched: boolean
-    }
-
-    function firstTouchSensorToIndex(touchSensorBit: TouchSensor) {
-        let bit = TouchSensor.T5
-        for (let sensorIndex = 5; sensorIndex <= 16; sensorIndex++) {
-            if ((bit & touchSensorBit) !== 0) {
-                return sensorIndex
-            }
-            bit >>= 1
-        }
-        return 0
+        public TSensor: number
     }
 
     /**
-    * Do something when a touch event is detected.
-    * The touch event handler is triggered at the beginning and at the end of a touch operation.
+    * Do something when the beginning of a touch event is detected.
     * @param handler body code to run when event is raised
     */
     //% subcategory="Touch"
-    //% blockId=makerbit_touch_on_touch
-    //% block="on touch"
+    //% blockId=makerbit_touch_on_touched
+    //% block="on touched"
     //% mutate=objectdestructuring
     //% mutateText=TouchEvent
-    //% mutateDefaults="sensor:sensor,isTouched:isTouched"
+    //% mutateDefaults="TSensor:TSensor"
     //% weight=60
-    export function onTouchEvent(handler: (event: TouchEvent) => void) {
+    export function onAnyTouchSensorTouched(handler: (event: TouchEvent) => void) {
         initBackgroundDetection()
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, EventBusValue.MICROBIT_EVT_ANY, () => {
             const event = new TouchEvent()
-            event.sensor = firstTouchSensorToIndex(control.eventValue())
-            event.isTouched = true
+            event.TSensor = firstTouchSensorToIndex(control.eventValue())
             handler(event)
         })
+    }
+
+    /**
+    * Do something when the end of a touch operation is detected.
+    * @param handler body code to run when event is raised
+    */
+    //% subcategory="Touch"
+    //% blockId=makerbit_touch_on_released
+    //% block="on released"
+    //% mutate=objectdestructuring
+    //% mutateText=TouchEvent
+    //% mutateDefaults="TSensor:TSensor"
+    //% weight=59
+    export function onAnyTouchSensorReleased(handler: (event: TouchEvent) => void) {
+        initBackgroundDetection()
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, EventBusValue.MICROBIT_EVT_ANY, () => {
             const event = new TouchEvent()
-            event.sensor = firstTouchSensorToIndex(control.eventValue())
-            event.isTouched = false
+            event.TSensor = firstTouchSensorToIndex(control.eventValue())
             handler(event)
         })
     }
@@ -247,6 +244,17 @@ namespace makerbit {
             touchController.isEventDetectionEnabled = true
             control.inBackground(detectAndNotifyTouchEvents)
         }
+    }
+
+    function firstTouchSensorToIndex(touchSensorBit: TouchSensor) {
+        let bit = TouchSensor.T5
+        for (let sensorIndex = 5; sensorIndex <= 16; sensorIndex++) {
+            if ((bit & touchSensorBit) !== 0) {
+                return sensorIndex
+            }
+            bit >>= 1
+        }
+        return 0
     }
 
     /**
