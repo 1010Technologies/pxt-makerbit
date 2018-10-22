@@ -200,8 +200,7 @@ namespace makerbit {
     //% position.fieldEditor="gridpicker"
     //% position.fieldOptions.columns=16
     //% blockHidden=true
-    export function position(position?: LcdPosition): number {
-        if (position === undefined) return 0
+    export function position(position: LcdPosition): number {
         return position
     }
 
