@@ -417,7 +417,7 @@ namespace makerbit {
         }
 
         export function playTrack(track: number): Buffer {
-            return composeSerialCommand(CommandCode.PLAY_TRACK, 0x00, clipTrack(track))
+            return composeSerialCommand(CommandCode.PLAY_TRACK, 0x00, track)
         }
 
         export function increaseVolume(): Buffer {
@@ -434,7 +434,7 @@ namespace makerbit {
         }
 
         export function repeatTrack(track: number): Buffer {
-            return composeSerialCommand(CommandCode.REPEAT_TRACK, 0x00, clipTrack(track))
+            return composeSerialCommand(CommandCode.REPEAT_TRACK, 0x00, track)
         }
 
         export function selectDeviceTfCard(): Buffer {
@@ -450,11 +450,7 @@ namespace makerbit {
         }
 
         export function playTrackFromFolder(track: number, folder: number): Buffer {
-            return composeSerialCommand(
-                CommandCode.PLAY_TRACK_FROM_FOLDER,
-                clipFolder(folder),
-                clipTrack(track)
-            )
+            return composeSerialCommand(CommandCode.PLAY_TRACK_FROM_FOLDER, folder, track)
         }
 
         export function queryStatus(): Buffer {
@@ -470,7 +466,7 @@ namespace makerbit {
         }
 
         export function queryFolderTrackCount(folder: number): Buffer {
-            return composeSerialCommand(CommandCode.QUERY_FOLDER_TRACK_COUNT, 0x00, clipFolder(folder))
+            return composeSerialCommand(CommandCode.QUERY_FOLDER_TRACK_COUNT, 0x00, folder)
         }
 
         export function queryFolderCount(): Buffer {
@@ -482,7 +478,7 @@ namespace makerbit {
         }
 
         export function repeatFolder(folder: number): Buffer {
-            return composeSerialCommand(CommandCode.REPEAT_FOLDER, clipFolder(folder), 0x02)
+            return composeSerialCommand(CommandCode.REPEAT_FOLDER, folder, 0x02)
         }
 
         export function playRandom(): Buffer {
@@ -503,14 +499,6 @@ namespace makerbit {
 
         export function unmute(): Buffer {
             return composeSerialCommand(CommandCode.MUTE, 0x00, 0x00)
-        }
-
-        function clipTrack(track: number): number {
-            return Math.min(Math.max(track, 1), 255)
-        }
-
-        function clipFolder(folder: number): number {
-            return Math.min(Math.max(folder, 1), 99)
         }
 
         export function decodeResponse(response: Buffer): Response {
