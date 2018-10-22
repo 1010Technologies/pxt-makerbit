@@ -83,8 +83,7 @@ namespace makerbit {
     //% blockId=makerbit_helper_level
     //% block="%level"
     //% blockHidden=true
-    export function level(level?: PinLevel): number {
-        if (level === undefined) return PinLevel.High
+    export function level(level: PinLevel): number {
         return level
     }
 }
