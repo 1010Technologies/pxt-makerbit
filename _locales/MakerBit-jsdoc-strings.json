@@ -1,7 +1,6 @@
 {
   "distance": "Ultrasonic tests",
   "makerbit": "MakerBit",
-  "makerbit.TouchEvent.TSensor": "The index of the touch sensor.",
   "makerbit.clearLcd": "Clears the LCD completely.",
   "makerbit.connectLcd": "Connects to the LCD at a given I2C address.\nThe addresses 39 (PCF8574) or 63 (PCF8574A) seem to be widely used.",
   "makerbit.connectLcd|param|i2cAddress": "I2C address of LCD in the range from 0 to 127, eg: 39",
@@ -72,5 +71,5 @@
   "makerbit.showStringOnLcd|param|text": "the text to show, eg: \"MakerBit\"",
   "makerbit.stopMotor": "Stops a motor.",
   "makerbit.stopMotor|param|motor": "motor, eg: Motor.A",
-  "makerbit.touchSensor": "Returns the index of the sensor that is currently touched and 0 if no sensor is touched.\nIf multiple sensors are touched, the one with the lowest index is returned."
+  "makerbit.touchSensor": "Returns the index of the sensor that is currently touched or released.\nReturns 0 when used outside of touch event handlers."
 }

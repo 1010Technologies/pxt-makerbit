@@ -24,6 +24,7 @@ namespace makerbit {
         lastStatus: number
         lastReadTimestamp: number
         isEventDetectionEnabled: boolean
+        lastEventValue: number
     }
 
     let touchController: TouchState
@@ -41,7 +42,8 @@ namespace makerbit {
         touchController = {
             lastStatus: 0,
             lastReadTimestamp: 0,
-            isEventDetectionEnabled: false
+            isEventDetectionEnabled: false,
+            lastEventValue: 0,
         }
 
         const addr = MPR121_ADDRESS
@@ -133,7 +135,9 @@ namespace makerbit {
         while (true) {
             const touchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
             touchController.lastStatus = touchStatus
+
             for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit <<= 1) {
+
                 // Raise event when touch starts
                 if ((touchSensorBit & touchStatus) !== 0) {
                     if (!((touchSensorBit & previousTouchStatus) !== 0)) {
@@ -168,9 +172,10 @@ namespace makerbit {
     //% weight=65
     export function onTouchSensorTouched(sensor: TouchSensor, handler: () => void) {
         initBackgroundDetection()
-        control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, sensor, handler)
+        control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, sensor, () => {
+            setupContextAndNotify(handler)
+        })
     }
-
 
     /**
     * Do something when a specific sensor is released.
@@ -186,14 +191,9 @@ namespace makerbit {
     //% weight=64
     export function onTouchSensorReleased(sensor: TouchSensor, handler: () => void) {
         initBackgroundDetection()
-        control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, sensor, handler)
-    }
-
-    export class TouchEvent {
-        /**
-         * The index of the touch sensor.
-         */
-        public TSensor: number
+        control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, sensor, () => {
+            setupContextAndNotify(handler)
+        })
     }
 
     /**
@@ -202,17 +202,12 @@ namespace makerbit {
     */
     //% subcategory="Touch"
     //% blockId=makerbit_touch_on_touched
-    //% block="on touched"
-    //% mutate=objectdestructuring
-    //% mutateText=TouchEvent
-    //% mutateDefaults="TSensor:TSensor"
+    //% block="on any touch sensor touched"
     //% weight=60
-    export function onAnyTouchSensorTouched(handler: (event: TouchEvent) => void) {
+    export function onAnyTouchSensorTouched(handler: () => void) {
         initBackgroundDetection()
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, EventBusValue.MICROBIT_EVT_ANY, () => {
-            const event = new TouchEvent()
-            event.TSensor = firstTouchSensorToIndex(control.eventValue())
-            handler(event)
+            setupContextAndNotify(handler)
         })
     }
 
@@ -222,17 +217,12 @@ namespace makerbit {
     */
     //% subcategory="Touch"
     //% blockId=makerbit_touch_on_released
-    //% block="on released"
-    //% mutate=objectdestructuring
-    //% mutateText=TouchEvent
-    //% mutateDefaults="TSensor:TSensor"
+    //% block="on any touch sensor released"
     //% weight=59
-    export function onAnyTouchSensorReleased(handler: (event: TouchEvent) => void) {
+    export function onAnyTouchSensorReleased(handler: () => void) {
         initBackgroundDetection()
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, EventBusValue.MICROBIT_EVT_ANY, () => {
-            const event = new TouchEvent()
-            event.TSensor = firstTouchSensorToIndex(control.eventValue())
-            handler(event)
+            setupContextAndNotify(handler)
         })
     }
 
@@ -246,27 +236,33 @@ namespace makerbit {
         }
     }
 
-    function firstTouchSensorToIndex(touchSensorBit: TouchSensor) {
-        let bit = TouchSensor.T5
-        for (let sensorIndex = 5; sensorIndex <= 16; sensorIndex++) {
-            if ((bit & touchSensorBit) !== 0) {
-                return sensorIndex
-            }
-            bit >>= 1
-        }
-        return 0
+    function setupContextAndNotify(handler: () => void) {
+        touchController.lastEventValue = control.eventValue()
+        handler()
+        touchController.lastEventValue = 0
     }
 
     /**
-     * Returns the index of the sensor that is currently touched and 0 if no sensor is touched.
-     * If multiple sensors are touched, the one with the lowest index is returned.
+     * Returns the index of the sensor that is currently touched or released.
+     * Returns 0 when used outside of touch event handlers.
      */
     //% subcategory="Touch"
     //% blockId="makerbit_touch_current_touch_sensor
     //% block="touch sensor"
     //% weight=50
     export function touchSensor(): number {
-        return firstTouchSensorToIndex(getTouchStatus())
+        return getSensorIndexFromSensorBitField(touchController.lastEventValue)
+    }
+
+    function getSensorIndexFromSensorBitField(touchSensorBit: TouchSensor) {
+        let bit = TouchSensor.T5
+        for (let sensorIndex = 5; sensorIndex <= 16; sensorIndex++) {
+            if ((bit & touchSensorBit) !== 0) {
+                return sensorIndex // return first hit
+            }
+            bit >>= 1
+        }
+        return 0
     }
 
     /**
