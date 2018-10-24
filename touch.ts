@@ -1,4 +1,4 @@
-// MakerBit Touch blocks
+// MakerBit touch blocks
 
 const enum TouchSensor {
     T5 = 0b100000000000,
@@ -239,12 +239,12 @@ namespace makerbit {
     function setupContextAndNotify(handler: () => void) {
         touchController.lastEventValue = control.eventValue()
         handler()
-        touchController.lastEventValue = 0
     }
 
     /**
-     * Returns the index of the sensor that is currently touched or released.
-     * Returns 0 when used outside of touch event handlers.
+     * Returns the sensor index of the last touch event that was received.
+     * It could be either a sensor touched or released event.
+     * This block intended to be used inside of touch event handlers.
      */
     //% subcategory="Touch"
     //% blockId="makerbit_touch_current_touch_sensor
