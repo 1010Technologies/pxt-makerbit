@@ -32,8 +32,8 @@ namespace makerbit {
         playMode: PlayMode
         repeat: Mp3Repeat
         maxTracksInFolder: number
-        lastTrackCompletedTimestamp: number
         volume: number
+        previousTrackCompletedResponse: number
     }
 
     let deviceState: DeviceState
@@ -93,12 +93,10 @@ namespace makerbit {
             return
         }
 
-        let currentTime = input.runningTime()
-
         // At end of playback we receive up to two TRACK_COMPLETED events.
         // We use the 1st TRACK_COMPLETED event to notify playback as complete
         // or to advance folder play. A closely following 2nd event is ignored.
-        if (deviceState.lastTrackCompletedTimestamp + 500 < currentTime) {
+        if (deviceState.previousTrackCompletedResponse !== response.payload) {
             control.raiseEvent(MICROBIT_MAKERBIT_MP3_ID, MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED)
 
             if (deviceState.playMode === PlayMode.Folder) {
@@ -108,8 +106,7 @@ namespace makerbit {
                 control.raiseEvent(MICROBIT_MAKERBIT_MP3_ID, MICROBIT_MAKERBIT_MP3_TRACK_STARTED)
             }
         }
-
-        deviceState.lastTrackCompletedTimestamp = currentTime
+        deviceState.previousTrackCompletedResponse = response.payload
     }
 
     /**
@@ -138,8 +135,8 @@ namespace makerbit {
             playMode: PlayMode.Track,
             repeat: Mp3Repeat.No,
             maxTracksInFolder: YX5300.MAX_TRACKS_PER_FOLDER,
-            lastTrackCompletedTimestamp: 0,
-            volume: 30
+            volume: 30,
+            previousTrackCompletedResponse: -1
         }
     }
 
@@ -190,6 +187,7 @@ namespace makerbit {
     }
 
     function playTrackOnDevice(targetState: DeviceState): void {
+        deviceState.previousTrackCompletedResponse = -1
 
         sendCommand(YX5300.playTrackFromFolder(targetState.track, targetState.folder))
 
