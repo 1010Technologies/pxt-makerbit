@@ -56,6 +56,9 @@ namespace makerbit {
     //% name.min=0 name.max=20
     //% weight=89
     export function setDigitalPin(name: number, level: number): void {
+        if (name < 0 || name > 20) {
+            return
+        }
         pins.digitalWritePin(name + DigitalPin.P0, level)
     }
 
@@ -73,6 +76,9 @@ namespace makerbit {
     //% level.min=0 level.max=1023
     //% weight=88
     export function setAnalogPin(name: number, level: number): void {
+        if (name < 0 || name > 20) {
+            return
+        }
         pins.analogWritePin(name + AnalogPin.P0, level)
     }
 
