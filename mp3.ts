@@ -137,7 +137,7 @@ namespace makerbit {
             folder: 1,
             playMode: PlayMode.Track,
             repeat: Mp3Repeat.No,
-            maxTracksInFolder: 99,
+            maxTracksInFolder: YX5300.MAX_TRACKS_PER_FOLDER,
             lastTrackCompletedTimestamp: 0,
             volume: 30
         }
@@ -159,11 +159,11 @@ namespace makerbit {
             return
         }
 
-        deviceState.track = track
+        deviceState.track = Math.min(Math.max(track, 1), YX5300.MAX_TRACKS_PER_FOLDER)
         deviceState.folder = folder
         deviceState.playMode = PlayMode.Track
         deviceState.repeat = repeat
-        deviceState.maxTracksInFolder = 99
+        deviceState.maxTracksInFolder = YX5300.MAX_TRACKS_PER_FOLDER
         playTrackOnDevice(deviceState)
     }
 
@@ -185,7 +185,7 @@ namespace makerbit {
         deviceState.folder = folder
         deviceState.playMode = PlayMode.Folder
         deviceState.repeat = repeat
-        deviceState.maxTracksInFolder = 99
+        deviceState.maxTracksInFolder = YX5300.MAX_TRACKS_PER_FOLDER
         playTrackOnDevice(deviceState)
     }
 
@@ -350,6 +350,7 @@ namespace makerbit {
         export interface Response { type: ResponseType, payload?: number }
 
         export const REQUIRED_PAUSE_BETWEEN_COMMANDS_MILLIS = 300
+        export const MAX_TRACKS_PER_FOLDER = 255
 
         export const enum CommandCode {
             PLAY_NEXT_TRACK = 0x01,
