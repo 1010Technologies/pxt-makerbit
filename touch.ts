@@ -20,14 +20,12 @@ namespace makerbit {
     const MPR121_ADDRESS = 0x5A
     const TOUCH_STATUS_PAUSE_BETWEEN_READ = 50
 
-    interface TouchState {
-        lastStatus: number
-        lastReadTimestamp: number
-        isEventDetectionEnabled: boolean
+    interface TouchController {
+        lastTouchStatus: number
         lastEventValue: number
     }
 
-    let touchController: TouchState
+    let touchController: TouchController
 
     const MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID = 2148
     const MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID = 2149
@@ -39,10 +37,13 @@ namespace makerbit {
     //% blockId="makerbit_touch_init" block="initialize touch"
     //% weight=70
     function initTouchController(): void {
+
+        if (!!touchController) {
+            return
+        }
+
         touchController = {
-            lastStatus: 0,
-            lastReadTimestamp: 0,
-            isEventDetectionEnabled: false,
+            lastTouchStatus: 0,
             lastEventValue: 0,
         }
 
@@ -108,25 +109,8 @@ namespace makerbit {
             mpr121.Proximity.DISABLED,
             mpr121.Touch.ELE_0_TO_11
         )
-    }
 
-    function getTouchStatus(): number {
-        if (!touchController) {
-            initTouchController()
-        }
-
-        if (touchController.isEventDetectionEnabled) {
-            return touchController.lastStatus
-        }
-
-        const now = input.runningTime()
-
-        if (now >= touchController.lastReadTimestamp + TOUCH_STATUS_PAUSE_BETWEEN_READ) {
-            touchController.lastStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
-            touchController.lastReadTimestamp = now
-        }
-
-        return touchController.lastStatus
+        control.inBackground(detectAndNotifyTouchEvents)
     }
 
     function detectAndNotifyTouchEvents() {
@@ -134,7 +118,7 @@ namespace makerbit {
 
         while (true) {
             const touchStatus = mpr121.readTouchStatus(MPR121_ADDRESS)
-            touchController.lastStatus = touchStatus
+            touchController.lastTouchStatus = touchStatus
 
             for (let touchSensorBit = 1; touchSensorBit <= 2048; touchSensorBit <<= 1) {
 
@@ -142,6 +126,7 @@ namespace makerbit {
                 if ((touchSensorBit & touchStatus) !== 0) {
                     if (!((touchSensorBit & previousTouchStatus) !== 0)) {
                         control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, touchSensorBit)
+                        touchController.lastEventValue = touchSensorBit
                     }
                 }
 
@@ -149,6 +134,7 @@ namespace makerbit {
                 if ((touchSensorBit & touchStatus) === 0) {
                     if (!((touchSensorBit & previousTouchStatus) === 0)) {
                         control.raiseEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, touchSensorBit)
+                        touchController.lastEventValue = touchSensorBit
                     }
                 }
             }
@@ -171,7 +157,7 @@ namespace makerbit {
     //% sensor.fieldOptions.tooltips="false"
     //% weight=65
     export function onTouchSensorTouched(sensor: TouchSensor, handler: () => void) {
-        initBackgroundDetection()
+        initTouchController()
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, sensor, () => {
             setupContextAndNotify(handler)
         })
@@ -190,7 +176,7 @@ namespace makerbit {
     //% sensor.fieldOptions.tooltips="false"
     //% weight=64
     export function onTouchSensorReleased(sensor: TouchSensor, handler: () => void) {
-        initBackgroundDetection()
+        initTouchController()
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, sensor, () => {
             setupContextAndNotify(handler)
         })
@@ -205,7 +191,7 @@ namespace makerbit {
     //% block="on any touch sensor touched"
     //% weight=60
     export function onAnyTouchSensorTouched(handler: () => void) {
-        initBackgroundDetection()
+        initTouchController()
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_TOUCHED_ID, EventBusValue.MICROBIT_EVT_ANY, () => {
             setupContextAndNotify(handler)
         })
@@ -220,20 +206,10 @@ namespace makerbit {
     //% block="on any touch sensor released"
     //% weight=59
     export function onAnyTouchSensorReleased(handler: () => void) {
-        initBackgroundDetection()
+        initTouchController()
         control.onEvent(MICROBIT_MAKERBIT_TOUCH_SENSOR_RELEASED_ID, EventBusValue.MICROBIT_EVT_ANY, () => {
             setupContextAndNotify(handler)
         })
-    }
-
-    function initBackgroundDetection() {
-        if (!touchController) {
-            initTouchController()
-        }
-        if (!touchController.isEventDetectionEnabled) {
-            touchController.isEventDetectionEnabled = true
-            control.inBackground(detectAndNotifyTouchEvents)
-        }
     }
 
     function setupContextAndNotify(handler: () => void) {
@@ -248,10 +224,15 @@ namespace makerbit {
      */
     //% subcategory="Touch"
     //% blockId="makerbit_touch_current_touch_sensor
-    //% block="touch sensor"
+    //% block="last touch sensor"
     //% weight=50
     export function touchSensor(): number {
-        return getSensorIndexFromSensorBitField(touchController.lastEventValue)
+        initTouchController()
+        if (touchController.lastEventValue !== 0) {
+            return getSensorIndexFromSensorBitField(touchController.lastEventValue)
+        } else {
+            return 0
+        }
     }
 
     function getSensorIndexFromSensorBitField(touchSensorBit: TouchSensor) {
@@ -275,7 +256,8 @@ namespace makerbit {
     //% sensor.fieldOptions.tooltips="false"
     //% weight=40
     export function isTouched(sensor: TouchSensor): boolean {
-        return (getTouchStatus() & sensor) !== 0
+        initTouchController()
+        return (touchController.lastTouchStatus & sensor) !== 0
     }
 
     // Communication module for MPR121 capacitive touch sensor controller

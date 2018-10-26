@@ -72,7 +72,7 @@
   "makerbit.showNumberOnLcd|block": "zeige LCD Nummer %value| von %startPosition=makerbit_lcd_position | bis %endPosition=makerbit_lcd_position",
   "makerbit.showStringOnLcd|block": "zeige LCD Zeichenfolge %text| von %startPosition=makerbit_lcd_position | bis %endPosition=makerbit_lcd_position",
   "makerbit.stopMotor|block": "stoppe Motor %motor",
-  "makerbit.touchSensor|block": "Berührungssensor",
+  "makerbit.touchSensor|block": "letzter Berührungssensor",
   "makerbit|block": "MakerBit",
   "{id:category}Makerbit": "MakerBit"
 }
