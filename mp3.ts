@@ -33,14 +33,14 @@ namespace makerbit {
         repeat: Mp3Repeat
         maxTracksInFolder: number
         volume: number
-        previousTrackCompletedResponse: number
+        previousTrackCompletedResponse: number,
+        lastTrackEventValue: number
     }
 
     let deviceState: DeviceState
 
-    const MICROBIT_MAKERBIT_MP3_ID = 756
-    const MICROBIT_MAKERBIT_MP3_TRACK_STARTED = 1
-    const MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED = 2
+    const MICROBIT_MAKERBIT_MP3_TRACK_STARTED_ID = 756
+    const MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED_ID = 757
 
     function readSerial() {
         const responseBuffer: Buffer = pins.createBuffer(10)
@@ -95,18 +95,20 @@ namespace makerbit {
 
         // At end of playback we receive up to two TRACK_COMPLETED events.
         // We use the 1st TRACK_COMPLETED event to notify playback as complete
-        // or to advance folder play. A closely following 2nd event is ignored.
+        // or to advance folder play. A following 2nd event with same playload is ignored.
         if (deviceState.previousTrackCompletedResponse !== response.payload) {
-            control.raiseEvent(MICROBIT_MAKERBIT_MP3_ID, MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED)
+
+            control.raiseEvent(MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED_ID, deviceState.track)
+            deviceState.lastTrackEventValue = deviceState.track
 
             if (deviceState.playMode === PlayMode.Folder) {
                 deviceState.track++
-                // Send as fast as possible to prevent collision with 2nd TRACK_COMPLETED event
-                serial.writeBuffer(YX5300.playTrackFromFolder(deviceState.track, deviceState.folder))
-                control.raiseEvent(MICROBIT_MAKERBIT_MP3_ID, MICROBIT_MAKERBIT_MP3_TRACK_STARTED)
+                playTrackOnDevice(deviceState)
             }
+
+            deviceState.previousTrackCompletedResponse = response.payload
         }
-        deviceState.previousTrackCompletedResponse = response.payload
+
     }
 
     /**
@@ -136,7 +138,8 @@ namespace makerbit {
             repeat: Mp3Repeat.No,
             maxTracksInFolder: YX5300.MAX_TRACKS_PER_FOLDER,
             volume: 30,
-            previousTrackCompletedResponse: -1
+            previousTrackCompletedResponse: -1,
+            lastTrackEventValue: 0
         }
     }
 
@@ -195,7 +198,8 @@ namespace makerbit {
             sendCommand(YX5300.enableRepeatModeForCurrentTrack())
         }
 
-        control.raiseEvent(MICROBIT_MAKERBIT_MP3_ID, MICROBIT_MAKERBIT_MP3_TRACK_STARTED)
+        control.raiseEvent(MICROBIT_MAKERBIT_MP3_TRACK_STARTED_ID, deviceState.track)
+        deviceState.lastTrackEventValue = deviceState.track
     }
 
     /**
@@ -288,10 +292,16 @@ namespace makerbit {
     //% block="on MP3 track started"
     //% weight=42
     export function onMp3TrackStarted(handler: () => void) {
+
         control.onEvent(
-            MICROBIT_MAKERBIT_MP3_ID,
-            MICROBIT_MAKERBIT_MP3_TRACK_STARTED,
-            handler)
+            MICROBIT_MAKERBIT_MP3_TRACK_STARTED_ID,
+            EventBusValue.MICROBIT_EVT_ANY,
+            () => {
+                const value = control.eventValue()
+                basic.pause(10) // defer call so that the 2nd track completion event can be processed before
+                deviceState.lastTrackEventValue = value
+                handler()
+            })
     }
 
     /**
@@ -303,10 +313,16 @@ namespace makerbit {
     //% block="on MP3 track completed"
     //% weight=41
     export function onMp3TrackCompleted(handler: () => void) {
+
         control.onEvent(
-            MICROBIT_MAKERBIT_MP3_ID,
-            MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED,
-            handler)
+            MICROBIT_MAKERBIT_MP3_TRACK_COMPLETED_ID,
+            EventBusValue.MICROBIT_EVT_ANY,
+            () => {
+                const value = control.eventValue()
+                basic.pause(10) // defer call so that the 2nd track completion event can be processed before
+                deviceState.lastTrackEventValue = value
+                handler()
+            })
     }
 
     /**
@@ -321,14 +337,16 @@ namespace makerbit {
     }
 
     /**
-     * Returns the index of the current MP3 track.
+     * Returns the index of the last MP3 track event.
+     * It could be either a track started or completed event.
+     * This block intended to be used inside of track event handlers.
      */
     //% subcategory="Serial MP3"
     //% blockId="makerbit_mp3_track"
     //% block="MP3 track"
     //% weight=39
     export function mp3Track(): number {
-        return deviceState ? deviceState.track : 1
+        return deviceState ? deviceState.lastTrackEventValue : 1
     }
 
     /**
