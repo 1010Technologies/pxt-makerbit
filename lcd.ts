@@ -92,10 +92,11 @@ namespace makerbit {
     }
 
     let lcdState: LcdState = undefined
+    let hasTriedToAutoConnect = false
 
     // Write 4 bits (high nibble) to I2C bus
     function write4bits(value: number) {
-        if (!lcdState) {
+        if (!lcdState && !connect()) {
             return
         }
         pins.i2cWriteNumber(lcdState.i2cAddress, value, NumberFormat.Int8LE)
@@ -158,7 +159,11 @@ namespace makerbit {
     }
 
     function updateCharacterIfRequired(character: number, position: number): void {
-        if (!lcdState || position < 0 || position >= LcdRows * LcdColumns) {
+        if (position < 0 || position >= LcdRows * LcdColumns) {
+            return
+        }
+
+        if (!lcdState && !connect()) {
             return
         }
 
@@ -222,7 +227,7 @@ namespace makerbit {
     //% blockId="makerbit_lcd_backlight" block="switch LCD backlight %backlight"
     //% weight=79
     export function setLcdBacklight(backlight: LcdBacklight): void {
-        if (!lcdState) {
+        if (!lcdState && !connect()) {
             return
         }
         lcdState.backlight = backlight
@@ -239,6 +244,11 @@ namespace makerbit {
     //% i2cAddress.min=0 i2cAddress.max=127
     //% weight=95
     export function connectLcd(i2cAddress: number): void {
+
+        if (0 == pins.i2cReadNumber(i2cAddress, NumberFormat.Int8LE, false)) {
+            return;
+        }
+
         lcdState = {
             i2cAddress: i2cAddress,
             backlight: LcdBacklight.On,
@@ -292,5 +302,24 @@ namespace makerbit {
             lcdState.characters[pos] = whitespace
         }
         clearLcd()
+    }
+
+    function connect(): boolean {
+
+        if (hasTriedToAutoConnect) {
+            return false
+        }
+        hasTriedToAutoConnect = true
+
+        if (0 != pins.i2cReadNumber(39, NumberFormat.Int8LE, false)) {
+            // PCF8574
+            connectLcd(39)
+
+        } else if (0 != pins.i2cReadNumber(63, NumberFormat.Int8LE, false)) {
+            // PCF8574A
+            connectLcd(63)
+        }
+
+        return !!lcdState
     }
 }
