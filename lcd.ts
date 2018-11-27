@@ -242,7 +242,7 @@ namespace makerbit {
     //% subcategory="LCD"
     //% blockId="makerbit_lcd_set_address" block="connect LCD at I2C address %i2cAddress"
     //% i2cAddress.min=0 i2cAddress.max=127
-    //% weight=95
+    //% weight=70
     export function connectLcd(i2cAddress: number): void {
 
         if (0 == pins.i2cReadNumber(i2cAddress, NumberFormat.Int8LE, false)) {
@@ -302,6 +302,16 @@ namespace makerbit {
             lcdState.characters[pos] = whitespace
         }
         clearLcd()
+    }
+
+    /**
+     * Returns true if a LCD is connected. False otherwise.
+     */
+    //% subcategory="LCD"
+    //% blockId="makerbit_lcd_is_connected" block="LCD is connected"
+    //% weight=69
+    export function isLcdConnected(): boolean {
+        return !!lcdState || connect()
     }
 
     function connect(): boolean {
