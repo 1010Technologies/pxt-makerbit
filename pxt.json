@@ -7,6 +7,7 @@
         "core": "*"
     },
     "files": [
+        "infrared.ts",
         "lcd.ts",
         "motor.ts",
         "mp3.ts",
@@ -21,5 +22,14 @@
     "testFiles": [
         "test.ts"
     ],
-    "public": true
+    "public": true,
+    "yotta": {
+        "config": {
+            "microbit-dal": {
+                "bluetooth": {
+                    "enabled": 0
+                }
+            }
+        }
+    }
 }

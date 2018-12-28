@@ -81,3 +81,11 @@ makerbit.clearLcd()
 makerbit.setLcdBacklight(LcdBacklight.On)
 const pos: number = makerbit.position(LcdPosition.P0)
 const isLcdConnected: boolean = makerbit.isLcdConnected()
+
+
+/**
+ * IR tests
+ */
+
+makerbit.onIrButtonPressed(IrButton.Ok, () => { })
+makerbit.onIrButtonReleased(IrButton.Up, () => { })
