@@ -223,7 +223,7 @@ namespace makerbit {
      * This block intended to be used inside of touch event handlers.
      */
     //% subcategory="Touch"
-    //% blockId="makerbit_touch_current_touch_sensor
+    //% blockId=makerbit_touch_current_touch_sensor
     //% block="last touch sensor"
     //% weight=50
     export function touchSensor(): number {
@@ -251,7 +251,8 @@ namespace makerbit {
      * @param sensor the touch sensor to be checked, eg: TouchSensor.T5
      */
     //% subcategory="Touch"
-    //% blockId="makerbit_touch_is_touch_sensor_touched" block="touch sensor | %sensor | is touched"
+    //% blockId=makerbit_touch_is_touch_sensor_touched
+    //% block="touch sensor | %sensor | is touched"
     //% sensor.fieldEditor="gridpicker" sensor.fieldOptions.columns=5
     //% sensor.fieldOptions.tooltips="false"
     //% weight=40

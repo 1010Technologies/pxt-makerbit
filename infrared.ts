@@ -54,7 +54,7 @@ namespace makerbit {
 
     interface IrState {
         necIr: NecIr
-        lastEventValue: number
+        activeCommand: number
     }
 
     enum NecIrState {
@@ -172,7 +172,7 @@ namespace makerbit {
     }
 
     /**
-     * Connects to the IR receiver module at a specific pin.
+     * Connects to the IR receiver module at the specified pin.
      * @param pin IR receiver pin, eg: MakerBitPin.A0
      */
     //% subcategory="IR Remote"
@@ -187,12 +187,12 @@ namespace makerbit {
 
             irState = {
                 necIr: new NecIr([0x62, 0x22, 0x02, 0xC2, 0xA8, 0x68, 0x98, 0xB0, 0x30, 0x18, 0x7A, 0x10, 0x38, 0x5A, 0x42, 0x4A, 0x52]),
-                lastEventValue: 0
+                activeCommand: 0
             }
 
             enableIrMarkSpaceDetection(pin)
 
-            let buttonPressed = 0
+            let activeCommand = 0
             let repeatTimeout = 0
             const REPEAT_TIMEOUT_MS = 120
 
@@ -200,42 +200,42 @@ namespace makerbit {
                 MICROBIT_MAKERBIT_IR_MARK_SPACE,
                 EventBusValue.MICROBIT_EVT_ANY,
                 () => {
-                    const result = irState.necIr.pushMarkSpace(control.eventValue())
+                    const newCommand = irState.necIr.pushMarkSpace(control.eventValue())
 
-                    if (result === 256) {
+                    if (newCommand === 256) {
                         repeatTimeout = input.runningTime() + REPEAT_TIMEOUT_MS
 
-                    } else if (result > 0 && result !== buttonPressed) {
+                    } else if (newCommand > 0 && newCommand !== activeCommand) {
 
-                        if (buttonPressed !== 0) {
-                            control.raiseEvent(MICROBIT_MAKERBIT_IR_BUTTON_RELEASED_ID, buttonPressed)
+                        if (activeCommand !== 0) {
+                            control.raiseEvent(MICROBIT_MAKERBIT_IR_BUTTON_RELEASED_ID, activeCommand)
                         }
 
-                        buttonPressed = result
                         repeatTimeout = input.runningTime() + REPEAT_TIMEOUT_MS
+                        irState.activeCommand = newCommand
+                        activeCommand = newCommand
+                        control.raiseEvent(MICROBIT_MAKERBIT_IR_BUTTON_PRESSED_ID, newCommand)
 
-                        control.raiseEvent(MICROBIT_MAKERBIT_IR_BUTTON_PRESSED_ID, result)
-                        irState.lastEventValue = result
-
-                    } else if (result < 0 && buttonPressed !== 0) {
-                        control.raiseEvent(MICROBIT_MAKERBIT_IR_BUTTON_RELEASED_ID, buttonPressed)
-                        buttonPressed = 0
-                        irState.lastEventValue = 0
+                    } else if (newCommand < 0 && activeCommand !== 0) {
+                        // Failed to decode command
+                        irState.activeCommand = 0
+                        control.raiseEvent(MICROBIT_MAKERBIT_IR_BUTTON_RELEASED_ID, activeCommand)
+                        activeCommand = 0
                     }
                 }
             )
 
             control.inBackground(() => {
                 while (true) {
-                    if (buttonPressed === 0) {
+                    if (activeCommand === 0) {
                         basic.pause(REPEAT_TIMEOUT_MS)
                     } else {
                         const now = input.runningTime()
                         if (now > repeatTimeout) {
                             // repeat timeout
-                            control.raiseEvent(MICROBIT_MAKERBIT_IR_BUTTON_RELEASED_ID, buttonPressed)
-                            irState.lastEventValue = buttonPressed
-                            buttonPressed = 0
+                            irState.activeCommand = 0
+                            control.raiseEvent(MICROBIT_MAKERBIT_IR_BUTTON_RELEASED_ID, activeCommand)
+                            activeCommand = 0
                         } else {
                             basic.pause(repeatTimeout - now + 2)
                         }
@@ -251,12 +251,12 @@ namespace makerbit {
      * @param handler body code to run when event is raised
     */
     //% subcategory="IR Remote"
-    //% blockId=makerbit_infrared_on_ir_received
+    //% blockId=makerbit_infrared_on_ir_button_pressed
     //% block="on IR button | %button pressed"
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
-    //% weight=71
+    //% weight=69
     export function onIrButtonPressed(button: IrButton, handler: () => void) {
         control.onEvent(
             MICROBIT_MAKERBIT_IR_BUTTON_PRESSED_ID,
@@ -275,7 +275,7 @@ namespace makerbit {
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
-    //% weight=71
+    //% weight=68
     export function onIrButtonReleased(button: IrButton, handler: () => void) {
         control.onEvent(
             MICROBIT_MAKERBIT_IR_BUTTON_RELEASED_ID,
@@ -288,13 +288,79 @@ namespace makerbit {
      * @param button the button to be checked
      */
     //% subcategory="IR Remote"
-    //% blockId="makerbit_infrared_button_pressed" block="IR button | %button | is pressed"
+    //% blockId=makerbit_infrared_button_pressed
+    //% block="IR button | %button | is pressed"
     //% button.fieldEditor="gridpicker"
     //% button.fieldOptions.columns=3
     //% button.fieldOptions.tooltips="false"
-    //% weight=70
-    //% blockHidden=true
+    //% weight=67
     export function isIrButtonPressed(button: IrButton): boolean {
-        return false
+        return irState.activeCommand === button
+    }
+
+    /**
+    * Do something when an IR command is received.
+    * @param handler body code to run when event is raised
+    */
+    //% subcategory="IR Remote"
+    //% blockId=makerbit_infrared_on_command
+    //% block="on IR command received"
+    //% weight=59
+    export function onIrCommandReceived(handler: () => void) {
+
+        control.onEvent(MICROBIT_MAKERBIT_IR_BUTTON_PRESSED_ID, EventBusValue.MICROBIT_EVT_ANY, () => {
+            setupContextAndNotify(handler)
+        })
+    }
+
+    /**
+    * Do something when an IR command is expired.
+    * @param handler body code to run when event is raised
+    */
+    //% subcategory="IR Remote"
+    //% blockId=makerbit_infrared_on_command_expired
+    //% block="on IR command expired"
+    //% weight=58
+    export function onIrCommandExpired(handler: () => void) {
+
+        control.onEvent(MICROBIT_MAKERBIT_IR_BUTTON_RELEASED_ID, EventBusValue.MICROBIT_EVT_ANY, () => {
+            setupContextAndNotify(handler)
+        })
+    }
+
+    function setupContextAndNotify(handler: () => void) {
+        const previousCommand = irState.activeCommand
+        const eventValue = control.eventValue()
+        irState.activeCommand = eventValue
+        handler()
+        if (irState.activeCommand === eventValue) {
+            irState.activeCommand = previousCommand
+        }
+    }
+
+    /**
+     * Returns the last command code that was received and 0 if the command is expired.
+     */
+    //% subcategory="IR Remote"
+    //% blockId=makerbit_infrared_command
+    //% block="IR command"
+    //% weight=57
+    export function irCommand(): number {
+        return irState.activeCommand
+    }
+
+    /**
+     * Turns an IR button into its corresponding command code.
+     * @param button the button
+     */
+    //% subcategory="IR Remote"
+    //% blockId=makerbit_infrared_button
+    //% button.fieldEditor="gridpicker"
+    //% button.fieldOptions.columns=3
+    //% button.fieldOptions.tooltips="false"
+    //% block="IR button %button"
+    //% weight=56
+    export function irButton(button: IrButton): number {
+        return button as number
     }
 }

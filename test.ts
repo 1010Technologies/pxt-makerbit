@@ -87,5 +87,11 @@ const isLcdConnected: boolean = makerbit.isLcdConnected()
  * IR tests
  */
 
+makerbit.connectInfrared(MakerBitPin.A0)
 makerbit.onIrButtonPressed(IrButton.Ok, () => { })
 makerbit.onIrButtonReleased(IrButton.Up, () => { })
+makerbit.isIrButtonPressed(IrButton.Number_0)
+makerbit.onIrCommandReceived(() => { })
+makerbit.onIrCommandExpired(() => { })
+const button: number = makerbit.irButton(IrButton.Number_9)
+const command: number = makerbit.irCommand()
