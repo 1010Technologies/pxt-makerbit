@@ -1,6 +1,6 @@
 // MakerBit blocks supporting a I2C LCD 1602
 
-enum LcdPosition {
+const enum LcdPosition {
     //% block="0"
     P0 = 0,
     //% block="1"
@@ -67,7 +67,7 @@ enum LcdPosition {
     P31 = 31
 }
 
-enum LcdBacklight {
+const enum LcdBacklight {
     //% block="off"
     Off = 0,
     //% block="on"
@@ -245,7 +245,7 @@ namespace makerbit {
     //% weight=70
     export function connectLcd(i2cAddress: number): void {
 
-        if (0 == pins.i2cReadNumber(i2cAddress, NumberFormat.Int8LE, false)) {
+        if (0 === pins.i2cReadNumber(i2cAddress, NumberFormat.Int8LE, false)) {
             return;
         }
 
