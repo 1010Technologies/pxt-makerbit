@@ -304,7 +304,7 @@ namespace makerbit {
     */
     //% subcategory="IR Remote"
     //% blockId=makerbit_infrared_on_command
-    //% block="on IR command received"
+    //% block="on IR button pressed"
     //% weight=59
     export function onIrCommandReceived(handler: () => void) {
 
@@ -319,7 +319,7 @@ namespace makerbit {
     */
     //% subcategory="IR Remote"
     //% blockId=makerbit_infrared_on_command_expired
-    //% block="on IR command expired"
+    //% block="on IR button released"
     //% weight=58
     export function onIrCommandExpired(handler: () => void) {
 
@@ -339,13 +339,13 @@ namespace makerbit {
     }
 
     /**
-     * Returns the last command code that was received and 0 if the command is expired.
+     * Returns the command code of the button that is currently pressed and 0 if no button is pressed.
      */
     //% subcategory="IR Remote"
     //% blockId=makerbit_infrared_command
-    //% block="IR command"
+    //% block="IR button"
     //% weight=57
-    export function irCommand(): number {
+    export function irCommandCode(): number {
         return irState.activeCommand
     }
 
