@@ -116,7 +116,7 @@ namespace makerbit {
      * @param mp3RX MP3 device receiver pin (RX), eg: MakerBitPin.A0
      * @param mp3TX MP3 device transmitter pin (TX), eg: MakerBitPin.A1
      */
-    //% subcategory="Serial MP3"
+    //% subcategory="MP3"
     //% blockId="makerbit_mp3_connect" block="connect MP3 device with MP3 RX attached to %mp3RX | and MP3 TX to %mp3TX"
     //% mp3RX.fieldEditor="gridpicker" mp3RX.fieldOptions.columns=3
     //% mp3RX.fieldOptions.tooltips="false"
@@ -149,7 +149,7 @@ namespace makerbit {
      * @param folder folder index, eg:1
      * @param repeat indicates whether to repeat the track, eg: Mp3Repeat.No
      */
-    //% subcategory="Serial MP3"
+    //% subcategory="MP3"
     //% blockId="makerbit_mp3_play_track_from_folder" block="play MP3 track %track | from folder %folder | %repeat"
     //% track.min=1 track.max=255
     //% folder.min=1 folder.max=99
@@ -172,7 +172,7 @@ namespace makerbit {
      * @param folder folder index, eg:1
      * @param repeat indicates whether to repeat the folder, eg: Mp3Repeat.No
      */
-    //% subcategory="Serial MP3"
+    //% subcategory="MP3"
     //% blockId="makerbit_mp3_play_folder" block="play MP3 folder %folder | %repeat"
     //% folder.min=1 folder.max=99
     //% weight=47
@@ -206,7 +206,7 @@ namespace makerbit {
      * Sets the volume.
      * @param volume volume in the range of 0 to 30: eg: 30
      */
-    //% subcategory="Serial MP3"
+    //% subcategory="MP3"
     //% blockId="makerbit_mp3_set_volume" block="set MP3 volume to %volume"
     //% volume.min=0 volume.max=30
     //% weight=46
@@ -226,7 +226,7 @@ namespace makerbit {
      * Dispatches a command to the MP3 device.
      * @param command command, eg: Mp3Command.PLAY_NEXT_TRACK
      */
-    //% subcategory="Serial MP3"
+    //% subcategory="MP3"
     //% blockId="makerbit_mp3_run_command"
     //% block="run MP3 command %command"
     //% weight=45
@@ -287,7 +287,7 @@ namespace makerbit {
      * Do something when a MP3 track is started.
      * @param handler body code to run when event is raised
     */
-    //% subcategory="Serial MP3"
+    //% subcategory="MP3"
     //% blockId=makerbit_mp3_on_track_started
     //% block="on MP3 track started"
     //% weight=42
@@ -308,7 +308,7 @@ namespace makerbit {
      * Do something when a MP3 track is completed.
      * @param handler body code to run when event is raised
     */
-    //% subcategory="Serial MP3"
+    //% subcategory="MP3"
     //% blockId=makerbit_mp3_on_track_completed
     //% block="on MP3 track completed"
     //% weight=41
@@ -328,7 +328,7 @@ namespace makerbit {
     /**
      * Returns the index of the selected MP3 folder.
      */
-    //% subcategory="Serial MP3"
+    //% subcategory="MP3"
     //% blockId="makerbit_mp3_folder"
     //% block="MP3 folder"
     //% weight=40
@@ -341,7 +341,7 @@ namespace makerbit {
      * It could be either a track started or completed event.
      * This block intended to be used inside of track event handlers.
      */
-    //% subcategory="Serial MP3"
+    //% subcategory="MP3"
     //% blockId="makerbit_mp3_track"
     //% block="MP3 track"
     //% weight=39
@@ -352,7 +352,7 @@ namespace makerbit {
     /**
      * Returns the MP3 volume.
      */
-    //% subcategory="Serial MP3"
+    //% subcategory="MP3"
     //% blockId="makerbit_mp3_volume"
     //% block="MP3 volume"
     //% weight=38
