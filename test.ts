@@ -24,19 +24,6 @@ makerbit.stopMotor(Motor.All)
 makerbit.setMotorDirection(Motor.A, MotorDirection.Forward)
 makerbit.setMotorDirection(Motor.B, MotorDirection.Reverse)
 
-
-/**
- * Touch tests
- */
-
-makerbit.onTouchSensorTouched(TouchSensor.T5, () => { })
-makerbit.onTouchSensorReleased(TouchSensor.T16, () => { })
-makerbit.onAnyTouchSensorTouched(() => { })
-makerbit.onAnyTouchSensorReleased(() => { })
-let touchSensor: number = makerbit.touchSensor()
-let isTouched: boolean = makerbit.isTouched(TouchSensor.T5)
-
-
 /**
  * Serial MP3 tests
  */
