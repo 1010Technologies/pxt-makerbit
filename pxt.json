@@ -1,6 +1,6 @@
 {
     "name": "MakerBit",
-    "version": "0.17.11",
+    "version": "0.17.12",
     "description": "The MakerBit connects to a wide variety of sensors, actuators, and other components.",
     "license": "MIT",
     "dependencies": {
