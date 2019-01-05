@@ -32,23 +32,6 @@ Sets the direction of a motor. Use this function at start time to configure your
 makerbit.setMotorDirection(Motor.A, MotorDirection.Reverse)
 ```
 
-
-## Touch
-MakerBit offers built-in support for up to 12 touch sensors via the proximity capacitive touch sensor controller MPR121.
-
-### MakerBit isTouchDetected
-Returns true if a specific touch sensor is touched. False otherwise.
-```sig
-makerbit.isTouchDetected(TouchSensor.T1)
-```
-
-### MakerBit onTouchDetected
-Do something when a touch event is detected.
-```sig
-makerbit.onTouchDetected(TouchSensor.T5, () => {})
-```
-
-
 ## Serial MP3
 This package includes support for external Serial MP3 devices with the YX5300 chip.
 
