@@ -16,7 +16,6 @@
         "pins.ts",
         "README.md",
         "ultrasonic.ts",
-        "_locales/de/MakerBit-jsdoc-strings.json",
         "_locales/de/MakerBit-strings.json"
     ],
     "testFiles": [
