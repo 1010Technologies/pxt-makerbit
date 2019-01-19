@@ -5,12 +5,12 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v0.0.5"
+        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v0.0.5",
+        "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v0.0.3"
     },
     "files": [
         "infrared.ts",
         "lcd.ts",
-        "motor.ts",
         "mp3.ts",
         "namespace.ts",
         "pins.ts",
