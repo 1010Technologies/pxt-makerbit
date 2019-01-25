@@ -10,7 +10,6 @@ http://makerbit.com/
 | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
 |                                            _MakerBit_                                            |                                   _MakerBit+R with motor controller_                                   |
 
-
 ## Ultrasonic
 
 Attach an external HC-SR04 ultrasonic distance sensor to steer your robots.
@@ -31,21 +30,6 @@ basic.forever(() => {
     distance = makerbit.getUltrasonicDistance(DistanceUnit.CM, MakerBitPin.P5, MakerBitPin.P8)
     led.plotBarGraph(distance, 0)
 })
-```
-
-## LCD
-
-Use an I2C LCD 1602 to display numbers and text.
-
-### LCD Example
-
-```blocks
-makerbit.connectLcd(39)
-makerbit.setLcdBacklight(LcdBacklight.Off)
-makerbit.showStringOnLcd("MakerBit", 0)
-makerbit.showNumberOnLcd(42, 16)
-basic.pause(2000)
-makerbit.clearLcd()
 ```
 
 ### MakerBit connectLcd

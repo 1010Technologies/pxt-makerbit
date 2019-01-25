@@ -1,34 +1,32 @@
 {
-    "name": "MakerBit",
-    "version": "0.18.0",
-    "description": "The MakerBit connects to a wide variety of sensors, actuators, and other components.",
-    "license": "MIT",
-    "dependencies": {
-        "core": "*",
-        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v0.0.5",
-        "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v0.0.3",
-        "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v0.0.2"
-    },
-    "files": [
-        "infrared.ts",
-        "lcd.ts",
-        "namespace.ts",
-        "pins.ts",
-        "README.md",
-        "ultrasonic.ts",
-        "_locales/de/MakerBit-strings.json"
-    ],
-    "testFiles": [
-        "test.ts"
-    ],
-    "public": true,
-    "yotta": {
-        "config": {
-            "microbit-dal": {
-                "bluetooth": {
-                    "enabled": 0
-                }
-            }
+  "name": "MakerBit",
+  "version": "0.18.0",
+  "description": "The MakerBit connects to a wide variety of sensors, actuators, and other components.",
+  "license": "MIT",
+  "dependencies": {
+    "core": "*",
+    "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v0.0.5",
+    "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v0.1.0",
+    "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v0.0.2",
+    "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v0.0.3"
+  },
+  "files": [
+    "infrared.ts",
+    "namespace.ts",
+    "pins.ts",
+    "README.md",
+    "ultrasonic.ts",
+    "_locales/de/MakerBit-strings.json"
+  ],
+  "testFiles": ["test.ts"],
+  "public": true,
+  "yotta": {
+    "config": {
+      "microbit-dal": {
+        "bluetooth": {
+          "enabled": 0
         }
+      }
     }
+  }
 }
