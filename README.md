@@ -32,54 +32,6 @@ basic.forever(() => {
 })
 ```
 
-### MakerBit connectLcd
-
-Connects to the LCD at a given I2C address.
-
-```sig
-makerbit.connectLcd(39)
-```
-
-### MakerBit showStringOnLcd
-
-Displays a string on the LCD at a given position. The text is wrapped automatically at line end.
-
-```sig
-makerbit.showStringOnLcd("Hello world", 0)
-```
-
-### MakerBit showNumberOnLcd
-
-Displays a number on the LCD at a given position. The number is wrapped automatically at line end.
-
-```sig
-makerbit.showNumberOnLcd(42, 16)
-```
-
-### MakerBit clearLcd
-
-Clears the LCD completely.
-
-```sig
-makerbit.clearLcd()
-```
-
-### MakerBit setLcdBacklight
-
-Enables or disables the backlight of the LCD.
-
-```sig
-makerbit.setLcdBacklight(LcdBacklight.On)
-```
-
-### MakerBit position
-
-Turns a LCD position value into a number.
-
-```sig
-makerbit.position(LcdPosition.P16)
-```
-
 ## License
 
 MIT
