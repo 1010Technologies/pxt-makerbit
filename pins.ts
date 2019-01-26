@@ -18,7 +18,7 @@ const enum MakerBitPin {
   P14 = DigitalPin.P14,
   P15 = DigitalPin.P15,
   P16 = DigitalPin.P16,
-  SDL = DigitalPin.P19,
+  SCL = DigitalPin.P19,
   SDA = DigitalPin.P20
 }
 
