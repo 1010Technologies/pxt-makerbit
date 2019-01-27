@@ -10,28 +10,6 @@ http://makerbit.com/
 | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
 |                                            _MakerBit_                                            |                                   _MakerBit+R with motor controller_                                   |
 
-## Ultrasonic
-
-Attach an external HC-SR04 ultrasonic distance sensor to steer your robots.
-
-### MakerBit getUltrasonicDistance
-
-Measures the distance and returns the result in a range from 1 to 300 centimeters or up to 118 inch. The maximum value is returned to indicate when no object was detected.
-
-```sig
-makerbit.getUltrasonicDistance(DistanceUnit.CM, MakerBitPin.P5, MakerBitPin.P8)
-```
-
-### Ultrasonic Example: Distance Graph
-
-```blocks
-let distance = 0
-basic.forever(() => {
-    distance = makerbit.getUltrasonicDistance(DistanceUnit.CM, MakerBitPin.P5, MakerBitPin.P8)
-    led.plotBarGraph(distance, 0)
-})
-```
-
 ## License
 
 MIT
