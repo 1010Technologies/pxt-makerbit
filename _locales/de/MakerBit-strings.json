@@ -1,6 +1,4 @@
 {
-  "DistanceUnit.CM|block": "cm",
-  "DistanceUnit.INCH|block": "inch",
   "IrButton.Down|block": "▼",
   "IrButton.Hash|block": "#",
   "IrButton.Left|block": "◀",
@@ -25,7 +23,6 @@
   "PinLevel.High|block": "hoch",
   "PinLevel.Low|block": "niedrig",
   "makerbit.connectInfrared|block": "verbinde IR Empfänger an %pin",
-  "makerbit.getUltrasonicDistance|block": "Ultraschalldistanz in %unit | mit Trig an %trig | und Echo an %echo",
   "makerbit.irButton|block": "IR Taste %button",
   "makerbit.irCommandCode|block": "IR Taste",
   "makerbit.isIrButtonPressed|block": "IR Taste | %button | wird gedrückt",
