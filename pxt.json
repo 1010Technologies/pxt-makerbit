@@ -5,16 +5,16 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v0.0.7",
-        "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v0.1.0",
-        "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v0.0.3",
-        "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v0.0.4",
-        "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v0.0.3",
-        "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v0.0.4"
+        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.0.0",
+        "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v1.0.0",
+        "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v1.0.0",
+        "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.0.0",
+        "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.0",
+        "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v0.0.6",
+        "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v0.0.3"
     },
     "files": [
         "namespace.ts",
-        "pins.ts",
         "README.md",
         "_locales/de/MakerBit-strings.json"
     ],
