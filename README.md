@@ -29,6 +29,8 @@ Bluetooth is disabled by default to save memory.
 
 [MakerBit-Pins](https://github.com/1010Technologies/pxt-makerbit-pins)
 
+[MakerBit-HC-SR04-Clap](https://github.com/1010Technologies/pxt-makerbit-hc-sr04-clap)
+
 ## License
 
 MIT
