@@ -1,35 +1,29 @@
 {
-    "name": "MakerBit",
-    "version": "1.0.2",
-    "description": "The MakerBit connects to a wide variety of sensors, actuators, and other components.",
-    "license": "MIT",
-    "dependencies": {
-        "core": "*",
-        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.0.0",
-        "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v1.0.0",
-        "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v1.0.0",
-        "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.0.0",
-        "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.1",
-        "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v0.0.6",
-        "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.0.0",
-        "MakerBit-HC-SR04-Clap": "github:1010technologies/pxt-makerbit-hc-sr04-clap#v0.0.6"
-    },
-    "files": [
-        "namespace.ts",
-        "README.md",
-        "_locales/de/MakerBit-strings.json"
-    ],
-    "testFiles": [
-        "test.ts"
-    ],
-    "public": true,
-    "yotta": {
-        "config": {
-            "microbit-dal": {
-                "bluetooth": {
-                    "enabled": 0
-                }
-            }
+  "name": "MakerBit",
+  "version": "1.0.2",
+  "description": "The MakerBit connects to a wide variety of sensors, actuators, and other components.",
+  "license": "MIT",
+  "dependencies": {
+    "core": "*",
+    "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.1.0",
+    "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v1.0.2",
+    "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v1.0.1",
+    "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.2.0",
+    "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.2",
+    "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v0.0.6",
+    "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.0.1",
+    "MakerBit-HC-SR04-Clap": "github:1010technologies/pxt-makerbit-hc-sr04-clap#v0.0.6"
+  },
+  "files": ["namespace.ts", "README.md", "_locales/de/MakerBit-strings.json"],
+  "testFiles": ["test.ts"],
+  "public": true,
+  "yotta": {
+    "config": {
+      "microbit-dal": {
+        "bluetooth": {
+          "enabled": 0
         }
+      }
     }
+  }
 }
