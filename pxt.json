@@ -5,7 +5,7 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.1.0",
+        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.2.1",
         "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v1.0.2",
         "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v1.0.1",
         "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.2.0",
