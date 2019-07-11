@@ -8,7 +8,7 @@
     "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.2.1",
     "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v1.0.2",
     "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v1.0.2",
-    "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.2.0",
+    "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.4.0",
     "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.2",
     "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v0.0.6",
     "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.0.1",
