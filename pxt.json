@@ -1,29 +1,35 @@
 {
-  "name": "MakerBit",
-  "version": "1.3.1",
-  "description": "The MakerBit connects to a wide variety of sensors, actuators, and other components.",
-  "license": "MIT",
-  "dependencies": {
-    "core": "*",
-    "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.2.1",
-    "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v1.0.2",
-    "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v1.0.2",
-    "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.4.0",
-    "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.2",
-    "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v1.0.0",
-    "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.0.2",
-    "MakerBit-HC-SR04-Clap": "github:1010technologies/pxt-makerbit-hc-sr04-clap#v0.0.6"
-  },
-  "files": ["namespace.ts", "README.md", "_locales/de/MakerBit-strings.json"],
-  "testFiles": ["test.ts"],
-  "public": true,
-  "yotta": {
-    "config": {
-      "microbit-dal": {
-        "bluetooth": {
-          "enabled": 0
+    "name": "MakerBit",
+    "version": "1.3.2",
+    "description": "The MakerBit connects to a wide variety of sensors, actuators, and other components.",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*",
+        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.2.1",
+        "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v1.0.2",
+        "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v1.0.2",
+        "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.4.0",
+        "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.2",
+        "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v1.0.0",
+        "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.0.2",
+        "MakerBit-HC-SR04-Clap": "github:1010technologies/pxt-makerbit-hc-sr04-clap#v0.0.6"
+    },
+    "files": [
+        "namespace.ts",
+        "README.md",
+        "_locales/de/MakerBit-strings.json"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "yotta": {
+        "config": {
+            "microbit-dal": {
+                "bluetooth": {
+                    "enabled": 0
+                }
+            }
         }
-      }
     }
-  }
 }
