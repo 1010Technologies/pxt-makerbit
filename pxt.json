@@ -27,7 +27,8 @@
         "config": {
             "microbit-dal": {
                 "bluetooth": {
-                    "enabled": 0
+                    "enabled": 0,
+                    "pairing_mode": 0
                 }
             }
         }
