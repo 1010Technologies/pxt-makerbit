@@ -38,3 +38,15 @@ MIT
 ## Supported targets
 
 - for PXT/microbit
+
+## Build and Publish
+
+Build:
+```
+pxt build
+```
+Release/publish:
+```
+pxt bump
+```
+
