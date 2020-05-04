@@ -41,6 +41,14 @@ MIT
 
 ## Build and Publish
 
+Install (Mac):
+```
+git clone https://github.com/1010Technologies/pxt-makerbit.git
+cd pxt-makerbit
+sudo npm install -g pxt
+pxt target microbit
+pxt install
+```
 Build:
 ```
 pxt build
