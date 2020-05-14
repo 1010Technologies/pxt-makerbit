@@ -6,4 +6,5 @@ pxt_modules
 *.db
 *.tgz
 .header.json
+.node-version
 package-lock.json
