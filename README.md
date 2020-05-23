@@ -27,6 +27,8 @@ Bluetooth is disabled by default to save memory.
 
 [MakerBit-IR-Receiver](https://github.com/1010Technologies/pxt-makerbit-ir-receiver)
 
+[MakerBit-IR-Transmitter](https://github.com/1010Technologies/pxt-makerbit-ir-transmitter)
+
 [MakerBit-Pins](https://github.com/1010Technologies/pxt-makerbit-pins)
 
 [MakerBit-HC-SR04-Clap](https://github.com/1010Technologies/pxt-makerbit-hc-sr04-clap)
@@ -42,6 +44,7 @@ MIT
 ## Build and Publish
 
 Install (Mac):
+
 ```
 git clone https://github.com/1010Technologies/pxt-makerbit.git
 cd pxt-makerbit
@@ -49,12 +52,15 @@ sudo npm install -g pxt
 pxt target microbit
 pxt install
 ```
+
 Build:
+
 ```
 pxt build
 ```
+
 Release/publish:
+
 ```
 pxt bump
 ```
-
