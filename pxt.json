@@ -5,12 +5,12 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.2.2",
-        "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v1.0.3",
+        "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.2.3",
+        "MakerBit-Motor": "github:1010technologies/pxt-makerbit-motor#v1.0.7",
         "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v1.0.2",
         "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.4.1",
-        "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.2",
-        "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v1.4.1",
+        "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.5",
+        "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v1.4.2",
         "MakerBit-IR-Transmitter": "github:1010technologies/pxt-makerbit-ir-transmitter#v1.0.0",
         "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.0.5",
         "MakerBit-HC-SR04-Clap": "github:1010technologies/pxt-makerbit-hc-sr04-clap#v0.0.6"
