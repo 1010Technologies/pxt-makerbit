@@ -10,7 +10,7 @@
         "MakerBit-MP3": "github:1010technologies/pxt-makerbit-mp3#v1.0.2",
         "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.4.1",
         "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.6",
-        "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v1.5.1",
+        "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v1.5.2",
         "MakerBit-IR-Transmitter": "github:1010technologies/pxt-makerbit-ir-transmitter#v1.0.0",
         "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.0.5",
         "MakerBit-HC-SR04-Clap": "github:1010technologies/pxt-makerbit-hc-sr04-clap#v0.0.6",
