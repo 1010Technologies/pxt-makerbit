@@ -12,7 +12,7 @@
         "MakerBit-Ultrasonic": "github:1010technologies/pxt-makerbit-ultrasonic#v1.0.6",
         "MakerBit-IR-Receiver": "github:1010technologies/pxt-makerbit-ir-receiver#v1.5.2",
         "MakerBit-IR-Transmitter": "github:1010technologies/pxt-makerbit-ir-transmitter#v1.0.0",
-        "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.0.5",
+        "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.0.6",
         "MakerBit-HC-SR04-Clap": "github:1010technologies/pxt-makerbit-hc-sr04-clap#v0.0.6",
         "pxt-comment-block": "github:IowaDave/pxt-comment-block#v0.0.4"
     },
