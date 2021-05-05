@@ -7,7 +7,7 @@
         "core": "*",
         "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.0.8",
         "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.2.11",
-        "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.6.18",
+        "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.6.19",
         "pxt-comment-block": "github:IowaDave/pxt-comment-block#v0.0.4"
     },
     "files": [
