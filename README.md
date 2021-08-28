@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/1010Technologies/pxt-makerbit.svg?branch=master)](https://travis-ci.org/1010Technologies/pxt-makerbit)
 
+![MakerBit](https://github.com/1010Technologies/pxt-makerbit/raw/master/icon.png "MakerBit")
+
 The MakerBit connects to the BBC micro:bit to provide easy connections to a wide variety of sensors, actuators and other components.
 This MakeCode extension includes our complete set of extensions for the MakerBit board.
 
