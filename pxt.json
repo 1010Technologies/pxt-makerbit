@@ -1,13 +1,13 @@
 {
     "name": "MakerBit",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "description": "The MakerBit connects to a wide variety of sensors, actuators, and other components.",
     "license": "MIT",
     "dependencies": {
         "core": "*",
         "MakerBit-Pins": "github:1010technologies/pxt-makerbit-pins#v1.1.0",
         "MakerBit-Touch": "github:1010technologies/pxt-makerbit-touch#v1.2.16",
-        "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.8.1",
+        "MakerBit-LCD1602": "github:1010technologies/pxt-makerbit-lcd1602#v1.8.2",
         "pxt-comment-block": "github:IowaDave/pxt-comment-block#v0.0.4"
     },
     "files": [
